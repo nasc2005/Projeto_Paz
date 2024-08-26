@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fé Shop - Cadastro e Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">Fé Shop</div>
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Área Principal -->
+    <main>
+        <div class="container">
+            <!-- Coluna de Cadastro -->
+            <div class="form-container">
+                <h2>Cadastre-se</h2>
+                <form>
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required>
+
+                    <label for="email-cadastro">Email</label>
+                    <input type="email" id="email-cadastro" name="email" required>
+
+                    <label for="senha-cadastro">Senha</label>
+                    <input type="password" id="senha-cadastro" name="senha" required>
+
+                    <label for="confirmar-senha">Confirmar Senha</label>
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" required>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <!-- Coluna de Login -->
+            <div class="form-container">
+                <h2>Entrar</h2>
+                <form>
+                    <label for="email-login">Email</label>
+                    <input type="email" id="email-login" name="email" required>
+
+                    <label for="senha-login">Senha</label>
+                    <input type="password" id="senha-login" name="senha" required>
+
+                    <button type="submit">Entrar</button>
+                    <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Fé Shop. Todos os direitos reservados.</p>
+        <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </div>
+    </footer>
+</body>
+
+</html>
