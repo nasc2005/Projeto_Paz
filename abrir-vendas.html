@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir Vendas - Projeto PAZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="abrir-vendas.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Abrir Vendas</h1>
+        </header>
+
+        <form action="vendendo.html" class="sales-form">
+            <div class="form-group">
+                <label for="date">Data da Venda:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Local de Venda:</label>
+                <input type="text" id="location" name="location" placeholder="Digite o local de venda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="seller">Vendedor:</label>
+                <input type="text" id="seller" name="seller" placeholder="Digite o nome do vendedor" required>
+            </div>
+
+            <button type="submit" class="btn-open-sales">Iniciar Venda</button>
+        </form>
+
+        <footer>
+            <p>&copy; 2024 Projeto PAZ. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>
