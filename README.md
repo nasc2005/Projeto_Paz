@@ -1,5 +1,5 @@
 <br id="topo">
-<h1 align="center"> Projeto Águas Laranjas 🐠 </h1>
+<h1 align="center"> Projeto Paz🕊️ </h1>
 
 <p align="center">
     <a href="#descgeral">Descrição Geral </a> | 
