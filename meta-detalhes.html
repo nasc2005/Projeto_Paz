@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Meta - Projeto PAZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="meta-detalhes.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Detalhes da Meta</h1>
+        </header>
+
+        <div class="meta-details">
+            <h2>Meta de Vendas - Janeiro</h2>
+            <p><strong>Objetivo:</strong> Atingir R$ 10.000 em vendas no mês de Janeiro.</p>
+            <p><strong>Progresso Atual:</strong> R$ 6.500</p>
+            <p><strong>Data de Início:</strong> 01/01/2024</p>
+            <p><strong>Data de Término:</strong> 31/01/2024</p>
+            <p><strong>Status:</strong> Em andamento</p>
+
+            <div class="actions">
+                <button class="btn-edit">Editar Meta</button>
+                <button class="btn-close">Encerrar Meta</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Projeto PAZ. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Event listeners para os botões
+        document.querySelector('.btn-edit').addEventListener('click', function() {
+            window.location.href = 'editar-meta.html';
+        });
+
+        document.querySelector('.btn-close').addEventListener('click', function() {
+            alert('Meta encerrada!');
+        });
+    </script>
+</body>
+</html>
