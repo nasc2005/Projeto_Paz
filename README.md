@@ -45,7 +45,7 @@ Atualmente, os trabalhadores informais que realizam vendas, como a equipe que ve
 
 <span id="propostasolu">
     
-## ✅ Solução Proposta: ConnectONGs:
+## ✅ Solução Proposta: Projeto Paz
  
 A solução proposta é o desenvolvimento de uma plataforma online, totalmente responsiva e fácil de usar, que permitirá aos vendedores informais automatizarem o processo de venda e controle de seus produtos. A plataforma oferecerá um sistema de registro e controle de vendas intuitivo, facilitando a realização de transações de forma rápida e eficiente. Além disso, ela contará com uma funcionalidade de geração automática de relatórios, permitindo a análise de desempenho e proporcionando dados importantes para a tomada de decisões estratégicas.
 
