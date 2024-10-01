@@ -1,3 +1,4 @@
+﻿
 <br id="topo">
 <h1 align="center"> Projeto Paz🕊️ </h1>
 
@@ -21,18 +22,15 @@
 
 ## :bookmark_tabs: Descrição Geral
  
-A documentação a seguir descreve os requisitos e especificações necessários para o desenvolvimento da ConnectONGs, destinado a divulgar ONG’s e possibilitar que voluntários se candidatem a vagas, além de fornecer às ONG’s a possiblidade de listar recursos disponíveis. Esta documentação foi criada com o objetivo de fornecer uma compreensão abrangente dos recursos e funcionalidades esperados do sistema, delineando claramente as necessidades dos usuários finais e das partes interessadas envolvidas. Ao seguir estes requisitos, busca-se garantir o desenvolvimento de um sistema eficaz e altamente funcional que atenda às expectativas e necessidades de todos os envolvidos.
+O projeto **Paz** visa otimizar a contabilidade das vendas informais realizadas durante eventos em uma igreja local. Inicialmente concebido para o registro de vendas de água, o projeto se expandiu para atender a outros vendedores informais. A plataforma será online e responsiva, permitindo que vendedores realizem suas vendas de forma eficiente e rápida, com ferramentas de controle de estoque, geração de estatísticas, e gerenciamento de metas.
 
 → [Voltar ao topo](#topo)
 
 <span id="atores">
     
  ## 💻 Atores: 
- <i>ADM Geral:</i> Supervisão e checagem de informações; verificação de informações da ONG; autenticação; verificação de colaborações/transações. </br>
- <i>ADM de ONG:</i> Cadastrar a ONG; avaliar perfil dos voluntários e recrutá-los. </br>
- <i>Voluntário:</i> Se inscrever na ONG; adicionar preferências e, possui permissões de acesso de usuário.</br> 
- <i>Usuário Cadastrado:</i> Possui permissões de acesso de usuários não cadastrados; pode se tornar voluntário e realiza avaliação.</br> 
- <i>Visitante Não Cadastrado:</i> Tem acesso a informações gerais. 
+ <i>Administrador:</i> Tem controle total sobre o sistema, podendo cadastrar e gerenciar instituições, vendedores, produtos e metas. Também é responsável por visualizar estatísticas e relatórios de vendas.</br>
+ <i>Vendedor:</i> Usuário que realiza vendas e pode cadastrar produtos no estoque. Tem acesso limitado às funções administrativas. Visualizam as metas e estatísticas definidas. </br>
 
  → [Voltar ao topo](#topo)
     
@@ -41,8 +39,7 @@ A documentação a seguir descreve os requisitos e especificações necessários
 
 ## 🚫 Descrição do problema:
  
-As Organizações Não Governamentais (ONGs) desempenham um papel crucial na sociedade, abordando uma variedade de questões e necessidades. No entanto, muitas ONGs enfrentam desafios significativos ao tentar encontrar voluntários adequados e gerenciar eficientemente os recursos disponíveis. Por outro lado, voluntários muitas vezes têm dificuldade em identificar ONGs alinhadas com suas habilidades e interesses.
- A falta de uma plataforma centralizada e eficiente para conectar ONGs e voluntários pode resultar em ineficiências, atrasos na resposta a necessidades urgentes e uma alocação inadequada de recursos.
+Atualmente, os trabalhadores informais que realizam vendas, como a equipe que vende água durante eventos em uma igreja local, enfrentam dificuldades em automatizar e organizar suas transações. A falta de ferramentas adequadas para o controle e a contabilização das vendas resulta em registros manuais, o que pode ser impreciso e demorado. Essa situação impede a otimização das vendas, dificulta o controle de estoque e limita a capacidade de gerar relatórios financeiros detalhados. Como consequência, esses vendedores não conseguem tomar decisões estratégicas para melhorar suas operações e aumentar seus lucros, prejudicando a sustentabilidade de seus negócios.
  
 → [Voltar ao topo](#topo)
 
@@ -50,33 +47,39 @@ As Organizações Não Governamentais (ONGs) desempenham um papel crucial na soc
     
 ## ✅ Solução Proposta: ConnectONGs:
  
-A ConnectONGs surge como uma solução abrangente para superar esses desafios, proporcionando uma plataforma web que atua como um facilitador para ONGs, voluntários e aqueles que precisam de ajuda. Vamos explorar como o ConnectONGs aborda essas questões:
+A solução proposta é o desenvolvimento de uma plataforma online, totalmente responsiva e fácil de usar, que permitirá aos vendedores informais automatizarem o processo de venda e controle de seus produtos. A plataforma oferecerá um sistema de registro e controle de vendas intuitivo, facilitando a realização de transações de forma rápida e eficiente. Além disso, ela contará com uma funcionalidade de geração automática de relatórios, permitindo a análise de desempenho e proporcionando dados importantes para a tomada de decisões estratégicas.
 
 → [Voltar ao topo](#topo)
 
 <span id="ferramentas">
     
-**Cadastro de ONGs:**
+**Registro e Controle de Vendas:**
  
-O sistema permite que as ONGs criem perfis detalhados, destacando suas missões, áreas de atuação e recursos necessários. Essa funcionalidade ajuda as ONGs a apresentarem suas necessidades de forma transparente, facilitando a captação de recursos.
+Permite que os vendedores informais registrem e controlem suas vendas de forma simples, rápida e eficiente, sem a necessidade de processos manuais.
  
-**Mapa Interativo:**
+**Geração de Relatórios:**
  
-A inclusão de um mapa interativo permite que usuários localizem facilmente ONGs com base em sua localização e áreas de atuação. Isso otimiza a resposta a emergências e promove a distribuição equitativa de recursos.
+A plataforma gera automaticamente relatórios detalhados sobre as vendas, facilitando a análise de desempenho e a tomada de decisões estratégicas.
  
-**Matchmaking:**
+**Controle de Estoque:**
  
-A funcionalidade de matchmaking utiliza algoritmos inteligentes para conectar voluntários às ONGs com base em habilidades específicas e interesses declarados. Isso agiliza o processo de seleção, aumentando a eficiência e a qualidade do trabalho voluntário.
+Oferece um sistema de gestão de estoque com notificações automáticas, avisando os vendedores quando os produtos estiverem próximos de acabar.
  
-**Recursos Compartilhados:**
+**Definição e Monitoramento de Metas:**
  
-O ConnectONGs permite que as ONGs listem os recursos disponíveis, como alimentos, roupas e abrigo. As pessoas necessitadas podem localizar facilmente onde solicitar esses recursos, promovendo uma distribuição eficaz e transparente.
+Possibilita a definição de metas de vendas, além de enviar notificações aos vendedores quando essas metas forem atingidas.
  
-**Feedback e Avaliações:**
+**Vendas Simultâneas:**
  
-Os usuários podem avaliar as ONGs e voluntários, promovendo a transparência e a confiabilidade. Essa funcionalidade incentiva a prestação de contas e ajuda na tomada de decisões informadas por parte dos voluntários e doadores.
+Suporte para cadastro de múltiplos vendedores, permitindo que realizem vendas simultaneamente, ampliando o alcance do sistema.
+
+**Gestão de Produtos:**
  
-Ao abordar esses pontos, a ConnectONGs visa criar uma comunidade colaborativa onde ONGs, voluntários e beneficiários podem interagir de maneira eficaz, aumentando assim o impacto positivo dessas organizações na sociedade.
+Facilita o cadastro e a edição de produtos no estoque, garantindo que as vendas sejam realizadas de forma organizada e precisa.
+
+**Notificações e Alertas:** 
+
+O sistema envia alertas automáticos sobre o estoque e o alcance de metas, permitindo que os vendedores e administradores tenham controle em tempo real das operações.
 
  → [Voltar ao topo](#topo)
 
@@ -84,31 +87,15 @@ Ao abordar esses pontos, a ConnectONGs visa criar uma comunidade colaborativa on
  
 ## 📕 Metodologia:
  
-O desenvolvimento do projeto "ConnectONGs" foi conduzido com através da aplicação da Metodologia Kanban, proporcionando uma abordagem ágil e eficiente para a equipe. Um dos benefícios notáveis do Kanban é sua capacidade de se adaptar a diferentes contextos e necessidades. Seja na produção de software, no desenvolvimento ágil ou em processos industriais, o Kanban pode ser ajustado para atender às demandas específicas de cada equipe. Sua flexibilidade é um dos motivos pelos quais essa metodologia é amplamente adotada em diferentes setores.  Aqui está um resumo de como o Kanban foi utilizado ao longo do processo:
+O desenvolvimento do projeto Paz seguirá a metodologia **Scrumban**, uma combinação das abordagens Scrum e Kanban. Essa metodologia proporciona uma estrutura ágil com ciclos iterativos e incrementais, garantindo que as funcionalidades sejam validadas constantemente com usuários reais da plataforma. Os principais benefícios do Scrumban incluem:
  
 **Visualização do Fluxo de Trabalho:**
  
-A equipe começou criando um quadro Kanban visualizando todas as etapas do desenvolvimento do projeto. As colunas representaram desde o planejamento e design até a implementação, testes e revisões.
- 
-**Divisão de Tarefas e Responsabilidades:**
- 
-O líder da equipe dividiu as funcionalidades do "ConnectONGs" em tarefas menores e atribuiu responsabilidades específicas a membros individuais ou subgrupos.  Cada tarefa foi representada por cartões no quadro, facilitando a visualização do progresso de cada parte do projeto.
- 
-**Limitação do Trabalho em Andamento (WIP):**
- 
-Foram estabelecidos limites claros para o número de tarefas em andamento em cada etapa do desenvolvimento. Isso evitou sobrecarga de trabalho e concentrou esforços na conclusão eficiente das funcionalidades.
- 
-**Priorização e Mapa Interativo:**
- 
-As funcionalidades foram priorizadas com base na importância para o usuário e na viabilidade técnica.  A integração de um mapa interativo foi tratada como uma tarefa específica, permitindo que os usuários localizassem ONGs com facilidade.
- 
-**Matchmaking e Recursos Compartilhados:**
- 
-As funcionalidades de matchmaking e recursos compartilhados foram implementadas como tarefas distintas, com a equipe monitorando o progresso e garantindo a integração eficaz entre voluntários e ONGs.
+Utilizando quadros de tarefas, é possível ter uma visão clara do progresso de cada atividade, facilitando o acompanhamento e a identificação de gargalos no processo.
  
 **Reuniões Regulares e Melhoria Contínua:**
  
-A equipe realizou reuniões regulares para revisar o quadro Kanban, discutir desafios e identificar oportunidades de melhoria.  A flexibilidade do Kanban permitiu ajustes contínuos com base no feedback da equipe e nas necessidades emergentes do projeto.  Ao utilizar o Kanban, a equipe do "ConnectONGs" foi capaz de manter o  fluxo de trabalho eficiente, garantindo a entrega oportuna e bem-sucedida de uma plataforma que atende às necessidades das ONGs, voluntários e beneficiários.
+A metodologia Scrumban incorpora reuniões frequentes, como revisões e retrospectivas, que promovem ajustes contínuos no processo de desenvolvimento, otimizando a eficiência da equipe e garantindo entregas de maior qualidade.
 
 → [Voltar ao topo](#topo)
 
@@ -117,7 +104,6 @@ A equipe realizou reuniões regulares para revisar o quadro Kanban, discutir des
 ## 🛠️ Tecnologias
 
 As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na construção do projeto:
-
 
 Geral: 
 - [GitHub](https://github.com/): Versionamento e documentação
@@ -154,68 +140,32 @@ Banco de Dados:
 
 <span id="problemadesenvol">
     
-## ❌ Problemas no Desenvolvimento: 
+## ❌ Problemas (até agora) no Desenvolvimento: 
 
-Integrante sem Acesso a Computador. 
-
-Dificuldade na Verificação de E-mails dos Usuários. 
-
-Falta de Tempo para Revisão de Erros no Sistema e Documentação. 
-
-Problemas com a Comunicação Interna dos Grupos e com os Demais. 
+Divisão de tempo para conciliar com outros projetos e atividades.
 
 → [Voltar ao topo](#topo)
 
 <span id="equipe">
 
-## :busts_in_silhouette: Equipe Front-End
+## :busts_in_silhouette: Scrum Master
 
 | Nome | GitHub |  
 | :----------: | :----------------------- 
-| **Guilherme Campos Ferraz** | [GitHub](https://github.com/gui-zaf) |
-| Fábio Monte Alves | [GitHub](https://github.com/Fabinzz) |  
-| Gabriel Mendes da Costa Portas | [GitHub](https://github.com/Biel-mendes) |  
-| Diego Bicelli de Moura | [GitHub](https://github.com/DiegoBicelli) |  
-| Lucas Barbosa dos Santos | [GitHub](https://github.com/TheAwesomeCake) |  
-| Guilherme Pinto Eustáquio  | [GitHub](https://github.com/GuilhermeEustaquio) |
-| Leandro Rodrigues de Farias  | [GitHub]( https://github.com/leandrorodrigues01) |
-| Isabela Ferreira Santos  | [GitHub]( https://github.com/isabferreira) |
-| Gustavo Zanovello Silva  | [GitHub](https://github.com/Gustav2314) |
-| Guilherme Santos da Silva | [GitHub](https://github.com/GuiOld) |
+|Murilo Vieira Nascimento| [GitHub](https://github.com/nasc2005) |
 
-## :busts_in_silhouette: Equipe Back-End
-
-| Nome | GitHub |  
-| :----------: | :----------------------- 
-| Marcelo Almeida de Araújo | [GitHub](https://github.com/marcelo-almeida-de-araujo) |
-|**Danilo Yuri de Jesus Cordeiro**| [GitHub](https://github.com/DanizinDev) |
-|Davi Almeida Pereira| [GitHub](https://github.com/Eletronbius) |
-|Guilherme Cabral de Lima| [GitHub](https://github.com/Guilherme-Cabral-de-Lima) |
-|João Vitor Moreira dos Santos Neris| [GitHub](https://github.com/) |
-| Maria Gabriela Mariano Pereira | [GitHub](https://github.com/snowtenshi) |
-|David de Souza Braga| [GitHub](https://github.com/) |
-
-
-## :busts_in_silhouette: Equipe Banco De Dados
-
-| Nome | GitHub |  
-| :----------: | :----------------------- 
-|**Ana Luiza dos Santos Dias**| [GitHub](https://github.com/AnnaDays) |
-|Daniel Teixeira da Silva| [GitHub](https://github.com/danielznz) |
-|Gustavo Costa Oliveira| [GitHub](https://github.com/Guh1254) |
-|Gustavo Simões Lisboa | [GitHub](https://github.com/Gustavo-Simoes) |
-|João Victor Alexandre da Silva| [GitHub](https://github.com/JoaoV-A01) |
-
-## :busts_in_silhouette: Equipe Engenharia De Software
+## :busts_in_silhouette: Product Owner
 
 | Nome | GitHub |  
 | :----------: | :-----------------------
-|Adriano Avila de Souza Bezerra| [GitHub](https://github.com/Adriano2901) |
-|Arthur Juan Farias Lima| [GitHub](https://github.com/arthurxzl) |
-|Fernando Takayoshi Soares Koge| [GitHub](https://github.com/FernandoKoge) |
-|José Henrique Almeida Motta| [GitHub](https://github.com/Jrique) |
 |Lucas José Gomes da Silva| [GitHub](https://github.com/LukasJSilva) |
-|**Murilo Vieira Nascimento**| [GitHub](https://github.com/nasc2005) |
+
+## :busts_in_silhouette: Equipe de Desenvolvimento
+
+| Nome | GitHub |  
+| :----------: | :-----------------------
+|Gustavo Costa Oliveira| [GitHub](https://github.com/Guh1254) |
+|João Victor Alexandre da Silva| [GitHub](https://github.com/JoaoV-A01) |
 
 
 → [Voltar ao topo](#topo)
@@ -226,9 +176,8 @@ Problemas com a Comunicação Interna dos Grupos e com os Demais.
 
 ![image](https://github.com/https-github-com-fatec-itaquera2sem/ConectaOngs/assets/146677759/73499089-2c11-4d4e-9245-70482add977e)
  
-
-
 **Diagrama de Classe** **– Geral:**
 ![image](https://github.com/https-github-com-fatec-itaquera2sem/ConectaOngs/assets/146677759/336cc679-2d9c-4c16-8ecc-6c706b1e0b38)
 
 → [Voltar ao topo](#topo)
+
