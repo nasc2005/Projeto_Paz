@@ -1,0 +1,4 @@
+anotaçoes de regras de negocios
+======================================================
+
+-Usuario não pode ter email repetido para ser criado.
