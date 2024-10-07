@@ -3,31 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Projeto PAZ</title>
+    <title>Home - Projeto PAZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Projeto PAZ</h1>
+            <img src="logo.png" alt="Logo Projeto PAZ" class="logo">
         </header>
 
-        <div class="login-box">
-            <h2>Entrar no Sistema</h2>
-            <form>
-                <label for="email">E-mail</label>
-                <input type="email" id="email" placeholder="Digite seu e-mail" required>
+        <div class="content">
+            <section class="purpose">
+                <h1>Bem-vindo ao Projeto PAZ</h1>
+                <p>Nossa missão é transformar vidas através de ações e vendas solidárias, levando recursos para instituições religiosas e comunidades carentes.</p>
+            </section>
 
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="Digite sua senha" required>
+            <section class="history">
+                <h2>Nossa História</h2>
+                <p>Fundado em 2024, o Projeto PAZ surgiu da necessidade de fortalecer a relação entre igrejas e comunidades. Desde então, temos ajudado inúmeras instituições a alcançar suas metas e expandir seu impacto.</p>
+            </section>
 
-                <button type="submit">Entrar</button>
-            </form>
+            <section class="description">
+                <h2>O que fazemos</h2>
+                <p>Facilitamos a organização de vendas e doações dentro das instituições, proporcionando um ambiente digital para gerenciamento de recursos e campanhas solidárias.</p>
+            </section>
 
-            <div class="options">
-                <a href="cadastroInstituicao.html">Cadastrar-se</a>
-                <a href="recuperar-senha.html">Esqueceu sua senha?</a>
+            <div class="cta-buttons">
+                <a href="login.html" class="btn">Entrar no Sistema</a>
             </div>
         </div>
 
