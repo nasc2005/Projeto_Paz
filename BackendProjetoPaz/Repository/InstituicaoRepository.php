@@ -1,41 +1,46 @@
 <?php
 namespace App\Backend\Repository;
 
-use App\Backend\Model\Instituicao;
+use App\Backend\Model\Produto;
 use App\Backend\Config\Database;
 use PDO;
 
-class InstituicaoRepository{
+class ProdutoRepository {
     private $conn;
-    private $table = "instituicoes";
-
+    private $table = "produtos";
 
     public function __construct()
     {
-       $this->conn = Database::getInstance(); 
+        $this->conn = Database::getInstance(); 
     }
-    
-    
-    
-    public function insertInstituicao(Instituicao $instituicao) {
-        $nome = $instituicao->getNome();
-        $descricao = $instituicao->getDescricao();
-        $logo = $instituicao->getLogo();
-        $saldo = $instituicao->getSaldo();
-        $insertdatetime = $instituicao->getInsertDateTime();
-        $query = "INSERT INTO $this->table (nome, descricao, logo, saldo, insertDateTime) VALUES (:nome, :descricao, :logo, :Saldo, :insertDateTime)";
+
+    public function insertProduto(Produto $produto) {
+        $nome = $produto->getNome();
+        $valorCusto = $produto->getValorCusto();
+        $imgUrl = $produto->getImgUrl();
+        $categoria = $produto->getCategoria();
+        $valorVenda = $produto->getValorVenda();
+        $descricao = $produto->getDescricao();
+        $estoque = $produto->getEstoque();
+        $insertDateTime = $produto->getInsertDateTime();
+
+        $query = "INSERT INTO $this->table (nome, valorCusto, imgUrl, categoria, valorVenda, descricao, estoque, insertDateTime)
+                  VALUES (:nome, :valorCusto, :imgUrl, :categoria, :valorVenda, :descricao, :estoque, :insertDateTime)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":valorCusto", $valorCusto);
+        $stmt->bindParam(":imgUrl", $imgUrl);
+        $stmt->bindParam(":categoria", $categoria);
+        $stmt->bindParam(":valorVenda", $valorVenda);
         $stmt->bindParam(":descricao", $descricao);
-        $stmt->bindParam(":logo", $logo);
-        $stmt->bindParam(":saldo", $saldo);
-        $stmt->bindParam(":insertDateTime", $insertdatetime);
+        $stmt->bindParam(":estoque", $estoque);
+        $stmt->bindParam(":insertDateTime", $insertDateTime);
 
         return $stmt->execute();
     }
 
-    public function getAllInstituicaos() {
+    public function getAllProdutos() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -43,40 +48,53 @@ class InstituicaoRepository{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getInstituicaoById($instituicao_id) {
+    public function getProdutoById($produto_id) {
         $query = "SELECT * FROM $this->table WHERE id = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $instituicao_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $produto_id, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateInstituicao(Instituicao $instituicao) {
-        $instituicao_id = $instituicao->getId();
-        $nome = $instituicao->getNome();
-        $descricao = $instituicao->getDescricao();
-        $logo = $instituicao->getLogo();
-        $saldo = $instituicao->getSaldo();
+    public function updateProduto(Produto $produto) {
+        $produto_id = $produto->getId();
+        $nome = $produto->getNome();
+        $valorCusto = $produto->getValorCusto();
+        $imgUrl = $produto->getImgUrl();
+        $categoria = $produto->getCategoria();
+        $valorVenda = $produto->getValorVenda();
+        $descricao = $produto->getDescricao();
+        $estoque = $produto->getEstoque();
 
-        $query = "UPDATE $this->table SET nome = :nome, descricao = :descricao, logo = :logo, saldo = :saldo WHERE id = :id";
-        
+        $query = "UPDATE $this->table SET 
+                    nome = :nome, 
+                    valorCusto = :valorCusto, 
+                    imgUrl = :imgUrl, 
+                    categoria = :categoria, 
+                    valorVenda = :valorVenda, 
+                    descricao = :descricao, 
+                    estoque = :estoque
+                  WHERE id = :id";
+
         $stmt = $this->conn->prepare($query);
-        
         $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":valorCusto", $valorCusto);
+        $stmt->bindParam(":imgUrl", $imgUrl);
+        $stmt->bindParam(":categoria", $categoria);
+        $stmt->bindParam(":valorVenda", $valorVenda);
         $stmt->bindParam(":descricao", $descricao);
-        $stmt->bindParam(":logo", $logo);
-        $stmt->bindParam(":saldo", $saldo);
-        $stmt->bindParam(":id", $instituicao_id);
-    
+        $stmt->bindParam(":estoque", $estoque);
+        $stmt->bindParam(":id", $produto_id);
+
         return $stmt->execute();
     }
-    
-    public function deleteInstituicao($instituicao_id) {
+
+    public function deleteProduto($produto_id) {
         $query = "DELETE FROM $this->table WHERE id = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $instituicao_id, PDO::PARAM_INT);
-    
+        $stmt->bindParam(":id", $produto_id, PDO::PARAM_INT);
+
         return $stmt->execute();
     }
 }
