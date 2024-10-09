@@ -6,6 +6,18 @@
     <title>Editar Produto - Projeto PAZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="editar-produto.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Função para notificar falta de produto
+        function notifyProductShortage() {
+            Swal.fire({
+                title: 'Falta de Produto!',
+                text: 'Notificação de falta de produto enviada com sucesso.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -26,6 +38,7 @@
 
                 <button type="submit" class="btn-submit">Atualizar Produto</button>
                 <button type="button" class="btn-delete">Excluir Produto</button>
+                <button type="button" class="btn-submit" onclick="notifyProductShortage()">Notificar Falta de Produto</button>
             </form>
         </div>
 

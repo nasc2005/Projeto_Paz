@@ -6,6 +6,49 @@
     <title>Abrir Vendas - Projeto PAZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="abrir-vendas.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Função para adicionar um novo campo de produto
+        function addProductField() {
+            const productList = document.getElementById('product-list');
+            const newProduct = document.createElement('div');
+            newProduct.className = 'product-item';
+
+            // Simulação de um produto vindo do backend
+            const select = document.createElement('select');
+            select.name = 'products[]';
+            select.innerHTML = `
+                <option value="">Selecione um produto</option>
+                <option value="produto1">Produto 1</option>
+                <option value="produto2">Produto 2</option>
+                <option value="produto3">Produto 3</option>
+                <option value="produto4">Produto 4</option>
+            `;
+            select.required = true;
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'remove-btn';
+            removeButton.innerText = 'X';
+            removeButton.onclick = function() {
+                productList.removeChild(newProduct);
+            };
+
+            newProduct.appendChild(select);
+            newProduct.appendChild(removeButton);
+            productList.appendChild(newProduct);
+        }
+
+        // Função para notificar falta de produto
+        function notifyProductShortage() {
+            Swal.fire({
+                title: 'Falta de Produto!',
+                text: 'Notificação de falta de produto enviada com sucesso.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -28,6 +71,25 @@
                 <label for="seller">Vendedor:</label>
                 <input type="text" id="seller" name="seller" placeholder="Digite o nome do vendedor" required>
             </div>
+
+            <div class="form-group">
+                <label for="products">Produtos:</label>
+                <div id="product-list">
+                    <div class="product-item">
+                        <select name="products[]" required>
+                            <option value="">Selecione um produto</option>
+                            <option value="produto1">Produto 1</option>
+                            <option value="produto2">Produto 2</option>
+                            <option value="produto3">Produto 3</option>
+                            <option value="produto4">Produto 4</option>
+                        </select>
+                        <button type="button" class="remove-btn" onclick="this.parentElement.remove()">X</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-open-sales" onclick="addProductField()">Adicionar Mais Produtos</button>
+            </div>
+
+            <button type="button" class="btn-open-sales" onclick="notifyProductShortage()">Notificar Falta de Produto</button>
 
             <button type="submit" class="btn-open-sales">Iniciar Venda</button>
         </form>

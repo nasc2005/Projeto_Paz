@@ -6,6 +6,15 @@
     <title>Cadastro de Instituição - Projeto PAZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="cadastroInstituicao.css">
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Evita o comportamento padrão do envio do formulário
+            // Aqui você pode adicionar a lógica de envio para o backend ou API
+
+            // Após o envio, redireciona para a página de cadastro de ADM
+            window.location.href = 'cadastro-adm.html';
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -15,7 +24,7 @@
 
         <div class="form-box">
             <h2>Insira os dados da Instituição</h2>
-            <form>
+            <form onsubmit="handleSubmit(event)">
                 <label for="institution-name">Nome da Instituição</label>
                 <input type="text" id="institution-name" placeholder="Digite o nome da instituição" required>
 
@@ -33,10 +42,6 @@
 
                 <button type="submit">Cadastrar Instituição</button>
             </form>
-
-            <div class="options">
-                <a href="cadastro-adm.html">Cadastrar ADM</a>
-            </div>
         </div>
 
         <footer>

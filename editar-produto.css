@@ -60,6 +60,11 @@ input {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #1a616a;
 }
 
 .btn-delete {
@@ -70,6 +75,11 @@ input {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
 }
 
 footer {
