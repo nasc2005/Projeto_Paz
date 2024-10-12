@@ -15,7 +15,7 @@ class LugarRepository {
     }
 
     public function insertLugar(Lugar $lugar) {
-        $idInstL = $lugar->getIdInstL();
+        $idInstL = $lugar->getIdInstLugar();
         $insertDateTime = $lugar->getInsertDateTime();
         $apelido = $lugar->getApelido();
         $endereco = $lugar->getEndereco();
@@ -55,7 +55,7 @@ class LugarRepository {
 
     public function updateLugar(Lugar $lugar) {
         $lugar_id = $lugar->getId();
-        $idInstL = $lugar->getIdInstL();
+        $idInstL = $lugar->getIdInstLugar();
         $apelido = $lugar->getApelido();
         $endereco = $lugar->getEndereco();
         $numero = $lugar->getNumero();
