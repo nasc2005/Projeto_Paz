@@ -9,7 +9,7 @@ class Produto {
     private $insertDateTime;
     private $nome;
     private $valorCusto;
-    private $imgUrl;
+    private $imagem;
     private $categoria;
     private $valorVenda;
     private $descricao;
@@ -47,12 +47,12 @@ class Produto {
         $this->valorCusto = $valorCusto;
     }
 
-    public function getImgUrl() {
-        return $this->imgUrl;
+    public function getImagem() {
+        return $this->imagem;
     }
 
-    public function setImgUrl($imgUrl) {
-        $this->imgUrl = $imgUrl;
+    public function setImagem($imagem) {
+        $this->imagem = $imagem;
     }
 
     public function getCategoria() {

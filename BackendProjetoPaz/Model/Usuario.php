@@ -6,15 +6,16 @@ use PDO;
 
 class Usuario {
     private $id;
-    private $idInstU;
+    private $idInstituicao;
     private $insertDateTime;
     private $nome;
-    private $Email;
+    private $email;
     private $senha;
     private $perfil;
     private $cpf;
     private $telefone;
     private $dataNasc;
+    private $imagem;
     
     public function getId() {
         return $this->id;
@@ -24,12 +25,12 @@ class Usuario {
         $this->id = $id;
     }
     
-    public function getIdInstU() {
-        return $this->idInstU;
+    public function getIdInstituicao() {
+        return $this->idInstituicao;
     }
     
-    public function setIdInstU($idInstU) {
-        $this->idInstU = $idInstU;
+    public function setIdInstituicao($idInstituicao) {
+        $this->idInstituicao = $idInstituicao;
     }
 
     public function getInsertDateTime() {
@@ -49,11 +50,11 @@ class Usuario {
     }
     
     public function getEmail() {
-        return $this->Email;
+        return $this->email;
     }
     
-    public function setEmail($Email) {
-        $this->Email = $Email;
+    public function setEmail($email) {
+        $this->email = $email;
     }
     
     public function getSenha() {
@@ -95,5 +96,11 @@ class Usuario {
     public function setDataNasc($dataNasc) {
         $this->dataNasc = $dataNasc;
     }
+    public function getImagem() {
+        return $this->imagem;
+    }
     
+    public function setImagem($imagem) {
+        $this->imagem = $imagem;
+    }
 }

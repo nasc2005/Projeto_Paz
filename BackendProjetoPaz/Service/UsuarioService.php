@@ -14,14 +14,14 @@ class UsuarioService {
     }
 
     public function create($data) {
-        if (!isset($data->idInstU, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc)) {
+        if (!isset($data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do usuário."]);
             return;
         }
         
         $usuario = new usuario();
-        $usuario->setIdInstU($data->idInstU);
+        $usuario->setIdInstituicao($data->idInstituicao);
         $usuario->setNome($data->nome);
         $usuario->setEmail($data->emai);
         $usuario->setSenha($data->senha);
@@ -29,6 +29,7 @@ class UsuarioService {
         $usuario->setCpf($data->cpf);
         $usuario->setTelefone($data->telefone);
         $usuario->setDataNasc($data->dataNasc);
+        $usuario->setImagem($data->imagem);
         $usuario->setInsertDateTime(new DateTime());
 
         if ($this->repository->insertUsuario($usuario)) {
@@ -59,7 +60,7 @@ class UsuarioService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idInstU, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc)) {
+        if (!isset($data->id, $data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização do usuário."]);
             return;
@@ -67,7 +68,7 @@ class UsuarioService {
 
         $usuario = new Usuario();
         $usuario->setId($data->id);
-        $usuario->setIdInstU($data->idInstU);
+        $usuario->setIdInstituicao($data->idInstituicao);
         $usuario->setNome($data->nome);
         $usuario->setEmail($data->emai);
         $usuario->setSenha($data->senha);
@@ -75,6 +76,7 @@ class UsuarioService {
         $usuario->setCpf($data->cpf);
         $usuario->setTelefone($data->telefone);
         $usuario->setDataNasc($data->dataNasc);
+        $usuario->setImagem($data->imagem);
         $usuario->setInsertDateTime(new DateTime());
 
         if ($this->repository->updateusuario($usuario)) {

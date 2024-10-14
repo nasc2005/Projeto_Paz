@@ -7,7 +7,7 @@ use PDO;
 
 class ItensVendaRepository {
     private $conn;
-    private $table = "itensvenda";
+    private $table = "itens_vendas";
 
     public function __construct()
     {
@@ -21,7 +21,14 @@ class ItensVendaRepository {
         $precoUnitario = $itensVenda->getPrecoUnitario();
         $subtotal = $itensVenda->getSubtotal();
 
-        $query = "INSERT INTO $this->table (idProduto, idVenda, quantidade, precoUnitario, subtotal)
+        $query = "INSERT INTO $this->table 
+                    (
+                    id_produto, 
+                    id_venda, 
+                    quantidade, 
+                    preco_unitario, 
+                    subtotal
+                    )
                   VALUES (:idProduto, :idVenda, :quantidade, :precoUnitario, :subtotal)";
 
         $stmt = $this->conn->prepare($query);
@@ -43,7 +50,7 @@ class ItensVendaRepository {
     }
 
     public function getItensVendaById($itensVenda_id) {
-        $query = "SELECT * FROM $this->table WHERE id = :id";
+        $query = "SELECT * FROM $this->table WHERE id_itensVenda = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $itensVenda_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -59,13 +66,14 @@ class ItensVendaRepository {
         $precoUnitario = $itensVenda->getPrecoUnitario();
         $subtotal = $itensVenda->getSubtotal();
 
-        $query = "UPDATE $this->table SET 
-                    idProduto = :idProduto, 
-                    idVenda = :idVenda, 
+        $query = "UPDATE $this->table 
+                  SET 
+                    id_produto = :idProduto, 
+                    id_venda = :idVenda, 
                     quantidade = :quantidade, 
                     precoUnitario = :precoUnitario, 
                     subtotal = :subtotal
-                  WHERE id = :id";
+                  WHERE id_itensVenda = :id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":idProduto", $idProduto);
@@ -79,7 +87,7 @@ class ItensVendaRepository {
     }
 
     public function deleteItensVenda($itensVenda_id) {
-        $query = "DELETE FROM $this->table WHERE id = :id";
+        $query = "DELETE FROM $this->table WHERE id_itensVenda = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $itensVenda_id, PDO::PARAM_INT);
 

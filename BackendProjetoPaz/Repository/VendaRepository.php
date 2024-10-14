@@ -14,24 +14,28 @@ class VendaRepository {
     }
 
     public function insertVenda(Venda $venda) {
-        $idUserVenda = $venda->getIdUserVenda();
-        $idLugarVenda = $venda->getIdLugarVenda();
+        $idUsuario = $venda->getIdUsuario();
+        $idLugar = $venda->getIdLugar();
         $idImgsVenda = $venda->getIdImgsVenda();
-        $insertDateTime = $venda->getInsertDateTime();
         $total = $venda->getTotal();
         $status = $venda->getStatus();
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "INSERT INTO $this->table 
-                    (idUserVenda, idLugarVenda, idImgsVenda, insertDateTime, total, status, formaPagamento)
-                  VALUES 
-                    (:idUserVenda, :idLugarVenda, :idImgsVenda, :insertDateTime, :total, :status, :formaPagamento)";
+                    (
+                    id_usuarioVenda, 
+                    id_lugarVenda, 
+                    id_imgsVenda,
+                    total, 
+                    status, 
+                    formaPagamento
+                    )
+                  VALUES (:idUsuario, :idLugar, :idImgsVenda, :total, :status, :formaPagamento)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idUserVenda", $idUserVenda);
-        $stmt->bindParam(":idLugarVenda", $idLugarVenda);
+        $stmt->bindParam(":idUsuario", $idUsuario);
+        $stmt->bindParam(":idLugar", $idLugar);
         $stmt->bindParam(":idImgsVenda", $idImgsVenda);
-        $stmt->bindParam(":insertDateTime", $insertDateTime);
         $stmt->bindParam(":total", $total);
         $stmt->bindParam(":status", $status);
         $stmt->bindParam(":formaPagamento", $formaPagamento);
@@ -48,7 +52,7 @@ class VendaRepository {
     }
 
     public function getVendaById($venda_id) {
-        $query = "SELECT * FROM $this->table WHERE id = :id";
+        $query = "SELECT * FROM $this->table WHERE id_venda = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $venda_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -58,29 +62,26 @@ class VendaRepository {
 
     public function updateVenda(Venda $venda) {
         $venda_id = $venda->getId();
-        $idUserVenda = $venda->getIdUserVenda();
-        $idLugarVenda = $venda->getIdLugarVenda();
+        $idUsuario = $venda->getIdUsuario();
+        $idLugar = $venda->getIdLugar();
         $idImgsVenda = $venda->getIdImgsVenda();
-        $insertDateTime = $venda->getInsertDateTime();
         $total = $venda->getTotal();
         $status = $venda->getStatus();
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "UPDATE $this->table SET 
-                    idUserVenda = :idUserVenda, 
-                    idLugarVenda = :idLugarVenda, 
-                    idImgsVenda = :idImgsVenda, 
-                    insertDateTime = :insertDateTime, 
+                    id_usuarioVenda = :idUsuario, 
+                    id_lugarVenda = :idLugar, 
+                    id_imgsVenda = :idImgsVenda,
                     total = :total, 
                     status = :status, 
                     formaPagamento = :formaPagamento
-                  WHERE id = :id";
+                  WHERE id_venda = :id";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idUserVenda", $idUserVenda);
-        $stmt->bindParam(":idLugarVenda", $idLugarVenda);
+        $stmt->bindParam(":idUsuario", $idUsuario);
+        $stmt->bindParam(":idLugar", $idLugar);
         $stmt->bindParam(":idImgsVenda", $idImgsVenda);
-        $stmt->bindParam(":insertDateTime", $insertDateTime);
         $stmt->bindParam(":total", $total);
         $stmt->bindParam(":status", $status);
         $stmt->bindParam(":formaPagamento", $formaPagamento);
@@ -90,7 +91,7 @@ class VendaRepository {
     }
 
     public function deleteVenda($venda_id) {
-        $query = "DELETE FROM $this->table WHERE id = :id";
+        $query = "DELETE FROM $this->table WHERE id_venda = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $venda_id, PDO::PARAM_INT);
 

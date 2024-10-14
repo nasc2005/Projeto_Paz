@@ -14,15 +14,15 @@ class VendaService {
     }
 
     public function create($data) {
-        if (!isset($data->idUserVenda, $data->idLugarVenda, $data->idImgsVenda, $data->total, $data->status, $data->formaPagamento)) {
+        if (!isset($data->idUsuario, $data->idLugar, $data->idImgsVenda, $data->total, $data->status, $data->formaPagamento)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do venda."]);
             return;
         }
         
         $venda = new Venda();
-        $venda->setIdUserVenda($data->idUserVenda);
-        $venda->setIdLugarVenda($data->idLugarVenda);
+        $venda->setIdUsuario($data->idUsuario);
+        $venda->setIdLugar($data->idLugar);
         $venda->setIdImgsVenda($data->idImgsVenda);
         $venda->setTotal($data->total);
         $venda->setStatus($data->status);
@@ -57,7 +57,7 @@ class VendaService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idUserVenda, $data->idLugarVenda, $data->idImgsVenda, $data->total, $data->status, $data->formaPagamento, $data->estoque)) {
+        if (!isset($data->id, $data->idUsuario, $data->idLugar, $data->idImgsVenda, $data->total, $data->status, $data->formaPagamento, $data->estoque)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização da venda."]);
             return;
@@ -65,8 +65,8 @@ class VendaService {
 
         $venda = new Venda();
         $venda->setId($data->id);
-        $venda->setIdUserVenda($data->idUserVenda);
-        $venda->setIdLugarVenda($data->idLugarVenda);
+        $venda->setIdUsuario($data->idUsuario);
+        $venda->setIdLugar($data->idLugar);
         $venda->setIdImgsVenda($data->idImgsVenda);
         $venda->setTotal($data->total);
         $venda->setStatus($data->status);

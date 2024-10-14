@@ -14,19 +14,19 @@ class MetaService {
     }
 
     public function create($data) {
-        if (!isset($data->idLugarMeta, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imgUrl, $data->status)) {
+        if (!isset($data->idLugar, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imagem, $data->status)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação da meta."]);
             return;
         }
         
         $meta = new Meta();
-        $meta->setIdLugarMeta($data->idLugarMeta);
+        $meta->setIdLugar($data->idLugar);
         $meta->setUsuarioCriador($data->usuarioCriador);
         $meta->setNome($data->nome);
         $meta->setValor($data->valor);
         $meta->setMarca($data->marca);
-        $meta->setImgUrl($data->imgUrl);
+        $meta->setImagem($data->imagem);
         $meta->setStatus($data->status);
         $meta->setInsertDateTime(new DateTime());
 
@@ -58,7 +58,7 @@ class MetaService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idLugarMeta, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imgUrl, $data->status)) {
+        if (!isset($data->id, $data->idLugar, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imagem, $data->status)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização da meta."]);
             return;
@@ -66,12 +66,12 @@ class MetaService {
 
         $meta = new Meta();
         $meta->setId($data->id);
-        $meta->setIdLugarMeta($data->idLugarMeta);
+        $meta->setIdLugar($data->idLugar);
         $meta->setUsuarioCriador($data->usuarioCriador);
         $meta->setNome($data->nome);
         $meta->setValor($data->valor);
         $meta->setMarca($data->marca);
-        $meta->setImgUrl($data->imgUrl);
+        $meta->setImagem($data->imagem);
         $meta->setStatus($data->status);
         $meta->setInsertDateTime(new DateTime());
 

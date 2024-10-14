@@ -14,7 +14,7 @@ class ProdutoService {
     }
 
     public function create($data) {
-        if (!isset($data->nome, $data->valorCusto, $data->imgUrl, $data->categoria, $data->valorVenda, $data->descricao, $data->estoque)) {
+        if (!isset($data->nome, $data->valorCusto, $data->imagem, $data->categoria, $data->valorVenda, $data->descricao, $data->estoque)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do produto."]);
             return;
@@ -23,7 +23,7 @@ class ProdutoService {
         $produto = new Produto();
         $produto->setNome($data->nome);
         $produto->setValorCusto($data->valorCusto);
-        $produto->setImgUrl($data->imgUrl);
+        $produto->setImagem($data->imagem);
         $produto->setCategoria($data->categoria);
         $produto->setValorVenda($data->valorVenda);
         $produto->setDescricao($data->descricao);
@@ -58,7 +58,7 @@ class ProdutoService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->nome, $data->valorCusto, $data->imgUrl, $data->categoria, $data->valorVenda, $data->descricao, $data->estoque)) {
+        if (!isset($data->id, $data->nome, $data->valorCusto, $data->imagem, $data->categoria, $data->valorVenda, $data->descricao, $data->estoque)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização do produto."]);
             return;
@@ -68,7 +68,7 @@ class ProdutoService {
         $produto->setId($data->id);
         $produto->setNome($data->nome);
         $produto->setValorCusto($data->valorCusto);
-        $produto->setImgUrl($data->imgUrl);
+        $produto->setImagem($data->imagem);
         $produto->setCategoria($data->categoria);
         $produto->setValorVenda($data->valorVenda);
         $produto->setDescricao($data->descricao);

@@ -15,19 +15,24 @@ class LugarRepository {
     }
 
     public function insertLugar(Lugar $lugar) {
-        $idInstL = $lugar->getIdInstLugar();
-        $insertDateTime = $lugar->getInsertDateTime();
+        $idInstituicao = $lugar->getIdInstituicao();
         $apelido = $lugar->getApelido();
         $endereco = $lugar->getEndereco();
         $numero = $lugar->getNumero();
         $arranjo = $lugar->getArranjo();
 
-        $query = "INSERT INTO $this->table (idInstL, insertDateTime, apelido, endereco, numero, arranjo)
-                  VALUES (:idInstL, :insertDateTime, :apelido, :endereco, :numero, :arranjo)";
+        $query = "INSERT INTO $this->table 
+                    (
+                    id_instituicaoLugar, 
+                    apelido, 
+                    endereco, 
+                    numero, 
+                    arranjo
+                    )
+                  VALUES (:idInstituicao, :apelido, :endereco, :numero, :arranjo)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idInstL", $idInstL);
-        $stmt->bindParam(":insertDateTime", $insertDateTime);
+        $stmt->bindParam(":idInstituicao", $idInstituicao);
         $stmt->bindParam(":apelido", $apelido);
         $stmt->bindParam(":endereco", $endereco);
         $stmt->bindParam(":numero", $numero);
@@ -45,7 +50,7 @@ class LugarRepository {
     }
 
     public function getLugarById($lugar_id) {
-        $query = "SELECT * FROM $this->table WHERE id = :id";
+        $query = "SELECT * FROM $this->table WHERE id_lugar = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $lugar_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -55,22 +60,23 @@ class LugarRepository {
 
     public function updateLugar(Lugar $lugar) {
         $lugar_id = $lugar->getId();
-        $idInstL = $lugar->getIdInstLugar();
+        $idInstituicao = $lugar->getIdInstituicao();
         $apelido = $lugar->getApelido();
         $endereco = $lugar->getEndereco();
         $numero = $lugar->getNumero();
         $arranjo = $lugar->getArranjo();
 
-        $query = "UPDATE $this->table SET 
-                    idInstL = :idInstL, 
+        $query = "UPDATE $this->table 
+                  SET 
+                    id_instituicaoLugar = :idInstituicao, 
                     apelido = :apelido, 
                     endereco = :endereco, 
                     numero = :numero, 
                     arranjo = :arranjo
-                  WHERE id = :id";
+                  WHERE id_lugar = :id";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idInstL", $idInstL);
+        $stmt->bindParam(":idInstituicao", $idInstituicao);
         $stmt->bindParam(":apelido", $apelido);
         $stmt->bindParam(":endereco", $endereco);
         $stmt->bindParam(":numero", $numero);
@@ -81,7 +87,7 @@ class LugarRepository {
     }
 
     public function deleteLugar($lugar_id) {
-        $query = "DELETE FROM $this->table WHERE id = :id";
+        $query = "DELETE FROM $this->table WHERE id_lugar = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $lugar_id, PDO::PARAM_INT);
 
