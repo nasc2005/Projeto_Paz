@@ -14,7 +14,7 @@ class MetaService {
     }
 
     public function create($data) {
-        if (!isset($data->idLugar, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imagem, $data->status)) {
+        if (!isset($data->idLugar, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imagem, $data->statusMeta)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação da meta."]);
             return;
@@ -27,7 +27,7 @@ class MetaService {
         $meta->setValor($data->valor);
         $meta->setMarca($data->marca);
         $meta->setImagem($data->imagem);
-        $meta->setStatus($data->status);
+        $meta->setStatusMeta($data->statusMeta);
         $meta->setInsertDateTime(new DateTime());
 
         if ($this->repository->insertMeta($meta)) {
@@ -58,7 +58,7 @@ class MetaService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idLugar, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imagem, $data->status)) {
+        if (!isset($data->id, $data->idLugar, $data->usuarioCriador, $data->nome, $data->valor, $data->marca, $data->imagem, $data->statusMeta)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização da meta."]);
             return;
@@ -72,7 +72,7 @@ class MetaService {
         $meta->setValor($data->valor);
         $meta->setMarca($data->marca);
         $meta->setImagem($data->imagem);
-        $meta->setStatus($data->status);
+        $meta->setStatusMeta($data->statusMeta);
         $meta->setInsertDateTime(new DateTime());
 
         if ($this->repository->updateMeta($meta)) {

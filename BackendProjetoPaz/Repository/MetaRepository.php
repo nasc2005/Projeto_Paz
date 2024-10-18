@@ -20,7 +20,7 @@ class MetaRepository {
         $valor = $meta->getValor();
         $marca = $meta->getMarca();
         $imagem = $meta->getImagem();
-        $status = $meta->getStatus();
+        $statusMeta = $meta->getStatusMeta();
 
         $query = "INSERT INTO $this->table 
                     (
@@ -30,9 +30,9 @@ class MetaRepository {
                     valor, 
                     marca, 
                     imagem, 
-                    status
+                    status_meta
                     )
-                  VALUES (:idLugar, :usuarioCriador, :nome, :valor, :marca, :imagem, :status)";
+                  VALUES (:idLugar, :usuarioCriador, :nome, :valor, :marca, :imagem, :statusMeta)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":idLugar", $idLugar);
@@ -41,7 +41,7 @@ class MetaRepository {
         $stmt->bindParam(":valor", $valor);
         $stmt->bindParam(":marca", $marca);
         $stmt->bindParam(":imagem", $imagem);
-        $stmt->bindParam(":status", $status);
+        $stmt->bindParam(":statusMeta", $statusMeta);
 
         return $stmt->execute();
     }
@@ -71,7 +71,7 @@ class MetaRepository {
         $valor = $meta->getValor();
         $marca = $meta->getMarca();
         $imagem = $meta->getImagem();
-        $status = $meta->getStatus();
+        $statusMeta = $meta->getStatusMeta();
 
         $query = "UPDATE $this->table 
                   SET 
@@ -81,7 +81,7 @@ class MetaRepository {
                     valor = :valor, 
                     marca = :marca, 
                     imagem = :imagem, 
-                    status = :status
+                    status_meta = :statusMeta
                   WHERE id_meta = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -91,7 +91,7 @@ class MetaRepository {
         $stmt->bindParam(":valor", $valor);
         $stmt->bindParam(":marca", $marca);
         $stmt->bindParam(":imagem", $imagem);
-        $stmt->bindParam(":status", $status);
+        $stmt->bindParam(":statusMeta", $statusMeta);
         $stmt->bindParam(":id", $meta_id);
 
         return $stmt->execute();

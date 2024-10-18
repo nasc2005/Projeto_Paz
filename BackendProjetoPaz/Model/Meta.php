@@ -13,7 +13,7 @@ class Meta {
     private $valor;
     private $marca;
     private $imagem;
-    private $status;
+    private $statusMeta;
 
     public function getId() {
         return $this->id;
@@ -79,11 +79,11 @@ class Meta {
         $this->imagem = $imagem;
     }
 
-    public function getStatus() {
-        return $this->status;
+    public function getStatusMeta() {
+        return $this->statusMeta;
     }
 
-    public function setStatus($status) {
-        $this->status = $status;
+    public function setStatusMeta($statusMeta) {
+        $this->statusMeta = $statusMeta;
     }
 }
