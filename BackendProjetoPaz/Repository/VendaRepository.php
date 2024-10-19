@@ -18,7 +18,7 @@ class VendaRepository {
         $idLugar = $venda->getIdLugar();
         $idImgsVenda = $venda->getIdImgsVenda();
         $total = $venda->getTotal();
-        $status = $venda->getStatus();
+        $statusVenda = $venda->getStatusVenda();
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "INSERT INTO $this->table 
@@ -27,17 +27,17 @@ class VendaRepository {
                     id_lugarVenda, 
                     id_imgsVenda,
                     total, 
-                    status, 
+                    status_venda, 
                     formaPagamento
                     )
-                  VALUES (:idUsuario, :idLugar, :idImgsVenda, :total, :status, :formaPagamento)";
+                  VALUES (:idUsuario, :idLugar, :idImgsVenda, :total, :statusVenda, :formaPagamento)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":idUsuario", $idUsuario);
         $stmt->bindParam(":idLugar", $idLugar);
         $stmt->bindParam(":idImgsVenda", $idImgsVenda);
         $stmt->bindParam(":total", $total);
-        $stmt->bindParam(":status", $status);
+        $stmt->bindParam(":statusVenda", $statusVenda);
         $stmt->bindParam(":formaPagamento", $formaPagamento);
 
         return $stmt->execute();
@@ -66,7 +66,7 @@ class VendaRepository {
         $idLugar = $venda->getIdLugar();
         $idImgsVenda = $venda->getIdImgsVenda();
         $total = $venda->getTotal();
-        $status = $venda->getStatus();
+        $statusVenda = $venda->getStatusVenda();
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "UPDATE $this->table SET 
@@ -74,7 +74,7 @@ class VendaRepository {
                     id_lugarVenda = :idLugar, 
                     id_imgsVenda = :idImgsVenda,
                     total = :total, 
-                    status = :status, 
+                    status_venda = :statusVenda, 
                     formaPagamento = :formaPagamento
                   WHERE id_venda = :id";
 
@@ -83,7 +83,7 @@ class VendaRepository {
         $stmt->bindParam(":idLugar", $idLugar);
         $stmt->bindParam(":idImgsVenda", $idImgsVenda);
         $stmt->bindParam(":total", $total);
-        $stmt->bindParam(":status", $status);
+        $stmt->bindParam(":statusVenda", $statusVenda);
         $stmt->bindParam(":formaPagamento", $formaPagamento);
         $stmt->bindParam(":id", $venda_id);
 

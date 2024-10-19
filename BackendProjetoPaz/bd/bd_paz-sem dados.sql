@@ -160,7 +160,7 @@ CREATE TABLE `vendas` (
   `id_imgsVenda` int NOT NULL,
   `total` float DEFAULT NULL,
   `forma_pagamento` varchar(50) DEFAULT NULL,
-  `status` varchar(50) DEFAULT NULL,
+  `status_venda` varchar(50) DEFAULT NULL,
   `data_criacao` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

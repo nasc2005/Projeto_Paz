@@ -12,7 +12,7 @@ class Venda {
     private $idImgsVenda;
     private $insertDateTime;
     private $total;
-    private $status;
+    private $statusVenda;
     private $formaPagamento;
 
     public function getId() {
@@ -63,12 +63,12 @@ class Venda {
         $this->total = $total;
     }
 
-    public function getStatus() {
-        return $this->status;
+    public function getStatusVenda() {
+        return $this->statusVenda;
     }
 
-    public function setStatus($status) {
-        $this->status = $status;
+    public function setStatusVenda($statusVenda) {
+        $this->statusVenda = $statusVenda;
     }
 
     public function getFormaPagamento() {
