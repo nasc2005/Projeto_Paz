@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `bd_paz`
 --
+
 CREATE DATABASE IF NOT EXISTS `bd_paz` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `bd_paz`;
 
@@ -115,7 +116,7 @@ CREATE TABLE `metas` (
 DROP TABLE IF EXISTS `produtos`;
 CREATE TABLE `produtos` (
   `id_produto` int NOT NULL,
-  `nome` int DEFAULT NULL,
+  `nome` varchar(50) DEFAULT NULL,
   `valor_custo` float DEFAULT NULL,
   `imagem` text,
   `categoria` varchar(45) DEFAULT NULL,
@@ -224,6 +225,58 @@ ALTER TABLE `vendas`
   ADD KEY `id_usuario_idx` (`id_usuarioVenda`),
   ADD KEY `id_imgsVenda_idx` (`id_imgsVenda`),
   ADD KEY `id_lugarVenda_idx` (`id_lugarVenda`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `imgs_vendas`
+--
+ALTER TABLE `imgs_vendas`
+  MODIFY `id_imgsVenda` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `instituicoes`
+--
+ALTER TABLE `instituicoes`
+  MODIFY `id_instituicao` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `itens_vendas`
+--
+ALTER TABLE `itens_vendas`
+  MODIFY `id_itensVenda` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `lugares`
+--
+ALTER TABLE `lugares`
+  MODIFY `id_lugar` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `metas`
+--
+ALTER TABLE `metas`
+  MODIFY `id_meta` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  MODIFY `id_produto` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `vendas`
+--
+ALTER TABLE `vendas`
+  MODIFY `id_venda` int NOT NULL AUTO_INCREMENT; 
 
 --
 -- Restrições para tabelas despejadas
