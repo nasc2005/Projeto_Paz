@@ -43,6 +43,10 @@ $data = json_decode(file_get_contents("php://input"));
 $router = new Router($service);
 
 // Definindo as rotas
+$router->addRoute('POST', '/BackendProjetoPaz/Controller/UsuarioController.php/usuarios/login', function() use ($service, $data) {
+    $service->login($data);
+});
+
 $router->addRoute('POST', '/BackendProjetoPaz/Controller/UsuarioController.php/admin/criar', function() use ($service, $data) {
     $service->create($data);
 });

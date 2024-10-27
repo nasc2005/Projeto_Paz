@@ -13,6 +13,23 @@ class UsuarioService {
         $this->repository = $repository;
     }
 
+    public function login($data) {
+        if (isset($data->email, $data->senha)) {
+            http_response_code(400);
+            echo json_encode(["error" => "Email e senha são necessários para o login."]);
+            return;
+        }
+        $usuario = $this->repository->getUsuarioByEmail($data->email);
+        if ($usuario && password_verify($data->senha, $usuario->password)) {
+            unset($usuario['senha']);
+            http_response_code(200);
+            echo json_encode(["message" => "Login bem-sucedido.", "usuario" => $usuario]);
+        } else {
+            http_response_code(401);
+            echo json_encode(["error"=> "Email ou senha incorretos"]);
+        }
+    }
+
     public function create($data) {
         if (!isset($data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
             http_response_code(400);

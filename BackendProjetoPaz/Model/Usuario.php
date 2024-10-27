@@ -64,6 +64,12 @@ class Usuario {
     public function setSenha($senha) {
         $this->senha = $senha;
     }
+    /*
+    public function setSenha($senha): self {
+        $this->senha = password_hash($senha, PASSWORD_DEFAULT);
+        return $this;
+    }
+    */
     
     public function getPerfil() {
         return $this->perfil;
