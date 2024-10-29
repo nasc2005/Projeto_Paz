@@ -14,6 +14,7 @@ HttpHeader::setDefaultHeaders();
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
+
 $action = 'default'; 
 if (isset($_GET['action'])) {
     $action = $_GET['action']; 
@@ -22,13 +23,19 @@ $data = json_decode(file_get_contents("php://input"));
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
-      
-    $service->create($data);
-                
+        $service->create($data);        
         break;
     case 'GET':
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $service->read($id);
+        switch ($action) {
+            case 'categoria':
+                $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : null;
+                $service->categoria($categoria);
+                break;
+            default:
+                $id = isset($_GET['id']) ? $_GET['id'] : null;
+                $service->read($id);
+                break;
+        }
         break;
     case 'PUT':
         $service->update($data);

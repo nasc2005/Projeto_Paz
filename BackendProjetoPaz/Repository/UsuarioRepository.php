@@ -76,6 +76,15 @@ class UsuarioRepository {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function getPerfil($perfil) {
+        $query = "SELECT * FROM $this->table WHERE perfil = :perfil";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":perfil", $perfil, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 
     public function updateUsuario(Usuario $usuario) {
         $usuario_id = $usuario->getId();

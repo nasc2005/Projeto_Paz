@@ -76,6 +76,27 @@ class UsuarioService {
         echo json_encode($result ?: ["message" => "Nenhum usuário encontrado."]);
     }
 
+    public function perfil($perfil = null) {
+        $result = $this->repository->getPerfil($perfil);
+    
+        foreach ($result as &$usuario) {
+            unset($usuario['senha']); // Remove o campo 'senha' para segurança
+        }
+        unset($usuario); // Remove a referência do último elemento (opcional)
+    
+        // Define o código de status e a estrutura de resposta padronizada
+        $status = !empty($result) ? 200 : 404;
+        http_response_code($status);
+    
+        // Estrutura de resposta padronizada
+        $response = [
+            "data" => $result ?: null,
+            "message" => !empty($result) ? "Perfil encontrado." : "Nenhum perfil encontrado."
+        ];
+    
+        echo json_encode($response);
+    }    
+
     public function update($data) {
         if (!isset($data->id, $data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
             http_response_code(400);

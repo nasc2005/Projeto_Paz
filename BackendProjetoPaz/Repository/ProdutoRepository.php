@@ -23,17 +23,12 @@ class ProdutoRepository {
         $descricao = $produto->getDescricao();
         $estoque = $produto->getEstoque();
 
-        $query = "INSERT INTO $this->table 
-                    (
-                    nome, 
-                    valor_custo, 
-                    imagem, 
-                    categoria, 
-                    valor_venda, 
-                    descricao, 
-                    estoque
+        $query = "INSERT INTO $this->table (
+                    nome, valor_custo, imagem, categoria, valor_venda, descricao, estoque
                     )
-                  VALUES (:nome, :valorCusto, :imagem, :categoria, :valorVenda, :descricao, :estoque, :insertDateTime)";
+                  VALUES (
+                    :nome, :valorCusto, :imagem, :categoria, :valorVenda, :descricao, :estoque
+                    )";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $nome);
@@ -59,6 +54,14 @@ class ProdutoRepository {
         $query = "SELECT * FROM $this->table WHERE id_produto = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $produto_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function getCategoria($categoria){
+        $query = "SELECT * FROM $this->table WHERE categoria = :categoria";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":categoria", $categoria, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
