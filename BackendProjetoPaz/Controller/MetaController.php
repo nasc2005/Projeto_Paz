@@ -27,8 +27,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 
         break;
     case 'GET':
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $service->read($id);
+        switch ($action) {
+            default:
+                $id = isset($_GET['id']) ? $_GET['id'] : null;
+                $service->read($id);
+                break;
+        }
         break;
     case 'PUT':
         $service->update($data);
