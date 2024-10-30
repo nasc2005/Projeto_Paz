@@ -13,11 +13,37 @@ class UsuarioRepository {
     {
         $this->conn = Database::getInstance(); 
     }
-
+    
     public function getUsuarioByEmail($email){
         $query = "SELECT * FROM $this->table WHERE email = :email";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":email", $email);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /* views do usuario */
+    public function getAllUsuarios() {
+        $query = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUsuarioById($usuario_id) {
+        $query = "SELECT * FROM $this->table WHERE id_usuario = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $usuario_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function getPerfil($perfil) {
+        $query = "SELECT * FROM $this->table WHERE perfil = :perfil";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":perfil", $perfil, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -45,7 +71,6 @@ class UsuarioRepository {
                     :nome, :email, :senha, :perfil, :cpf, 
                     :telefone, :dataNasc, :imagem
                     )";
-
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":idInstituicao", $idInstituicao);
         $stmt->bindParam(":nome", $nome);
@@ -59,32 +84,6 @@ class UsuarioRepository {
         
         return $stmt->execute();
     }
-
-    public function getAllUsuarios() {
-        $query = "SELECT * FROM $this->table";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getUsuarioById($usuario_id) {
-        $query = "SELECT * FROM $this->table WHERE id_usuario = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $usuario_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-    public function getPerfil($perfil) {
-        $query = "SELECT * FROM $this->table WHERE perfil = :perfil";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":perfil", $perfil, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
 
     public function updateUsuario(Usuario $usuario) {
         $usuario_id = $usuario->getId();

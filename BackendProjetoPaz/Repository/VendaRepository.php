@@ -13,36 +13,6 @@ class VendaRepository {
         $this->conn = Database::getInstance(); 
     }
 
-    public function insertVenda(Venda $venda) {
-        $idUsuario = $venda->getIdUsuario();
-        $idLugar = $venda->getIdLugar();
-        $idImgsVenda = $venda->getIdImgsVenda();
-        $total = $venda->getTotal();
-        $statusVenda = $venda->getStatusVenda();
-        $formaPagamento = $venda->getFormaPagamento();
-
-        $query = "INSERT INTO $this->table 
-                    (
-                    id_usuarioVenda, 
-                    id_lugarVenda, 
-                    id_imgsVenda,
-                    total, 
-                    status_venda, 
-                    formaPagamento
-                    )
-                  VALUES (:idUsuario, :idLugar, :idImgsVenda, :total, :statusVenda, :formaPagamento)";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idUsuario", $idUsuario);
-        $stmt->bindParam(":idLugar", $idLugar);
-        $stmt->bindParam(":idImgsVenda", $idImgsVenda);
-        $stmt->bindParam(":total", $total);
-        $stmt->bindParam(":statusVenda", $statusVenda);
-        $stmt->bindParam(":formaPagamento", $formaPagamento);
-
-        return $stmt->execute();
-    }
-
     public function getAllVendas() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
@@ -58,6 +28,42 @@ class VendaRepository {
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllItensVenda($id_instituicao) {
+        $query = "SELECT v*, iv.* FROM vendas v
+                  JOIN itens_venda iv ON iv.id_venda = v.id_venda";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function insertVenda(Venda $venda) {
+        $idUsuario = $venda->getIdUsuario();
+        $idLugar = $venda->getIdLugar();
+        $idImgsVenda = $venda->getIdImgsVenda();
+        $total = $venda->getTotal();
+        $statusVenda = $venda->getStatusVenda();
+        $formaPagamento = $venda->getFormaPagamento();
+
+        $query = "INSERT INTO $this->table (
+                    id_usuarioVenda, id_lugarVenda, id_imgsVenda,
+                    total, status_venda, formaPagamento
+                    )
+                  VALUES (
+                    :idUsuario, :idLugar, :idImgsVenda, 
+                    :total, :statusVenda, :formaPagamento
+                    )";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":idUsuario", $idUsuario);
+        $stmt->bindParam(":idLugar", $idLugar);
+        $stmt->bindParam(":idImgsVenda", $idImgsVenda);
+        $stmt->bindParam(":total", $total);
+        $stmt->bindParam(":statusVenda", $statusVenda);
+        $stmt->bindParam(":formaPagamento", $formaPagamento);
+
+        return $stmt->execute();
     }
 
     public function updateVenda(Venda $venda) {

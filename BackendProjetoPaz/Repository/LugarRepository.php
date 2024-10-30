@@ -14,33 +14,6 @@ class LugarRepository {
         $this->conn = Database::getInstance(); 
     }
 
-    public function insertLugar(Lugar $lugar) {
-        $idInstituicao = $lugar->getIdInstituicao();
-        $apelido = $lugar->getApelido();
-        $endereco = $lugar->getEndereco();
-        $numero = $lugar->getNumero();
-        $arranjo = $lugar->getArranjo();
-
-        $query = "INSERT INTO $this->table 
-                    (
-                    id_instituicaoLugar, 
-                    apelido, 
-                    endereco, 
-                    numero, 
-                    arranjo
-                    )
-                  VALUES (:idInstituicao, :apelido, :endereco, :numero, :arranjo)";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idInstituicao", $idInstituicao);
-        $stmt->bindParam(":apelido", $apelido);
-        $stmt->bindParam(":endereco", $endereco);
-        $stmt->bindParam(":numero", $numero);
-        $stmt->bindParam(":arranjo", $arranjo);
-
-        return $stmt->execute();
-    }
-
     public function getAllLugares() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
@@ -56,6 +29,38 @@ class LugarRepository {
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllMetasByLugar($id_lugar) {
+        $query = "SELECT l.apelido AS apelido_lugar, m.* FROM lugares l
+                  JOIN lugares l ON l.id_lugarMeta = l.id_lugar
+                  WHERE l.id_lugar = :id_lugar";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id_lugar', $id_lugar, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function insertLugar(Lugar $lugar) {
+        $idInstituicao = $lugar->getIdInstituicao();
+        $apelido = $lugar->getApelido();
+        $endereco = $lugar->getEndereco();
+        $numero = $lugar->getNumero();
+        $arranjo = $lugar->getArranjo();
+
+        $query = "INSERT INTO $this->table 
+                    (id_instituicaoLugar, apelido, endereco, numero, arranjo)
+                  VALUES (:idInstituicao, :apelido, :endereco, :numero, :arranjo)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":idInstituicao", $idInstituicao);
+        $stmt->bindParam(":apelido", $apelido);
+        $stmt->bindParam(":endereco", $endereco);
+        $stmt->bindParam(":numero", $numero);
+        $stmt->bindParam(":arranjo", $arranjo);
+
+        return $stmt->execute();
     }
 
     public function updateLugar(Lugar $lugar) {
