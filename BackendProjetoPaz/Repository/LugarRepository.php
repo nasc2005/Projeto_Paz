@@ -30,7 +30,7 @@ class LugarRepository {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    /*
     public function getAllMetasByLugar($id_lugar) {
         $query = "SELECT l.apelido AS apelido_lugar, m.* FROM lugares l
                   JOIN lugares l ON l.id_lugarMeta = l.id_lugar
@@ -41,7 +41,7 @@ class LugarRepository {
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    */
     public function insertLugar(Lugar $lugar) {
         $idInstituicao = $lugar->getIdInstituicao();
         $apelido = $lugar->getApelido();
