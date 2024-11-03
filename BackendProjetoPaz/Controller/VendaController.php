@@ -22,12 +22,18 @@ $data = json_decode(file_get_contents("php://input"));
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
-      
     $service->create($data);
-                
         break;
     case 'GET':
         switch ($action) {
+            case 'vendas/usuario':
+                $idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : null;
+                $service->read($idUsuario);
+                break;
+            case 'vendas/lugar':
+                $idLugar = isset($_GET['idLugar']) ? $_GET['idLugar'] : null;
+                $service->read($idLugar);
+                break;
             default:
                 $id = isset($_GET['id']) ? $_GET['id'] : null;
                 $service->read($id);

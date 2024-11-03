@@ -13,6 +13,7 @@ class VendaRepository {
         $this->conn = Database::getInstance(); 
     }
 
+    /*
     public function getAllVendas() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
@@ -29,15 +30,69 @@ class VendaRepository {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
-    public function getAllItensVenda($id_instituicao) {
-        $query = "SELECT v*, iv.* FROM vendas v
-                  JOIN itens_venda iv ON iv.id_venda = v.id_venda";
+    */
+    public function getAllResumoVendas() {
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
+                  FROM vendas v
+                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+                  JOIN produtos p ON p.id_produto = iv.id_produto
+                  GROUP BY v.id_venda, v.data_criacao";
+    
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getResumoVendasByUsuario($usuario_id) {
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
+                  FROM vendas v
+                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+                  JOIN produtos p ON p.id_produto = iv.id_produto
+                  WHERE v.id_usuarioVenda = :id
+                  GROUP BY v.id_venda, v.data_criacao";
+    
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $usuario_id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getResumoVendasByLugar($lugar_id) {
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
+                  FROM vendas v
+                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+                  JOIN produtos p ON p.id_produto = iv.id_produto
+                  WHERE v.id_lugarVenda = :id
+                  GROUP BY v.id_venda, v.data_criacao";
+    
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $lugar_id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function getDetalhesVenda($venda_id) {
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento,
+                         iv.quantidade,
+                         p.nome, (iv.quantidade * p.preco) AS valor_item, p.valor_custo, p.valor_venda 
+                         imgv.*
+                  FROM vendas v
+                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+                  JOIN produtos p ON p.id_produto = iv.id_produto
+                  JOIN 
+                  LEFT JOIN imagens_venda imgv ON imgv.id_imgsVenda = v.id_imgsVenda
+                  WHERE v.id_venda = :venda_id";
+    
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $venda_id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 
     public function insertVenda(Venda $venda) {
         $idUsuario = $venda->getIdUsuario();

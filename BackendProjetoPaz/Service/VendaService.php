@@ -38,13 +38,30 @@ class VendaService {
         }
     }
    
-    public function read($id = null) {
+    public function read($id = null, $idUsuario = null, $idLugar = null) {
         if ($id) {
-            $result = $this->repository->getVendaById($id);
+            $result = $this->repository->getDetalhesVenda($id);
            // unset($result['senha']);
             $status = $result ? 200 : 404;
-        } else {
-            $result = $this->repository->getAllVendas();
+        } 
+        elseif ($idUsuario) {
+            $result = $this->repository->getResumoVendasByUsuario($idUsuario);
+            foreach ($result as &$venda) {
+                //unset($venda['senha']);
+            }
+            unset($venda);
+            $status = !empty($result) ? 200 : 404;
+        }
+        elseif ($idLugar) {
+            $result = $this->repository->getResumoVendasByLugar($idLugar);
+            foreach ($result as &$venda) {
+                //unset($venda['senha']);
+            }
+            unset($venda);
+            $status = !empty($result) ? 200 : 404;
+        }
+        else {
+            $result = $this->repository->getAllResumoVendas();
             foreach ($result as &$venda) {
                 //unset($venda['senha']);
             }
