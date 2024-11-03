@@ -31,7 +31,7 @@ class InstituicaoRepository{
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    /*
     public function getAllUsuariosByInstituicao($instituicao_id) {
         $query = "SELECT i.nome AS instituicao_nome, u.* FROM instituicoes i
                   JOIN usuarios u ON u.id_instituicao = i.id_instituicao
@@ -42,7 +42,8 @@ class InstituicaoRepository{
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    */
+    /*
     public function getAllLugaresByInstituicao($instituicao_id) {
         $query = "SELECT i.nome AS instituicao_nome, l.* FROM instituicoes i
                   JOIN lugares l ON l.id_instituicaoLugar = i.id_instituicao
@@ -53,7 +54,7 @@ class InstituicaoRepository{
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
-    
+    */
     public function insertInstituicao(Instituicao $instituicao) {
         $nome = $instituicao->getNome();
         $descricao = $instituicao->getDescricao();

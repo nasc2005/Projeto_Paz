@@ -1,4 +1,4 @@
--- alterar quantidade de produtos
+/* alterar quantidade de produtos */
 CREATE TRIGGER atualizar_estoque
 ON itens_vendas
 FOR INSERT
@@ -15,8 +15,7 @@ BEGIN
     SET estoque = estoque - @QNT
     WHERE id_produto = @IDPROD
 END
-
--- atualizar o saldo da instituição
+/* atualizar o saldo da instituição */
 CREATE TRIGGER atualizar_saldo
 ON vendas
 FOR INSERT
