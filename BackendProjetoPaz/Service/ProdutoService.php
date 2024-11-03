@@ -46,7 +46,6 @@ class ProdutoService {
         } else {
             $result = $this->repository->getAllProdutos();
             foreach ($result as &$produto) {
-                //unset($produto['senha']);
             }
             unset($produto);
             $status = !empty($result) ? 200 : 404;
@@ -56,17 +55,10 @@ class ProdutoService {
         echo json_encode($result ?: ["message" => "Nenhum produto encontrado."]);
     }
 
-    public function categoria($categoria = null) {
+    public function readByCategoria($categoria) {
         if ($categoria) {
             $result = $this->repository->getCategoria($categoria);
             $status = $result ? 200 : 404;
-        } else {
-            $result = $this->repository->getAllProdutos();
-            foreach ($result as &$produto) {
-                //unset($produto['senha']);
-            }
-            unset($produto);
-            $status = !empty($result) ? 200 : 404;
         }
 
         http_response_code($status);

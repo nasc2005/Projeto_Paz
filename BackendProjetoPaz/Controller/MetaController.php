@@ -28,9 +28,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'GET':
         switch ($action) {
+            case 'metas/lugar':
+                $lugar_id = isset($_GET['idLugar']) ? $_GET['idLugar'] : null;
+                $service->readByLugar($id, $lugar_id);
+                break;
             default:
                 $id = isset($_GET['id']) ? $_GET['id'] : null;
-                $service->read($id);
+                $service->read($id, $lugar_id);
                 break;
         }
         break;

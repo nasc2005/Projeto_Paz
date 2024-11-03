@@ -13,6 +13,32 @@ class MetaRepository {
         $this->conn = Database::getInstance(); 
     }
 
+    public function getAllMetas() {
+        $query = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllMetasByLugar($lugar_id) {
+        $query = "SELECT * FROM $this->table WHERE id_lugarMeta = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $lugar_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getMetaById($meta_id) {
+        $query = "SELECT * FROM $this->table WHERE id_meta = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $meta_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function insertMeta(Meta $meta) {
         $idLugar = $meta->getIdLugar();
         $usuarioCriador = $meta->getUsuarioCriador();
@@ -22,17 +48,10 @@ class MetaRepository {
         $imagem = $meta->getImagem();
         $statusMeta = $meta->getStatusMeta();
 
-        $query = "INSERT INTO $this->table 
-                    (
-                    id_lugar, 
-                    usuarioCriador,
-                    nome, 
-                    valor, 
-                    marca, 
-                    imagem, 
-                    status_meta
-                    )
-                  VALUES (:idLugar, :usuarioCriador, :nome, :valor, :marca, :imagem, :statusMeta)";
+        $query = "INSERT INTO $this->table (
+                    id_lugar, usuarioCriador, nome, valor, marca, imagem, status_meta)
+                  VALUES (
+                    :idLugar, :usuarioCriador, :nome, :valor, :marca, :imagem, :statusMeta)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":idLugar", $idLugar);
@@ -44,23 +63,6 @@ class MetaRepository {
         $stmt->bindParam(":statusMeta", $statusMeta);
 
         return $stmt->execute();
-    }
-
-    public function getAllMetas() {
-        $query = "SELECT * FROM $this->table";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getMetaById($meta_id) {
-        $query = "SELECT * FROM $this->table WHERE id_meta = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $meta_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function updateMeta(Meta $meta) {

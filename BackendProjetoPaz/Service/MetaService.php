@@ -39,13 +39,27 @@ class MetaService {
         }
     }
    
-    public function read($id = null) {
+    public function read($id = null, $lugar_id = null) {
         if ($id) {
             $result = $this->repository->getMetaById($id);
            // unset($result['senha']);
             $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllMetas();
+            foreach ($result as &$meta) {
+                //unset($meta['senha']);
+            }
+            unset($meta);
+            $status = !empty($result) ? 200 : 404;
+        }
+
+        http_response_code($status);
+        echo json_encode($result ?: ["message" => "Nenhuma meta encontrada."]);
+    }
+
+    public function readByLugar($lugar_id) {
+        if ($lugar_id) {
+            $result = $this->repository->getAllMetasByLugar($lugar_id);
             foreach ($result as &$meta) {
                 //unset($meta['senha']);
             }

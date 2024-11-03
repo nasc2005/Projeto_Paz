@@ -29,7 +29,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         switch ($action) {
             case 'categoria':
                 $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : null;
-                $service->categoria($categoria);
+                $service->readByCategoria($categoria);
                 break;
             default:
                 $id = isset($_GET['id']) ? $_GET['id'] : null;

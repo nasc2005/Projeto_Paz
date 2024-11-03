@@ -28,11 +28,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         switch ($action) {
             case 'vendas/usuario':
                 $idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : null;
-                $service->read($idUsuario);
+                $service->readByUsuario($idUsuario);
                 break;
             case 'vendas/lugar':
                 $idLugar = isset($_GET['idLugar']) ? $_GET['idLugar'] : null;
-                $service->read($idLugar);
+                $service->readByLugar($idLugar);
                 break;
             default:
                 $id = isset($_GET['id']) ? $_GET['id'] : null;
