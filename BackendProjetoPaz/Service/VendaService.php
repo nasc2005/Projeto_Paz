@@ -38,9 +38,9 @@ class VendaService {
         }
     }
    
-    public function read($id = null) {
-        if ($id) {
-            $result = $this->repository->getDetalhesVenda($id);
+    public function read($venda_id = null) {
+        if ($venda_id) {
+            $result = $this->repository->getDetalhesVenda($venda_id);
             $status = $result ? 200 : 404;
         }else {
             $result = $this->repository->getAllResumoVendas();

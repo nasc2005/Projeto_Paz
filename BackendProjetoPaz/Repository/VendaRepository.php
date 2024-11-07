@@ -31,13 +31,13 @@ class VendaRepository {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     */
+
     public function getAllResumoVendas() {
-        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
-                  FROM vendas v
-                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+        $query = "SELECT v.id_venda, v.status_venda, v.forma_pagamento, v.data_criacao, SUM(iv.quantidade * p.valor_venda) AS valor_total
+                  FROM $this->table v
+                  JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
                   GROUP BY v.id_venda, v.data_criacao";
-    
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     
@@ -45,9 +45,9 @@ class VendaRepository {
     }
 
     public function getResumoVendasByUsuario($usuario_id) {
-        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
-                  FROM vendas v
-                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.forma_pagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
+                  FROM $this->table v
+                  JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
                   WHERE v.id_usuarioVenda = :id
                   GROUP BY v.id_venda, v.data_criacao";
@@ -60,9 +60,9 @@ class VendaRepository {
     }
 
     public function getResumoVendasByLugar($lugar_id) {
-        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
-                  FROM vendas v
-                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.forma_pagamento, SUM(iv.quantidade * p.valor_venda) AS valor_total
+                  FROM $this->table v
+                  JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
                   WHERE v.id_lugarVenda = :id
                   GROUP BY v.id_venda, v.data_criacao";
@@ -75,16 +75,14 @@ class VendaRepository {
     }
     
     public function getDetalhesVenda($venda_id) {
-        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.formaPagamento,
-                         iv.quantidade,
-                         p.nome, (iv.quantidade * p.preco) AS valor_item, p.valor_custo, p.valor_venda 
+        $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.forma_pagamento, iv.quantidade,
+                         p.nome, (iv.quantidade * p.valor_venda) AS valor_item, p.valor_custo, p.valor_venda,
                          imgv.*
                   FROM vendas v
-                  JOIN itens_venda iv ON iv.id_venda = v.id_venda
+                  JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
-                  JOIN 
-                  LEFT JOIN imagens_venda imgv ON imgv.id_imgsVenda = v.id_imgsVenda
-                  WHERE v.id_venda = :venda_id";
+                  LEFT JOIN imgs_vendas imgv ON imgv.id_imgsVenda = v.id_imgsVenda
+                  WHERE v.id_venda = :id;";
     
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $venda_id, PDO::PARAM_INT);
