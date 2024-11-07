@@ -33,9 +33,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'GET':
         switch ($action) {
-            case 'perfil':
+            case 'usuarios/perfil':
                 $perfil = isset($_GET['perfil']) ? $_GET['perfil'] : null;
-                $service->perfil($perfil);
+                $service->readByPerfil($perfil);
                 break;
             default:
                 $id = isset($_GET['id']) ? $_GET['id'] : null;

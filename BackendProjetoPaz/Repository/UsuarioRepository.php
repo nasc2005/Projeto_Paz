@@ -40,13 +40,13 @@ class UsuarioRepository {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function getPerfil($perfil) {
+    public function getUsuariosByPerfil($perfil) {
         $query = "SELECT * FROM $this->table WHERE perfil = :perfil";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":perfil", $perfil, PDO::PARAM_INT);
+        $stmt->bindParam(":perfil", $perfil);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function insertUsuario(Usuario $usuario) {

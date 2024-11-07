@@ -11,9 +11,9 @@ VALUES
 INSERT INTO `usuarios` (id_instituicao, nome, telefone, email, senha, cpf, perfil, data_nasc, imagem)
 VALUES 
 (1, 'João da Silva', '11987654321', 'joao.silva@example.com', 'senha123', '123.456.789-00', 'Administrador', '1990-05-15', 'https://example.com/user1.png'),
-(1, 'Maria Oliveira', '11976543210', 'maria.oliveira@example.com', 'senha456', '987.654.321-00', 'Usuário', '1992-11-25', 'https://example.com/user2.png'),
-(2, 'Carlos Pereira', '11965432109', 'carlos.pereira@example.com', 'senha789', '456.789.123-00', 'Moderador', '1985-07-30', 'https://example.com/user3.png'),
-(3, 'Ana Souza', '11954321098', 'ana.souza@example.com', 'senha101', '789.123.456-00', 'Usuário', '1988-03-10', 'https://example.com/user4.png'),
+(1, 'Maria Oliveira', '11976543210', 'maria.oliveira@example.com', 'senha456', '987.654.321-00', 'Vendedor', '1992-11-25', 'https://example.com/user2.png'),
+(2, 'Carlos Pereira', '11965432109', 'carlos.pereira@example.com', 'senha789', '456.789.123-00', 'Vendedor', '1985-07-30', 'https://example.com/user3.png'),
+(3, 'Ana Souza', '11954321098', 'ana.souza@example.com', 'senha101', '789.123.456-00', 'Vendedor', '1988-03-10', 'https://example.com/user4.png'),
 (4, 'Pedro Gomes', '11943210987', 'pedro.gomes@example.com', 'senha202', '321.654.987-00', 'Administrador', '1995-09-20', 'https://example.com/user5.png');
 
 /* TABELA DE LUGARES */

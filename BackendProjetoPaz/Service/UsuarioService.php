@@ -3,6 +3,8 @@ namespace App\Backend\Service;
 
 use App\Backend\Model\Usuario;
 use App\Backend\Repository\UsuarioRepository;
+use Exception;
+
 use DateTime;
 
 class UsuarioService {
@@ -14,19 +16,30 @@ class UsuarioService {
     }
 
     public function login($data) {
-        if (isset($data->email, $data->senha)) {
+        if (!isset($data->email) || !isset($data->senha)) {
             http_response_code(400);
             echo json_encode(["error" => "Email e senha são necessários para o login."]);
             return;
         }
-        $usuario = $this->repository->getUsuarioByEmail($data->email);
-        if ($usuario && password_verify($data->senha, $usuario->password)) {
-            unset($usuario['senha']);
-            http_response_code(200);
-            echo json_encode(["message" => "Login bem-sucedido.", "usuario" => $usuario]);
+        try {
+            $usuario = $this->repository->getUsuarioByEmail($data->email);
+            //senha com hash
+            //if ($usuario && password_verify($data->senha, $usuario['senha']))
+            //senha sem "hash"
+            if ($data->senha === $usuario['senha']) {
+                unset($usuario['senha']);
+                http_response_code(200);
+                echo json_encode([
+                    "message" => "Login bem-sucedido.", 
+                    "usuario" => $usuario
+                ]);
         } else {
             http_response_code(401);
             echo json_encode(["error"=> "Email ou senha incorretos"]);
+        }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["error" => "Erro interno do servidor."]);
         }
     }
 
@@ -76,26 +89,23 @@ class UsuarioService {
         echo json_encode($result ?: ["message" => "Nenhum usuário encontrado."]);
     }
 
-    public function perfil($perfil = null) {
-        $result = $this->repository->getPerfil($perfil);
-    
-        foreach ($result as &$usuario) {
-            unset($usuario['senha']); // Remove o campo 'senha' para segurança
+    public function readByPerfil($perfil) {
+        if($perfil) {
+            $result = $this->repository->getUsuariosByPerfil($perfil);
+            foreach ($result as &$usuario) {
+                unset($usuario['senha']);
+            }
+            unset($usuario);
+            $status = !empty($result) ? 200 : 404;
         }
-        unset($usuario); // Remove a referência do último elemento (opcional)
-    
-        // Define o código de status e a estrutura de resposta padronizada
-        $status = !empty($result) ? 200 : 404;
         http_response_code($status);
-    
-        // Estrutura de resposta padronizada
         $response = [
             "data" => $result ?: null,
-            "message" => !empty($result) ? "Perfil encontrado." : "Nenhum perfil encontrado."
+            "message" => !empty($result) ? "Usuários encontrados para o perfil especificado." : "Nenhum usuário encontrado para o perfil."
         ];
-    
         echo json_encode($response);
-    }    
+    }
+        
 
     public function update($data) {
         if (!isset($data->id, $data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
