@@ -33,7 +33,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'GET':
         switch ($action) {
-            case 'usuarios/perfil':
+            case 'perfil':
                 $perfil = isset($_GET['perfil']) ? $_GET['perfil'] : null;
                 $service->readByPerfil($perfil);
                 break;
