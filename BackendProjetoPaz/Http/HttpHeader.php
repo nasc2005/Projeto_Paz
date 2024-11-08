@@ -4,6 +4,7 @@ namespace App\Backend\Http;
 class HttpHeader {
     private static $allowedOrigins = [
         'http://localhost',
+        'http://localhost:5173',
         'http://localhost:3000',
     ];
 
