@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'; // Para notificações
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/editar-meta.css';
 import { readMetaById, putMeta, deleteMeta } from '../services/api-metas';
@@ -103,7 +104,7 @@ function EditarMeta() {
             type="text"
             id="nome"
             name="nome"
-            value={meta.nome}
+            value={meta.nome || ''}
             onChange={handleInputChange}
             required
           />
@@ -113,7 +114,7 @@ function EditarMeta() {
             type="number"
             id="valor"
             name="valor"
-            value={meta.valor}
+            value={meta.valor || ''}
             onChange={handleInputChange}
             required
           />
@@ -123,7 +124,7 @@ function EditarMeta() {
             type="text"
             id="marca"
             name="marca"
-            value={meta.marca}
+            value={meta.marca || ''}
             onChange={handleInputChange}
             required
           />

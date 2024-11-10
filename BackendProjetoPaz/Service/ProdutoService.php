@@ -30,7 +30,7 @@ class ProdutoService {
         $produto->setEstoque($data->estoque);
         $produto->setInsertDateTime(new DateTime());
 
-        if ($this->repository->insertproduto($produto)) {
+        if ($this->repository->insertProduto($produto)) {
             http_response_code(201);
             echo json_encode(["message" => "Produto criado com sucesso."]);
         } else {

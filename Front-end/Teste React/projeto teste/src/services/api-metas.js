@@ -19,7 +19,7 @@ export async function readMetaById(id) {
 
 // Função para criar uma nova meta
 export async function postMeta(data) {
-    const response = await api.post('/metas', data);
+    const response = await api.post('/criar', data);
     return response.data;
 
 }

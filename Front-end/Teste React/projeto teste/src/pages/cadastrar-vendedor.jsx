@@ -3,12 +3,19 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2'; // Adicionando SweetAlert2 para notificações
 import { useNavigate } from 'react-router-dom'; // Importando useNavigate para navegação
 import '../styles/cadastrar-vendedor.css';
+import { postUsuario } from '../services/api-usuarios';
 
 function CadastrarVendedor() {
   const [vendedor, setVendedor] = useState({
+    id_instituicao: 1,
     nome: '',
     email: '',
-    senha: ''
+    telefone: '',
+    senha: '',
+    cpf: '',
+    perfil: 'Vendedor',
+    data_nasc: '',
+    imagem: ''
   });
 
   const navigate = useNavigate(); // Hook de navegação
@@ -19,26 +26,49 @@ function CadastrarVendedor() {
     setVendedor({ ...vendedor, [name]: value });
   };
 
+  // Função para adicionar um novo usuário
+  const addUsuario = async () => {
+    const novoUsuario = {
+      id_instituicao: vendedor.id_instituicao,
+      nome: vendedor.nome,
+      email: vendedor.email,
+      telefone: vendedor.telefone,
+      senha: vendedor.senha,
+      cpf: vendedor.cpf,
+      perfil: vendedor.perfil,
+      data_nasc: vendedor.data_nasc,
+      imagem: vendedor.imagem
+    };
+    
+    try {
+      await postUsuario(novoUsuario);
+      Swal.fire({
+        title: 'Usuário Cadastrado!',
+        text: 'A usuário foi cadastrado com sucesso.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        // Redirecionar para a página de listagem de usuários
+        navigate('/visualizar-estatisticas');
+      });
+      
+      // Resetar o formulário após o envio (opcional)
+      setVendedor({ nome: '', email: '', telefone: '', senha: '', cpf: '',  data_nasc: '', imagem: '' });
+    } catch (error) {
+      console.error("Erro ao cadastrar usuário:", error);
+      Swal.fire({
+        title: 'Erro!',
+        text: 'Não foi possível cadastrar a usuário.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
   // Função para lidar com o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Aqui você pode adicionar a lógica para salvar os dados, como uma requisição para a API.
-    console.log('Vendedor cadastrado:', vendedor);
-
-    // Exibir uma notificação de sucesso
-    Swal.fire({
-      title: 'Vendedor Cadastrado!',
-      text: 'O vendedor foi cadastrado com sucesso.',
-      icon: 'success',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      // Redirecionar para a página de listagem de vendedores (ou qualquer outra página)
-      navigate('/vendedores'); // Substitua '/vendedores' pelo caminho correto
-    });
-
-    // Resetar o formulário após o envio (opcional)
-    setVendedor({ nome: '', email: '', senha: '' });
+    addUsuario(); // Chama a função para salvar os dados
   };
 
   return (
@@ -78,6 +108,50 @@ function CadastrarVendedor() {
             name="senha"
             placeholder="Senha"
             value={vendedor.senha}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="cpf">CPF:</label>
+          <input
+            type="text"
+            id="cpf"
+            name="cpf"
+            placeholder="CPF do Vendedor"
+            value={vendedor.cpf}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="telefone">Telefone:</label>
+          <input
+            type="text"
+            id="telefone"
+            name="telefone"
+            placeholder="Telefone do Vendedor"
+            value={vendedor.telefone}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="data_nasc">Data Nascimento:</label>
+          <input
+            type="date"
+            id="data_nasc"
+            name="data_nasc"
+            placeholder="Data de Nascimento do Vendedor"
+            value={vendedor.data_nasc}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="imagem">Foto de Perfil:</label>
+          <input
+            type="text"
+            id="imagem"
+            name="imagem"
+            placeholder="Foto do Vendedor"
+            value={vendedor.imagem}
             onChange={handleInputChange}
             required
           />

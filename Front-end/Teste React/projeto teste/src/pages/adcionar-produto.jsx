@@ -1,7 +1,6 @@
-// src/pages/AdicionarProduto.jsx
 import React, { useState } from 'react';
-import Swal from 'sweetalert2'; // Adicionando SweetAlert2 para notificações
-import { useNavigate } from 'react-router-dom'; // Importando useNavigate para navegação
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import '../styles/adicionar-produto.css';
 import { postProduto } from '../services/api-produtos';
 
@@ -9,31 +8,30 @@ function AdicionarProduto() {
   const [produto, setProduto] = useState({
     nome: '', 
     valor_custo: '',
-    imagem: '',
+    imagem: 'teste',
     categoria: '',
     valor_venda: '',
     descricao: '',
     estoque: ''
   });
   
-  const [loading, setLoading] = useState(false); // Estado para controle de carregamento
+  const [loading, setLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
-  const navigate = useNavigate(); // Hook de navegação
+  const navigate = useNavigate();
 
-  // Função para lidar com mudanças nos campos do formulário
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'imagem' && files[0]) {
       const imageFile = files[0];
       setProduto({ ...produto, [name]: imageFile });
-      setPreviewImage(URL.createObjectURL(imageFile)); // Mostrar pré-visualização da imagem
+      setPreviewImage(URL.createObjectURL(imageFile));
     } else {
       setProduto({ ...produto, [name]: value });
     }
   };
 
-  // Função para adicionar um novo Produto
   const addProduto = async () => {
+    setLoading(true);
     const novoProduto = {
       nome: produto.nome, 
       valor_custo: produto.valor_custo,
@@ -42,6 +40,11 @@ function AdicionarProduto() {
       descricao: produto.descricao, 
       estoque: produto.estoque
     };
+
+    // Adicione a imagem apenas se ela existir
+    if (produto.imagem) {
+      novoProduto.imagem = produto.imagem;
+    } 
   
     try {
       await postProduto(novoProduto);
@@ -51,11 +54,8 @@ function AdicionarProduto() {
         icon: 'success',
         confirmButtonText: 'OK'
       }).then(() => {
-        // Redirecionar para a página de listagem de Produtos (ou qualquer outra página)
         navigate('/visualizar-estoque');
       });
-      
-      // Resetar o formulário após o envio (opcional)
       setProduto({ nome: '', valor_custo: '', imagem: '', categoria: '', valor_venda: '', descricao: '', estoque: '' });
     } catch (error) {
       console.error("Erro ao cadastrar produto:", error);
@@ -66,12 +66,12 @@ function AdicionarProduto() {
         confirmButtonText: 'OK'
       });
     }
+    setLoading(false);
   };
 
-  // Função para lidar com o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    addProduto(); // Chama a função para salvar os dados
+    addProduto();
   };
 
   return (

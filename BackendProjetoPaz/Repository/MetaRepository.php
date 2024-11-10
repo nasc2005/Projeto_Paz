@@ -77,14 +77,14 @@ class MetaRepository {
 
         $query = "UPDATE $this->table 
                   SET 
-                    id_lugar = :idLugar, 
-                    usuarioCriador = :usuarioCriador,
+                    id_lugar = :id_lugar, 
+                    id_usuarioCriador = :id_usuarioCriador,
                     nome = :nome, 
                     valor = :valor, 
                     marca = :marca, 
                     imagem = :imagem, 
-                    status_meta = :statusMeta
-                  WHERE id_meta = :id";
+                    status_meta = :status_meta
+                  WHERE id_meta = :id_meta";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_lugar", $id_lugar);

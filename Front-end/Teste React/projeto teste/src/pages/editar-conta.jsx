@@ -1,57 +1,68 @@
 // src/pages/EditarConta.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'; // Para notificações
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/editar-conta.css';
+import { readUserById, putUsuario } from '../services/api-usuarios';
 
 function EditarConta() {
-  // Estado inicial com os valores já preenchidos
+  const { id } = useParams(); // Obter o `id` da URL
+  const navigate = useNavigate();
+
   const [usuario, setUsuario] = useState({
-    nome: 'Gustavo Costa',
-    email: 'gustavo@paz.com',
-    senha: '12345678',
+    id_usuario: id,
+    id_instituicao: 1,
+    nome: '',
+    telefone: '',
+    email: '',
+    cpf: '',
+    perfil: '',
+    data_nasc: '',
+    imagem: ''
   });
 
-  const [loading, setLoading] = useState(false); // Controle de estado para carregar
-  const [formValid, setFormValid] = useState(true); // Estado para controle de validação
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Função para lidar com as mudanças nos campos de entrada
+  // Função para buscar os dados do usuario com base no `id`
+  useEffect(() => {
+    async function fetchUsuario() {
+      try {
+        const usuario = await readUserById(id); // Busca os dados usando o `id`
+        setUsuario(usuario); // Preenche o estado com os dados recebidos
+      } catch (error) {
+        console.error("Erro ao buscar o usuario:", error);
+      }
+    }
+    fetchUsuario();
+  }, [id]);
+
+  if (isLoading) return <div>Carregando...</div>; // Exibe "Carregando" enquanto busca dados
+
+
+  // Função para lidar com mudanças nos campos de entrada
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUsuario({ ...usuario, [name]: value });
   };
 
-  // Função para lidar com a validação do formulário
-  const validateForm = () => {
-    // Simples validação (pode ser melhorada conforme necessário)
-    const isValid = usuario.nome && usuario.email && usuario.senha.length >= 6;
-    setFormValid(isValid);
-    return isValid;
-  };
-
-  // Função para lidar com o envio do formulário
+  // Função para atualizar o usuario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      // Se o formulário não for válido, não enviamos
-      return;
-    }
+    setIsLoading(true);
 
-    setLoading(true); // Inicia o carregamento
-
-    // Simulação de requisição para salvar as alterações
-    setTimeout(() => {
-      console.log('Alterações salvas:', usuario);
-
-      // Exibir notificação de sucesso
+    try {
+      await putUsuario(usuario); // Atualiza os dados do usuario
       Swal.fire({
-        title: 'Sucesso!',
-        text: 'As alterações foram salvas com sucesso.',
+        title: 'Usuario Atualizado!',
+        text: 'As informações da usuario foram atualizadas com sucesso.',
         icon: 'success',
-        confirmButtonText: 'OK',
-      });
-
-      setLoading(false); // Finaliza o carregamento
-    }, 2000); // Simulação de 2 segundos para a requisição (substitua pela lógica real)
+        confirmButtonText: 'OK'
+      }).then(() => navigate('/visualizar-estatisticas'));
+    } catch (error) {
+      console.error("Erro ao atualizar a usuario:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,7 +78,7 @@ function EditarConta() {
             type="text"
             id="nome"
             name="nome"
-            value={usuario.nome}
+            value={usuario.nome || ''}
             onChange={handleInputChange}
             required
           />
@@ -77,27 +88,68 @@ function EditarConta() {
             type="email"
             id="email"
             name="email"
-            value={usuario.email}
+            value={usuario.email || ''}
             onChange={handleInputChange}
             required
           />
 
-          <label htmlFor="senha">Senha:</label>
+          <label htmlFor="perfil">Perfil:</label>
           <input
-            type="password"
-            id="senha"
-            name="senha"
-            value={usuario.senha}
+            type="text"
+            id="perfil"
+            name="perfil"
+            value={usuario.perfil || ''}
+            onChange={handleInputChange}
+            disabled // Adiciona o atributo disabled para impedir edições
+            required
+          />
+
+          <label htmlFor="cpf">CPF:</label>
+          <input
+            type="text"
+            id="cpf"
+            name="cpf"
+            placeholder="CPF"
+            value={usuario.cpf || ''}
             onChange={handleInputChange}
             required
           />
 
-          <button
-            type="submit"
-            className="btn-submit"
-            disabled={loading || !formValid} // Desabilitar o botão de envio enquanto o formulário está sendo salvo ou inválido
-          >
-            {loading ? 'Salvando...' : 'Salvar Alterações'}
+          <label htmlFor="telefone">Telefone:</label>
+          <input
+            type="text"
+            id="telefone"
+            name="telefone"
+            placeholder="Telefone"
+            value={usuario.telefone || ''}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="dataNasc">Data Nascimento:</label>
+          <input
+            type="date"
+            id="dataNasc"
+            name="dataNasc"
+            placeholder="Data de Nascimento"
+            value={usuario.data_nasc || ''}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="imagem">Foto de Perfil:</label>
+          <input
+            type="text"
+            id="imagem"
+            name="imagem"
+            placeholder="Foto de Perfil"
+            value={usuario.imagem || ''}
+            onChange={handleInputChange}
+            required
+          />
+
+          <button type="submit" className="btn-submit" disabled={isLoading}>
+            {isLoading ? 'Atualizando...' : 'Atualizar Conta'}
           </button>
         </form>
       </div>

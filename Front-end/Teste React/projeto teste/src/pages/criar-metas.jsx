@@ -12,7 +12,8 @@ function CriarMeta() {
     nome: '',
     valor: '',
     marca: '',
-    imagem: '' // Armazenar URL da imagem para pré-visualização
+    status_meta: '',
+    imagem: 'teste' // Armazenar URL da imagem para pré-visualização
   });
 
   const [loading, setLoading] = useState(false); // Estado para controle de carregamento
@@ -34,11 +35,13 @@ function CriarMeta() {
   // Função para adicionar uma nova meta
   const addMeta = async () => {
     const novoMeta = {
-      id_instituicao: meta.id_instituicao,
-      apelido: meta.apelido,
-      endereco: meta.endereco,
-      numero: meta.numero,
-      arranjo: meta.arranjo,
+      id_lugar: meta.id_lugar,
+      id_usuarioCriador: meta.id_usuarioCriador,
+      nome: meta.nome,
+      valor: meta.valor,
+      marca: meta.marca,
+      status_meta: meta.status_meta,
+      imagem: meta.imagem
     };
   
     try {

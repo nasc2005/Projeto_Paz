@@ -1,14 +1,14 @@
 import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Importar Link do React Router
 import '../styles/visualizar-estatisticas.css'; // Importe o arquivo CSS para este componente
-import { getFunction } from '../services/api-usuarios';
+import { readUsuarios } from '../services/api-usuarios';
 
 function Estatisticas() {
   const [usuarios, setUsuarios] = useState([]);
 
   // Função para buscar usuários
   async function getUsers() {
-    const response = await getFunction();
+    const response = await readUsuarios();
     setUsuarios(response);
   
   }

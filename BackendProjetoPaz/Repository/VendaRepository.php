@@ -101,7 +101,7 @@ class VendaRepository {
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "INSERT INTO $this->table (
-                    id_usuarioVenda, id_lugarVenda, id_imgsVenda,
+                    id_usuario, id_lugar, id_imgsVenda,
                     total, status_venda, formaPagamento
                     )
                   VALUES (
@@ -129,12 +129,12 @@ class VendaRepository {
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "UPDATE $this->table SET 
-                    id_usuarioVenda = :idUsuario, 
-                    id_lugarVenda = :idLugar, 
+                    id_usuario = :idUsuario, 
+                    id_lugar = :idLugar, 
                     id_imgsVenda = :idImgsVenda,
                     total = :total, 
                     status_venda = :statusVenda, 
-                    formaPagamento = :formaPagamento
+                    forma_pagamento = :formaPagamento
                   WHERE id_venda = :id";
 
         $stmt = $this->conn->prepare($query);
