@@ -1,25 +1,34 @@
 // src/pages/DetalhesMeta.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/meta-detalhes.css';  // Certifique-se de ter o arquivo CSS correspondente
+import { readMetaById } from '../services/api-metas';
 
 function DetalhesMeta() {
-  const meta = {
-    nome: "Meta de Vendas - Janeiro",
-    objetivo: "Atingir R$ 10.000 em vendas no mês de Janeiro.",
-    progresso: "R$ 6.500",
-    dataInicio: "01/01/2024",
-    dataTermino: "31/01/2024",
-    status: "Em andamento"
-  };
+  const { id } = useParams();
+  
+  const [meta, setMeta] = useState(null);
+
+  // Função para buscar venda
+  async function getMeta() {
+      const response = await readMetaById(id);
+      setMeta(response);
+  }
+
+  useEffect(() => {
+    getMeta();
+  }, [id]);
+
+  const navigate = useNavigate();
 
   // Função para lidar com o encerramento da meta
   const handleEncerrarMeta = () => {
     alert("Meta encerrada!");
   };
 
-  // Função para redirecionar para a página de edição da meta
+  // Função para redirecionar para a página de criar meta
   const handleEditarMeta = () => {
-    window.location.href = 'editar-meta.html';
+    navigate(`/editar-meta/${meta.id_meta}`); // Redireciona para a página de cadastro de comunidade
   };
 
   return (
@@ -27,20 +36,25 @@ function DetalhesMeta() {
       <header>
         <h1>Detalhes da Meta</h1>
       </header>
+      {meta ? (
+        <div className="meta-details">
+          <h2>{meta.nome || ''}</h2>
+          <p><strong>Valor: R$ </strong> {meta.valor || ''}</p>
+          <p><strong>Progresso Atual:</strong> trabalhando nisso</p>
+          <p><strong>Data de Início:</strong> {meta.data_criacao || ''}</p>
+          <p><strong>Data de Término:</strong> trabalhando nisso</p>
+          <p><strong>Status:</strong> {meta.status_meta || ''}</p>
 
-      <div className="meta-details">
-        <h2>{meta.nome}</h2>
-        <p><strong>Objetivo:</strong> {meta.objetivo}</p>
-        <p><strong>Progresso Atual:</strong> {meta.progresso}</p>
-        <p><strong>Data de Início:</strong> {meta.dataInicio}</p>
-        <p><strong>Data de Término:</strong> {meta.dataTermino}</p>
-        <p><strong>Status:</strong> {meta.status}</p>
-
-        <div className="actions">
-          <button className="btn-edit" onClick={handleEditarMeta}>Editar Meta</button>
-          <button className="btn-close" onClick={handleEncerrarMeta}>Encerrar Meta</button>
+          <div className="actions">
+            <button className="btn-edit" onClick={handleEditarMeta}>Editar Meta</button>
+            <button className="btn-close" onClick={handleEncerrarMeta}>Encerrar Meta</button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p>Carregando detalhes da venda...</p>
+      )}
+
+      
 
       <footer>
         <p>&copy; 2024 Projeto PAZ. Todos os direitos reservados.</p>

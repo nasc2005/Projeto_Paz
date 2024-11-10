@@ -76,7 +76,7 @@ class VendaRepository {
     
     public function getDetalhesVenda($venda_id) {
         $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.forma_pagamento, iv.quantidade,
-                         p.nome, (iv.quantidade * p.valor_venda) AS valor_item, p.valor_custo, p.valor_venda,
+                         p.id_produto, p.nome, (iv.quantidade * p.valor_venda) AS valor_item, p.valor_custo, p.valor_venda,
                          imgv.*
                   FROM vendas v
                   JOIN itens_vendas iv ON iv.id_venda = v.id_venda

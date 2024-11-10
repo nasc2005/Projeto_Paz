@@ -3,48 +3,73 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2'; // Para exibir alertas
 import { useNavigate } from 'react-router-dom'; // Para navegação
 import '../styles/criar-metas.css';
+import { postMeta } from '../services/api-metas';
 
 function CriarMeta() {
   const [meta, setMeta] = useState({
+    id_lugar: 1,
+    id_usuarioCriador: 1,
     nome: '',
-    descricao: '',
-    prazo: ''
+    valor: '',
+    marca: '',
+    imagem: '' // Armazenar URL da imagem para pré-visualização
   });
 
   const [loading, setLoading] = useState(false); // Estado para controle de carregamento
+  const [previewImage, setPreviewImage] = useState(null);
   const navigate = useNavigate(); // Hook de navegação
 
   // Função para lidar com mudanças nos campos do formulário
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMeta({ ...meta, [name]: value });
+    const { name, value, files } = e.target;
+    if (name === 'imagem' && files[0]) {
+      const imageFile = files[0];
+      setMeta({ ...meta, [name]: imageFile });
+      setPreviewImage(URL.createObjectURL(imageFile)); // Mostrar pré-visualização da imagem
+    } else {
+      setMeta({ ...meta, [name]: value });
+    }
   };
 
-  // Função para lidar com o envio do formulário
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Iniciar o carregamento
-
-    // Aqui você pode adicionar a lógica para salvar os dados, como uma requisição para a API.
-    // Vamos simular um delay de 2 segundos para ilustrar o processo de envio
-    setTimeout(() => {
-      console.log('Meta criada:', meta);
-      
-      // Exibir uma notificação de sucesso
+  // Função para adicionar uma nova meta
+  const addMeta = async () => {
+    const novoMeta = {
+      id_instituicao: meta.id_instituicao,
+      apelido: meta.apelido,
+      endereco: meta.endereco,
+      numero: meta.numero,
+      arranjo: meta.arranjo,
+    };
+  
+    try {
+      await postMeta(novoMeta);
       Swal.fire({
-        title: 'Meta Criada!',
-        text: 'A meta foi criada com sucesso.',
+        title: 'Meta Cadastrada!',
+        text: 'A meta foi cadastrada com sucesso.',
         icon: 'success',
         confirmButtonText: 'OK'
       }).then(() => {
-        // Redirecionar após o sucesso
-        navigate('/metas'); // Substitua '/metas' pela página de metas ou qualquer outra
+        // Redirecionar para a página de listagem de metas (ou qualquer outra página)
+        navigate('/visualizar-metas');
       });
-
+      
       // Resetar o formulário após o envio (opcional)
-      setMeta({ nome: '', descricao: '', prazo: '' });
-      setLoading(false); // Finalizar o carregamento
-    }, 2000); // Simulando um atraso de 2 segundos (substitua com a lógica real de requisição)
+      setMeta({ nome: '', valor: '', marca: '', imagem: '' });
+    } catch (error) {
+      console.error("Erro ao cadastrar meta:", error);
+      Swal.fire({
+        title: 'Erro!',
+        text: 'Não foi possível cadastrar a meta.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
+  // Função para lidar com o envio do formulário
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addMeta(); // Chama a função para salvar os dados
   };
 
   return (
@@ -66,25 +91,36 @@ function CriarMeta() {
             required
           />
 
-          <label htmlFor="descricao">Descrição:</label>
-          <textarea
-            id="descricao"
-            name="descricao"
-            placeholder="Descrição da Meta"
-            value={meta.descricao}
-            onChange={handleInputChange}
-            required
-          ></textarea>
-
-          <label htmlFor="prazo">Prazo:</label>
+          <label htmlFor="valor">Valor:</label>
           <input
-            type="date"
-            id="prazo"
-            name="prazo"
-            value={meta.prazo}
+            type="number"
+            id="valor"
+            name="valor"
+            value={meta.valor}
             onChange={handleInputChange}
             required
           />
+
+          <label htmlFor="marca">Marca do produto:</label>
+          <input
+            type="text"
+            id="marca"
+            name="marca"
+            value={meta.marca}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="imagem">Imagem do produto:</label>
+          <input
+            type="file"
+            id="imagem"
+            name="imagem"
+            accept="image/*"
+            onChange={handleInputChange}
+          />
+          {previewImage && <img src={previewImage} alt="Pré-visualização" style={{ width: '100px', marginTop: '10px' }} />}
+
 
           <button type="submit" className="btn-submit" disabled={loading}>
             {loading ? 'Criando...' : 'Criar Meta'}

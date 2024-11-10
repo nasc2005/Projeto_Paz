@@ -5,23 +5,35 @@ const api = axios.create({
 });
 
 // Função para obter a lista de metas
-export async function getFunction() {
+export async function readMetas() {
     const response = await api.get('/metas');
     return response.data;
 
 }
 
+// Função para buscar um lugar específico pelo ID
+export async function readMetaById(id) {
+    const response = await api.get(`/meta?id=${id}`);
+    return response.data;
+}
+
 // Função para criar uma nova meta
-export async function postFunction(data) {
+export async function postMeta(data) {
     const response = await api.post('/metas', data);
     return response.data;
 
 }
 
+// Função para criar uma nova meta
+export async function putMeta(data) {
+    const response = await api.put(`/atualizar`, data);
+    return response.data;
+}
+
 // Função para deletar uma meta
-export async function deleteFunction(id) {
+export async function deleteMeta(id) {
     await api.delete(`/metas/${id}`);
 
 }
 
-export default api;             
+export default api;

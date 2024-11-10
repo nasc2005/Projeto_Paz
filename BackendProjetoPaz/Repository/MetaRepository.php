@@ -66,6 +66,7 @@ class MetaRepository {
     }
 
     public function updateMeta(Meta $meta) {
+        $id_meta = $meta->getId();
         $id_lugar = $meta->getIdLugar();
         $id_usuarioCriador = $meta->getUsuarioCriador();
         $nome = $meta->getNome();
