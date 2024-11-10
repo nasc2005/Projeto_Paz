@@ -1,27 +1,98 @@
 // src/pages/EditarProduto.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../styles/editar-produto.css';
+import { readProdutoById, putProduto, deleteProduto } from '../services/api-produtos';
 
 function EditarProduto() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   // Estado inicial com valores preenchidos
   const [produto, setProduto] = useState({
-    nome: 'Produto A',
-    preco: 50,
-    quantidade: 10,
+    id_produto: id,
+    nome: '', 
+    valor_custo: '',
+    imagem: '',
+    categoria: '',
+    valor_venda: '',
+    descricao: '',
+    estoque: ''
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    async function fetchProduto() {
+      try {
+        const produto = await readProdutoById(id);
+        setProduto(produto);
+        setPreviewImage(produto.imagem); // Carregar imagem existente (se houver) na pré-visualização
+      } catch (error) {
+        console.error("Erro ao buscar o produto:", error);
+      }
+    }
+    fetchProduto();
+  }, [id]);
 
   // Função para lidar com as mudanças nos campos de entrada
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProduto({ ...produto, [name]: value });
+    const { name, value, files } = e.target;
+    if (name === 'imagem' && files[0]) {
+      const imageFile = files[0];
+      setProduto({ ...produto, [name]: imageFile });
+      setPreviewImage(URL.createObjectURL(imageFile)); // Mostrar pré-visualização da imagem
+    } else {
+      setProduto({ ...produto, [name]: value });
+    }
   };
 
   // Função para lidar com a submissão do formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica para atualizar o produto no backend
-    console.log('Produto atualizado:', produto);
+    setIsLoading(true);
+
+    try {
+      // Preparar dados para envio (pode incluir lógica de upload de imagem aqui)
+      await putProduto(produto);
+      Swal.fire({
+        title: 'Produto Atualizada!',
+        text: 'As informações do produto foram atualizadas com sucesso.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => navigate('/visualizar-estoque'));
+    } catch (error) {
+      console.error("Erro ao atualizar o produto:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter isso!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteProduto(id);
+          Swal.fire({
+            title: 'Produto Excluído!',
+            text: 'O produto foi excluída com sucesso.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => navigate('/visualizar-estoque'));
+        } catch (error) {
+          console.error("Erro ao excluir o produto:", error);
+        }
+      }
+    });
   };
 
   // Função para notificar a falta de produto
@@ -32,12 +103,6 @@ function EditarProduto() {
       icon: 'warning',
       confirmButtonText: 'OK',
     });
-  };
-
-  // Função para excluir o produto (pode ser uma chamada API ou outro comportamento)
-  const handleDelete = () => {
-    // Lógica para excluir o produto
-    console.log('Produto excluído');
   };
 
   return (
@@ -58,12 +123,41 @@ function EditarProduto() {
             required
           />
 
-          <label htmlFor="preco">Preço:</label>
+          <label htmlFor="descricao">Descrição:</label>
+          <textarea
+            id="descricao"
+            name="descricao"
+            value={produto.descricao}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="categoria">Categoria:</label>
+          <input
+            type="text"
+            id="categoria"
+            name="categoria"
+            value={produto.categoria}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="valor_custo">Custo:</label>
           <input
             type="number"
-            id="preco"
-            name="preco"
-            value={produto.preco}
+            id="valor_custo"
+            name="custo"
+            value={produto.valor_custo}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="valor_venda">Valor de Venda:</label>
+          <input
+            type="number"
+            id="valor_venda"
+            name="valor_venda"
+            value={produto.valor_venda}
             onChange={handleInputChange}
             required
           />
@@ -71,12 +165,22 @@ function EditarProduto() {
           <label htmlFor="quantidade">Quantidade:</label>
           <input
             type="number"
-            id="quantidade"
+            id="estoque"
             name="quantidade"
-            value={produto.quantidade}
+            value={produto.estoque}
             onChange={handleInputChange}
             required
           />
+
+          <label htmlFor="imagem">Imagem do produto:</label>
+          <input
+            type="file"
+            id="imagem"
+            name="imagem"
+            accept="image/*"
+            onChange={handleInputChange}
+          />
+          {previewImage && <img src={previewImage} alt="Pré-visualização" style={{ width: '100px', marginTop: '10px' }} />}
 
           <button type="submit" className="btn-submit">
             Atualizar Produto

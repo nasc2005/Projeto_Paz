@@ -51,7 +51,7 @@ class ProdutoRepository {
     }
 
     public function getProdutoById($id_produto) {
-        $query = "SELECT * FROM $this->table WHERE id_produto = :id";
+        $query = "SELECT * FROM $this->table WHERE id_produto = :id_produto";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_produto", $id_produto, PDO::PARAM_INT);
         $stmt->execute();
