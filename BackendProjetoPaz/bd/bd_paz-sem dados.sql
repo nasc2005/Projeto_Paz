@@ -80,7 +80,7 @@ CREATE TABLE `itens_vendas` (
 DROP TABLE IF EXISTS `lugares`;
 CREATE TABLE `lugares` (
   `id_lugar` int NOT NULL,
-  `id_instituicaoLugar` int NOT NULL,
+  `id_instituicao` int NOT NULL,
   `apelido` varchar(100) DEFAULT NULL,
   `endereco` varchar(45) DEFAULT NULL,
   `numero` varchar(50) DEFAULT NULL,
@@ -156,8 +156,8 @@ CREATE TABLE `usuarios` (
 DROP TABLE IF EXISTS `vendas`;
 CREATE TABLE `vendas` (
   `id_venda` int NOT NULL,
-  `id_usuarioVenda` int NOT NULL,
-  `id_lugarVenda` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  `id_lugar` int NOT NULL,
   `id_imgsVenda` int NOT NULL,
   `total` float DEFAULT NULL,
   `forma_pagamento` varchar(50) DEFAULT NULL,
@@ -286,35 +286,35 @@ ALTER TABLE `vendas`
 -- Restrições para tabelas `itens_vendas`
 --
 ALTER TABLE `itens_vendas`
-  ADD CONSTRAINT `id_produto` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id_produto`),
-  ADD CONSTRAINT `id_venda` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id_venda`);
+  ADD CONSTRAINT `fk_itens_vendas_id_produto` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id_produto`),
+  ADD CONSTRAINT `fk_itens_vendas_id_venda` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id_venda`);
 
 --
 -- Restrições para tabelas `lugares`
 --
 ALTER TABLE `lugares`
-  ADD CONSTRAINT `id_instituicaoLugar` FOREIGN KEY (`id_instituicaoLugar`) REFERENCES `instituicoes` (`id_instituicao`);
+  ADD CONSTRAINT `fk_lugares_id_instituicao` FOREIGN KEY (`id_instituicao`) REFERENCES `instituicoes` (`id_instituicao`);
 
 --
 -- Restrições para tabelas `metas`
 --
 ALTER TABLE `metas`
-  ADD CONSTRAINT `id_lugar` FOREIGN KEY (`id_lugar`) REFERENCES `lugares` (`id_lugar`),
-  ADD CONSTRAINT `id_usuarioCriador` FOREIGN KEY (`id_usuarioCriador`) REFERENCES `usuarios` (`id_usuario`);
+  ADD CONSTRAINT `fk_metas_id_lugar` FOREIGN KEY (`id_lugar`) REFERENCES `lugares` (`id_lugar`),
+  ADD CONSTRAINT `fk_metas_id_usuarioCriador` FOREIGN KEY (`id_usuarioCriador`) REFERENCES `usuarios` (`id_usuario`);
 
 --
 -- Restrições para tabelas `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `id_instituicao` FOREIGN KEY (`id_instituicao`) REFERENCES `instituicoes` (`id_instituicao`);
+  ADD CONSTRAINT `fk_usuarios_id_instituicao` FOREIGN KEY (`id_instituicao`) REFERENCES `instituicoes` (`id_instituicao`);
 
 --
 -- Restrições para tabelas `vendas`
 --
 ALTER TABLE `vendas`
-  ADD CONSTRAINT `id_imgsVenda` FOREIGN KEY (`id_imgsVenda`) REFERENCES `imgs_vendas` (`id_imgsVenda`),
-  ADD CONSTRAINT `id_lugarVenda` FOREIGN KEY (`id_lugarVenda`) REFERENCES `lugares` (`id_lugar`),
-  ADD CONSTRAINT `id_usuarioVenda` FOREIGN KEY (`id_usuarioVenda`) REFERENCES `usuarios` (`id_usuario`);
+  ADD CONSTRAINT `fk_vendas_id_imgsVenda` FOREIGN KEY (`id_imgsVenda`) REFERENCES `imgs_vendas` (`id_imgsVenda`),
+  ADD CONSTRAINT `fk_vendas_id_lugar` FOREIGN KEY (`id_lugar`) REFERENCES `lugares` (`id_lugar`),
+  ADD CONSTRAINT `fk_vendas_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
