@@ -37,7 +37,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case 'PUT':
-        $service->update($data);
+        switch ($action) {
+         default:
+            $service->update($data);
+            break;   
+        }
         break;
     case 'DELETE':
         $id = isset($_GET['id']) ? $_GET['id'] : null;
