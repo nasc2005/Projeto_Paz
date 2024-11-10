@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: #f3fbfc;
+    color: #1a616a;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #32bacc;
+    color: #f3fbfc;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    max-width: 100%;  /* Limita a largura máxima da imagem ao tamanho do card */
+    max-height: 150px; /* Limita a altura máxima da imagem */
+    width: auto; /* Mantém a proporção */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Ajusta a imagem para caber dentro do card */
+}
+
+.card-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-content h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    color: #1a616a;
+}
+
+.card-content p {
+    font-family: 'Lora', serif;
+    color: #74847c;
+    margin: 10px 0;
+}
+
+.action-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #32bacc;
+    color: #f3fbfc;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.action-link:hover {
+    background-color: #1a616a;
+    color: #f3fbfc;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f3fbfc;
+    color: #acbcb4;
+    font-size: 0.8rem;
+}
