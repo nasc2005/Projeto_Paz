@@ -1,39 +1,93 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importando o hook para navegação
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/editar-meta.css';
+import { readMetaById, putMeta, deleteMeta } from '../services/api-metas';
 
 function EditarMeta() {
-  // Estado inicial com valores preenchidos
-  const [meta, setMeta] = useState({
-    nome: 'Meta de Vendas - Janeiro',
-    descricao: 'Aumentar as vendas em 20% durante o mês de Janeiro.',
-    prazo: '2024-01-31',
-  });
-
-  // Inicializando o hook useNavigate para redirecionamento
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  // Função para lidar com as mudanças nos campos de entrada
+  const [meta, setMeta] = useState({
+    id_meta: id,
+    id_lugar: '',
+    id_usuarioCriador: '',
+    nome: '',
+    valor: '',
+    marca: '',
+    imagem: '', // Armazenar URL da imagem para pré-visualização
+    status_meta: ''
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    async function fetchMeta() {
+      try {
+        const meta = await readMetaById(id);
+        setMeta(meta);
+        setPreviewImage(meta.imagem); // Carregar imagem existente (se houver) na pré-visualização
+      } catch (error) {
+        console.error("Erro ao buscar a meta:", error);
+      }
+    }
+    fetchMeta();
+  }, [id]);
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMeta({ ...meta, [name]: value });
+    const { name, value, files } = e.target;
+    if (name === 'imagem' && files[0]) {
+      const imageFile = files[0];
+      setMeta({ ...meta, [name]: imageFile });
+      setPreviewImage(URL.createObjectURL(imageFile)); // Mostrar pré-visualização da imagem
+    } else {
+      setMeta({ ...meta, [name]: value });
+    }
   };
 
-  // Função para lidar com a submissão do formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica para salvar as alterações da meta
-    console.log('Alterações salvas:', meta);
-    // Redirecionar para a página de listagem de metas (ou qualquer outra página)
-    navigate('/metas'); // Substitua '/metas' pela rota de destino desejada
+    setIsLoading(true);
+
+    try {
+      // Preparar dados para envio (pode incluir lógica de upload de imagem aqui)
+      await putMeta(meta);
+      Swal.fire({
+        title: 'Meta Atualizada!',
+        text: 'As informações da meta foram atualizadas com sucesso.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => navigate('/visualizar-metas'));
+    } catch (error) {
+      console.error("Erro ao atualizar a meta:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Função para encerrar a meta (pode ser customizada conforme necessário)
-  const handleEncerrarMeta = () => {
-    // Lógica para encerrar a meta (pode ser uma chamada API ou outro comportamento)
-    console.log('Meta encerrada');
-    // Redirecionar para a página de listagem de metas após encerrar
-    navigate('/metas'); // Substitua '/metas' pela rota desejada
+  const handleDelete = () => {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter isso!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteMeta(id);
+          Swal.fire({
+            title: 'Meta Excluída!',
+            text: 'A meta foi excluída com sucesso.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => navigate('/visualizar-metas'));
+        } catch (error) {
+          console.error("Erro ao excluir a meta:", error);
+        }
+      }
+    });
   };
 
   return (
@@ -54,24 +108,35 @@ function EditarMeta() {
             required
           />
 
-          <label htmlFor="descricao">Descrição:</label>
-          <textarea
-            id="descricao"
-            name="descricao"
-            value={meta.descricao}
+          <label htmlFor="valor">Valor:</label>
+          <input
+            type="number"
+            id="valor"
+            name="valor"
+            value={meta.valor}
             onChange={handleInputChange}
             required
           />
 
-          <label htmlFor="prazo">Prazo:</label>
+          <label htmlFor="marca">Marca do produto:</label>
           <input
-            type="date"
-            id="prazo"
-            name="prazo"
-            value={meta.prazo}
+            type="text"
+            id="marca"
+            name="marca"
+            value={meta.marca}
             onChange={handleInputChange}
             required
           />
+
+          <label htmlFor="imagem">Imagem do produto:</label>
+          <input
+            type="file"
+            id="imagem"
+            name="imagem"
+            accept="image/*"
+            onChange={handleInputChange}
+          />
+          {previewImage && <img src={previewImage} alt="Pré-visualização" style={{ width: '100px', marginTop: '10px' }} />}
 
           <button type="submit" className="btn-submit">
             Salvar Alterações
@@ -79,7 +144,7 @@ function EditarMeta() {
           <button
             type="button"
             className="btn-close"
-            onClick={handleEncerrarMeta}
+            onClick={handleDelete}
           >
             Encerrar Meta
           </button>
