@@ -2,14 +2,14 @@
 import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Para navegação entre páginas
 import '../styles/visualizar-estoque.css'; // Arquivo CSS da página
-import { getFunction } from '../services/api-produtos'; 
+import { readProdutos } from '../services/api-produtos'; 
 
 function EstoqueProdutos() {
   const [produtos, setProdutos] = useState([]);
 
   // Função para buscar produtos
   async function getProdutos() {
-    const response = await getFunction();
+    const response = await readProdutos();
     setProdutos(response);
   
   }
@@ -33,7 +33,7 @@ function EstoqueProdutos() {
               Custo: R$ {produto.valor_custo} - 
               Quantidade: {produto.estoque} - 
               Descrição: {produto.descricao}
-              <Link to="/editar-produto" className="btn-edit">Editar</Link>
+              <Link to={`/editar-produto/${produto.id_produto}`} className="btn-edit">Editar</Link>
             </li>
           ))}
         </ul>

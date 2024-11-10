@@ -2,14 +2,14 @@
 import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Para navegação entre páginas
 import '../styles/visualizar-vendas-concluidas.css'; // Arquivo CSS da página
-import { getFunction } from '../services/api-vendas';
+import { readVendas } from '../services/api-vendas';
 
 function VendasConcluidas() {
   const [vendas, setVendas] = useState([]);
 
   // Função para buscar vendas
   async function getVendas() {
-    const response = await getFunction();
+    const response = await readVendas();
     setVendas(response);
   
   }
