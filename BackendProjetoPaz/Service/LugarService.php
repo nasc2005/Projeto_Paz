@@ -14,14 +14,14 @@ class LugarService {
     }
 
     public function create($data) {
-        if (!isset($data->idInstituicao, $data->apelido, $data->endereco, $data->numero, $data->arranjo)) {
+        if (!isset($data->id_instituicaoLugar, $data->apelido, $data->endereco, $data->numero, $data->arranjo)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do lugar."]);
             return;
         }
         
         $lugar = new Lugar();
-        $lugar->setIdInstituicao ($data->idInstituicao);
+        $lugar->setIdInstituicao ($data->id_instituicaoLugar);
         $lugar->setApelido($data->apelido);
         $lugar->setEndereco($data->endereco);
         $lugar->setNumero($data->numero);
@@ -56,7 +56,7 @@ class LugarService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idInstituicao, $data->apelido, $data->endereco, $data->numero, $data->arranjo)) {
+        if (!isset($data->id, $data->id_instituicaoLugar, $data->apelido, $data->endereco, $data->numero, $data->arranjo)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização do lugar."]);
             return;
@@ -64,7 +64,7 @@ class LugarService {
 
         $lugar = new Lugar();
         $lugar->setId($data->id);
-        $lugar->setApelido($data->idInstituicao);
+        $lugar->setApelido($data->id_instituicaoLugar);
         $lugar->setApelido($data->apelido);
         $lugar->setEndereco($data->endereco);
         $lugar->setNumero($data->numero);

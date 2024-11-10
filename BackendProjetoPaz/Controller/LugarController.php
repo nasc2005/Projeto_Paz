@@ -22,9 +22,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
-      
-    $service->create($data);
-                
+        switch ($action) {
+            default:
+                $service->create($data);
+                break;
+        }
         break;
     case 'GET':
         switch ($action) {
