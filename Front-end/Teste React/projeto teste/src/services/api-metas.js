@@ -32,7 +32,7 @@ export async function putMeta(data) {
 
 // Função para deletar uma meta
 export async function deleteMeta(id) {
-    await api.delete(`/metas/${id}`);
+    await api.delete(`/meta?id=${id}`);
 
 }
 

@@ -115,7 +115,7 @@ function AdicionarProduto() {
           <input
             type="number"
             id="valor_custo"
-            name="custo"
+            name="valor_custo"
             value={produto.valor_custo}
             onChange={handleInputChange}
             required
@@ -131,11 +131,11 @@ function AdicionarProduto() {
             required
           />
 
-          <label htmlFor="quantidade">Quantidade:</label>
+          <label htmlFor="estoque">Quantidade:</label>
           <input
             type="number"
             id="estoque"
-            name="quantidade"
+            name="estoque"
             value={produto.estoque}
             onChange={handleInputChange}
             required

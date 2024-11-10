@@ -1,57 +1,65 @@
 // src/pages/EditarInstituicao.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'; // Para notificações
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/editar-instituicao.css';
+import { readInstituicaoById, putInstituicao } from '../services/api-instituicoes';
 
 function EditarInstituicao() {
-  // Estado inicial com valores preenchidos
+  const { id } = useParams(); // Obter o `id` da URL
+  const navigate = useNavigate();
+
+  // Estado para armazenar os dados do formulário
   const [instituicao, setInstituicao] = useState({
-    nome: 'Instituição Exemplo',
-    endereco: 'Rua ABC, 123',
-    cnpj: '12.345.678/0001-90',
+    id_instituicao: id,
+    nome: '',
+    descricao: '',
+    logo: '',
+    saldo: ''
   });
 
-  const [loading, setLoading] = useState(false); // Controle de estado para carregamento
-  const [formValid, setFormValid] = useState(true); // Controle de validade do formulário
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Função para lidar com as mudanças nos campos de entrada
+  // Função para buscar os dados da instituição com base no `id`
+  useEffect(() => {
+    async function fetchInstituicao() {
+      try {
+        const instituicao = await readInstituicaoById(id); // Busca os dados usando o `id`
+        setInstituicao(instituicao); // Preenche o estado com os dados recebidos
+      } catch (error) {
+        console.error("Erro ao buscar o instituicao:", error);
+      }
+    }
+    fetchInstituicao();
+  }, [id]);
+
+  if (isLoading) return <div>Carregando...</div>; // Exibe "Carregando" enquanto busca dados
+
+
+  // Função para lidar com mudanças nos campos de entrada
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInstituicao({ ...instituicao, [name]: value });
   };
 
-  // Função para validar o formulário
-  const validateForm = () => {
-    // Simples validação de CNPJ e campos obrigatórios
-    const isValid = instituicao.nome && instituicao.endereco && instituicao.cnpj;
-    setFormValid(isValid);
-    return isValid;
-  };
-
-  // Função para lidar com o envio do formulário
+  // Função para atualizar a instituição
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      // Se o formulário não for válido, não enviamos
-      return;
-    }
+    setIsLoading(true);
 
-    setLoading(true); // Inicia o carregamento
-
-    // Simulação de requisição para atualizar os dados
-    setTimeout(() => {
-      console.log('Instituição atualizada:', instituicao);
-
-      // Exibir notificação de sucesso
+    try {
+      await putInstituicao(instituicao); // Atualiza os dados do instituicao
       Swal.fire({
-        title: 'Sucesso!',
-        text: 'A instituição foi atualizada com sucesso.',
+        title: 'Instituição Atualizada!',
+        text: 'As informações da instituição foram atualizadas com sucesso.',
         icon: 'success',
-        confirmButtonText: 'OK',
-      });
-
-      setLoading(false); // Finaliza o carregamento
-    }, 2000); // Simulação de 2 segundos para a requisição (substitua pela lógica real)
+        confirmButtonText: 'OK'
+      }).then(() => navigate('/visualizar-estatisticas'));
+    } catch (error) {
+      console.error("Erro ao atualizar a instituição:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -62,42 +70,51 @@ function EditarInstituicao() {
 
       <div className="institution-form">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="nome">Nome da Instituição:</label>
+        <label htmlFor="nome">Nome da Instituição</label>
           <input
             type="text"
             id="nome"
             name="nome"
+            placeholder="Digite o nome da instituição"
             value={instituicao.nome}
             onChange={handleInputChange}
             required
           />
-
-          <label htmlFor="endereco">Endereço:</label>
+          
+          <label htmlFor="descricao">Descrição</label>
           <input
             type="text"
-            id="endereco"
-            name="endereco"
-            value={instituicao.endereco}
+            id="descricao"
+            name="descricao"
+            placeholder="Digite a descrição da instituição"
+            value={instituicao.descricao}
             onChange={handleInputChange}
             required
           />
 
-          <label htmlFor="cnpj">CNPJ:</label>
+          <label htmlFor="logo">Logo</label>
           <input
             type="text"
-            id="cnpj"
-            name="cnpj"
-            value={instituicao.cnpj}
+            id="logo"
+            name="logo"
+            placeholder="Insira a logo da instituição"
+            value={instituicao.logo}
             onChange={handleInputChange}
             required
           />
 
-          <button
-            type="submit"
-            className="btn-submit"
-            disabled={loading || !formValid} // Desabilitar o botão enquanto o formulário está sendo salvo ou inválido
-          >
-            {loading ? 'Salvando...' : 'Atualizar Instituição'}
+          <label htmlFor="saldo">Saldo</label>
+          <input
+            type="number"
+            id="saldo"
+            name="saldo"
+            value={instituicao.saldo}
+            onChange={handleInputChange}
+            required
+          />
+
+          <button type="submit" className="btn-submit" disabled={isLoading}>
+            {isLoading ? 'Atualizando...' : 'Atualizar Instituição'}
           </button>
         </form>
       </div>
