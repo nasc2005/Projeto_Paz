@@ -14,19 +14,19 @@ class VendaService {
     }
 
     public function create($data) {
-        if (!isset($data->idUsuario, $data->idLugar, $data->idImgsVenda, $data->total, $data->statusVenda, $data->formaPagamento)) {
+        if (!isset($data->id_usuario, $data->id_lugar, $data->id_imgsVenda, $data->total, $data->status_venda, $data->forma_pagamento)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do venda."]);
             return;
         }
         
         $venda = new Venda();
-        $venda->setIdUsuario($data->idUsuario);
-        $venda->setIdLugar($data->idLugar);
-        $venda->setIdImgsVenda($data->idImgsVenda);
+        $venda->setIdUsuario($data->id_usuario);
+        $venda->setIdLugar($data->id_lugar);
+        $venda->setIdImgsVenda($data->id_imgsVenda);
         $venda->setTotal($data->total);
-        $venda->setStatusVenda($data->statusVenda);
-        $venda->setFormaPagamento($data->formaPagamento);
+        $venda->setStatusVenda($data->status_venda);
+        $venda->setFormaPagamento($data->forma_pagamento);
         $venda->setInsertDateTime(new DateTime());
 
         if ($this->repository->insertVenda($venda)) {
@@ -79,20 +79,20 @@ class VendaService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idUsuario, $data->idLugar, $data->idImgsVenda, $data->total, $data->statusVenda, $data->formaPagamento, $data->estoque)) {
+        if (!isset($data->id_venda, $data->id_usuario, $data->id_lugar, $data->id_imgsVenda, $data->total, $data->status_venda, $data->forma_pagamento, $data->estoque)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização da venda."]);
             return;
         }
 
         $venda = new Venda();
-        $venda->setId($data->id);
-        $venda->setIdUsuario($data->idUsuario);
-        $venda->setIdLugar($data->idLugar);
-        $venda->setIdImgsVenda($data->idImgsVenda);
+        $venda->setId($data->id_venda);
+        $venda->setIdUsuario($data->id_usuario);
+        $venda->setIdLugar($data->id_lugar);
+        $venda->setIdImgsVenda($data->id_imgsVenda);
         $venda->setTotal($data->total);
-        $venda->setStatusVenda($data->statusVenda);
-        $venda->setFormaPagamento($data->formaPagamento);
+        $venda->setStatusVenda($data->status_venda);
+        $venda->setFormaPagamento($data->forma_pagamento);
         $venda->setInsertDateTime(new DateTime());
 
         if ($this->repository->updateVenda($venda)) {

@@ -36,13 +36,11 @@ class ImgVendaService {
     public function read($id = null) {
         if ($id) {
             $result = $this->repository->getImgVendaById($id);
-           // unset($result['senha']);
+           
             $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllImgVendas();
-            foreach ($result as &$imgVenda) {
-                //unset($imgVenda['senha']);
-            }
+
             unset($imgVenda);
             $status = !empty($result) ? 200 : 404;
         }
@@ -52,17 +50,17 @@ class ImgVendaService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->imgPix, $data->imgDinheiro, $data->imgComprovante)) {
+        if (!isset($data->id_imgsVenda, $data->img_pix, $data->img_dinheiro, $data->img_comprovante)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização das imagens da venda."]);
             return;
         }
 
         $imgVenda = new ImgVenda();
-        $imgVenda->setId($data->id);
-        $imgVenda->setimgPix($data->imgPix);
-        $imgVenda->setimgDinheiro($data->imgDinheiro);
-        $imgVenda->setimgComprovante($data->imgComprovante);
+        $imgVenda->setId($data->id_imgsVenda);
+        $imgVenda->setimgPix($data->img_pix);
+        $imgVenda->setimgDinheiro($data->img_dinheiro);
+        $imgVenda->setimgComprovante($data->img_comprovante);
 
         if ($this->repository->updateImgVenda($imgVenda)) {
             http_response_code(200);

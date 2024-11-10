@@ -21,59 +21,58 @@ class MetaRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAllMetasByLugar($lugar_id) {
-        $query = "SELECT * FROM $this->table WHERE id_lugarMeta = :id";
+    public function getAllMetasByLugar($id_lugar) {
+        $query = "SELECT * FROM $this->table WHERE id_lugarMeta = :id_lugar";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $lugar_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_lugar", $id_lugar, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getMetaById($meta_id) {
-        $query = "SELECT * FROM $this->table WHERE id_meta = :id";
+        $query = "SELECT * FROM $this->table WHERE id_meta = :id_meta";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $meta_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_meta", $meta_id, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function insertMeta(Meta $meta) {
-        $idLugar = $meta->getIdLugar();
-        $usuarioCriador = $meta->getUsuarioCriador();
+        $id_lugar = $meta->getIdLugar();
+        $id_usuarioCriador = $meta->getUsuarioCriador();
         $nome = $meta->getNome();
         $valor = $meta->getValor();
         $marca = $meta->getMarca();
         $imagem = $meta->getImagem();
-        $statusMeta = $meta->getStatusMeta();
+        $status_meta = $meta->getStatusMeta();
 
         $query = "INSERT INTO $this->table (
-                    id_lugar, usuarioCriador, nome, valor, marca, imagem, status_meta)
+                    id_lugar, id_usuarioCriador, nome, valor, marca, imagem, status_meta)
                   VALUES (
-                    :idLugar, :usuarioCriador, :nome, :valor, :marca, :imagem, :statusMeta)";
+                    :id_lugar, :id_usuarioCriador, :nome, :valor, :marca, :imagem, :status_meta)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idLugar", $idLugar);
-        $stmt->bindParam(":usuarioCriador", $usuarioCriador);
+        $stmt->bindParam(":id_lugar", $id_lugar);
+        $stmt->bindParam(":id_usuarioCriador", $id_usuarioCriador);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":valor", $valor);
         $stmt->bindParam(":marca", $marca);
         $stmt->bindParam(":imagem", $imagem);
-        $stmt->bindParam(":statusMeta", $statusMeta);
+        $stmt->bindParam(":status_meta", $status_meta);
 
         return $stmt->execute();
     }
 
     public function updateMeta(Meta $meta) {
-        $meta_id = $meta->getId();
-        $idLugar = $meta->getIdLugar();
-        $usuarioCriador = $meta->getUsuarioCriador();
+        $id_lugar = $meta->getIdLugar();
+        $id_usuarioCriador = $meta->getUsuarioCriador();
         $nome = $meta->getNome();
         $valor = $meta->getValor();
         $marca = $meta->getMarca();
         $imagem = $meta->getImagem();
-        $statusMeta = $meta->getStatusMeta();
+        $status_meta = $meta->getStatusMeta();
 
         $query = "UPDATE $this->table 
                   SET 
@@ -87,22 +86,22 @@ class MetaRepository {
                   WHERE id_meta = :id";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idLugar", $idLugar);
-        $stmt->bindParam(":usuarioCriador", $usuarioCriador);
+        $stmt->bindParam(":id_lugar", $id_lugar);
+        $stmt->bindParam(":id_usuarioCriador", $id_usuarioCriador);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":valor", $valor);
         $stmt->bindParam(":marca", $marca);
         $stmt->bindParam(":imagem", $imagem);
-        $stmt->bindParam(":statusMeta", $statusMeta);
-        $stmt->bindParam(":id", $meta_id);
+        $stmt->bindParam(":status_meta", $status_meta);
+        $stmt->bindParam(":id_meta", $id_meta);
 
         return $stmt->execute();
     }
 
-    public function deleteMeta($meta_id) {
-        $query = "DELETE FROM $this->table WHERE id_meta = :id";
+    public function deleteMeta($id_meta) {
+        $query = "DELETE FROM $this->table WHERE id_meta = :id_meta";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $meta_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_meta", $id_meta, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

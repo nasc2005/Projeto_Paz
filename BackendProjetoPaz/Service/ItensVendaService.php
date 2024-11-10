@@ -13,17 +13,17 @@ class ItensVendaService {
     }
 
     public function create($data) {
-        if (!isset($data->idProduto, $data->idVenda, $data->quantidade, $data->precoUnitario, $data->subtotal)) {
+        if (!isset($data->id_produto, $data->id_venda, $data->quantidade, $data->preco_unitario, $data->subtotal)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação dos itens venda."]);
             return;
         }
         
         $itensVenda = new ItensVenda();
-        $itensVenda->setIdProduto($data->idProduto);
-        $itensVenda->setIdVenda($data->idVenda);
+        $itensVenda->setIdProduto($data->id_produto);
+        $itensVenda->setIdVenda($data->id_venda);
         $itensVenda->setQuantidade($data->quantidade);
-        $itensVenda->setPrecoUnitario($data->precoUnitario);
+        $itensVenda->setPrecoUnitario($data->preco_unitario);
         $itensVenda->setSubtotal($data->subtotal);
 
         if ($this->repository->insertItensVenda($itensVenda)) {
@@ -54,19 +54,19 @@ class ItensVendaService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->idProduto, $data->idVenda, $data->quantidade, $data->precoUnitario, $data->subtotal, $data->estoque)) {
+        if (!isset($data->id_itensVenda, $data->id_produto, $data->id_venda, $data->quantidade, $data->preco_unitario, $data->subtotal)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização da itensVenda."]);
             return;
         }
 
         $itensVenda = new ItensVenda();
-        $itensVenda->setId($data->id);
-        $itensVenda->setidProduto($data->idProduto);
-        $itensVenda->setIdVenda($data->idVenda);
+        $itensVenda->setId($data->id_itensVenda);
+        $itensVenda->setidProduto($data->id_produto);
+        $itensVenda->setIdVenda($data->id_venda);
         $itensVenda->setquantidade($data->quantidade);
-        $itensVenda->setprecoUnitario($data->precoUnitario);
-        $itensVenda->setSubtotal($data->quantidade * $data->precoUnitario);
+        $itensVenda->setprecoUnitario($data->preco_unitario);
+        $itensVenda->setSubtotal($data->quantidade * $data->preco_unitario);
 
         if ($this->repository->updateItensVenda($itensVenda)) {
             http_response_code(200);

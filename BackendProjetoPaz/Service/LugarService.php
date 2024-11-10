@@ -40,13 +40,11 @@ class LugarService {
     public function read($id = null) {
         if ($id) {
             $result = $this->repository->getLugarById($id);
-           // unset($result['senha']);
+
             $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllLugares();
-            foreach ($result as &$lugar) {
-                //unset($lugar['senha']);
-            }
+  
             unset($lugar);
             $status = !empty($result) ? 200 : 404;
         }

@@ -33,9 +33,9 @@ class UsuarioRepository {
     }
 
     public function getUsuarioById($usuario_id) {
-        $query = "SELECT * FROM $this->table WHERE id_usuario = :id";
+        $query = "SELECT * FROM $this->table WHERE id_usuario = :id_usuario";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $usuario_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_usuario", $usuario_id, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -50,14 +50,14 @@ class UsuarioRepository {
     }
 
     public function insertUsuario(Usuario $usuario) {
-        $idInstituicao = $usuario->getIdInstituicao();
+        $id_instituicao = $usuario->getIdInstituicao();
         $nome = $usuario->getNome();
         $email = $usuario->getEmail();
         $senha = $usuario->getSenha();
         $perfil = $usuario->getPerfil();
         $cpf = $usuario->getCpf();
         $telefone = $usuario->getTelefone();
-        $dataNasc = $usuario->getDataNasc();
+        $data_nasc = $usuario->getDataNasc();
         $imagem = $usuario->getImagem();
 
         $query = "INSERT INTO $this->table 
@@ -69,32 +69,32 @@ class UsuarioRepository {
                   VALUES (
                     :idInstituicao, 
                     :nome, :email, :senha, :perfil, :cpf, 
-                    :telefone, :dataNasc, :imagem
+                    :telefone, :data_nasc, :imagem
                     )";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idInstituicao", $idInstituicao);
+        $stmt->bindParam(":id_instituicao", $id_instituicao);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":senha", $senha);
         $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":cpf", $cpf);
         $stmt->bindParam(":telefone", $telefone);
-        $stmt->bindParam(":dataNasc", $dataNasc);
+        $stmt->bindParam(":data_nasc", $data_nasc);
         $stmt->bindParam(":imagem", $imagem);
         
         return $stmt->execute();
     }
 
     public function updateUsuario(Usuario $usuario) {
-        $usuario_id = $usuario->getId();
-        $idInstituicao = $usuario->getIdInstituicao();
+        $id_usuario = $usuario->getId();
+        $id_instituicao = $usuario->getIdInstituicao();
         $nome = $usuario->getNome();
         $email = $usuario->getEmail();
         $senha = $usuario->getSenha();
         $perfil = $usuario->getPerfil();
         $cpf = $usuario->getCpf();
         $telefone = $usuario->getTelefone();
-        $dataNasc = $usuario->getDataNasc();
+        $data_nasc = $usuario->getDataNasc();
         $imagem = $usuario->getImagem();
 
         $query = "UPDATE $this->table SET 
@@ -106,24 +106,24 @@ class UsuarioRepository {
                   WHERE id_usuario = :id";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idInstituicao", $idInstituicao);
+        $stmt->bindParam(":id_instituicao", $id_instituicao);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":senha", $senha);
         $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":cpf", $cpf);
         $stmt->bindParam(":telefone", $telefone);
-        $stmt->bindParam(":dataNasc", $dataNasc);
+        $stmt->bindParam(":data_nasc", $data_nasc);
         $stmt->bindParam(":imagem", $imagem);
-        $stmt->bindParam(":id", $usuario_id);
+        $stmt->bindParam(":id_usuario", $id_usuario);
 
         return $stmt->execute();
     }
 
     public function deleteUsuario($usuario_id) {
-        $query = "DELETE FROM $this->table WHERE id_usuario = :id";
+        $query = "DELETE FROM $this->table WHERE id_usuario = :id_usuario";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $usuario_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_usuario", $usuario_id, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

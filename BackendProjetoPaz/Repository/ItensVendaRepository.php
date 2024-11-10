@@ -15,27 +15,24 @@ class ItensVendaRepository {
     }
 
     public function insertItensVenda(ItensVenda $itensVenda) {
-        $idProduto = $itensVenda->getIdProduto();
-        $idVenda = $itensVenda->getIdVenda();
+        $id_produto = $itensVenda->getIdProduto();
+        $id_venda = $itensVenda->getIdVenda();
         $quantidade = $itensVenda->getQuantidade();
-        $precoUnitario = $itensVenda->getPrecoUnitario();
+        $preco_unitario = $itensVenda->getPrecoUnitario();
         $subtotal = $itensVenda->getSubtotal();
 
         $query = "INSERT INTO $this->table 
                     (
-                    id_produto, 
-                    id_venda, 
-                    quantidade, 
-                    preco_unitario, 
-                    subtotal
+                    id_produto, id_venda, 
+                    quantidade, preco_unitario, subtotal
                     )
-                  VALUES (:idProduto, :idVenda, :quantidade, :precoUnitario, :subtotal)";
+                  VALUES (:id_produto, :id_venda, :quantidade, :preco_unitario, :subtotal)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idProduto", $idProduto);
-        $stmt->bindParam(":idVenda", $idVenda);
+        $stmt->bindParam(":id_produto", $id_produto);
+        $stmt->bindParam(":id_venda", $id_venda);
         $stmt->bindParam(":quantidade", $quantidade);
-        $stmt->bindParam(":precoUnitario", $precoUnitario);
+        $stmt->bindParam(":preco_unitario", $preco_unitario);
         $stmt->bindParam(":subtotal", $subtotal);
 
         return $stmt->execute();
@@ -59,11 +56,11 @@ class ItensVendaRepository {
     }
 
     public function updateItensVenda(ItensVenda $itensVenda) {
-        $itensVenda_id = $itensVenda->getId();
-        $idProduto = $itensVenda->getIdProduto();
-        $idVenda = $itensVenda->getIdVenda();
+        $id_itensVenda = $itensVenda->getId();
+        $id_produto = $itensVenda->getIdProduto();
+        $id_venda = $itensVenda->getIdVenda();
         $quantidade = $itensVenda->getQuantidade();
-        $precoUnitario = $itensVenda->getPrecoUnitario();
+        $preco_unitario = $itensVenda->getPrecoUnitario();
         $subtotal = $itensVenda->getSubtotal();
 
         $query = "UPDATE $this->table 
@@ -73,23 +70,23 @@ class ItensVendaRepository {
                     quantidade = :quantidade, 
                     precoUnitario = :precoUnitario, 
                     subtotal = :subtotal
-                  WHERE id_itensVenda = :id";
+                  WHERE id_itensVenda = :id_itensVenda";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idProduto", $idProduto);
-        $stmt->bindParam(":idVenda", $idVenda);
+        $stmt->bindParam(":id_produto", $id_produto);
+        $stmt->bindParam(":id_venda", $id_venda);
         $stmt->bindParam(":quantidade", $quantidade);
-        $stmt->bindParam(":precoUnitario", $precoUnitario);
+        $stmt->bindParam(":preco_unitario", $preco_unitario);
         $stmt->bindParam(":subtotal", $subtotal);
-        $stmt->bindParam(":id", $itensVenda_id);
+        $stmt->bindParam(":id_itensVenda", $id_itensVenda);
 
         return $stmt->execute();
     }
 
-    public function deleteItensVenda($itensVenda_id) {
-        $query = "DELETE FROM $this->table WHERE id_itensVenda = :id";
+    public function deleteItensVenda($id_itensVenda) {
+        $query = "DELETE FROM $this->table WHERE id_itensVenda = :id_itensVenda";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $itensVenda_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_itensVenda", $id_itensVenda, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

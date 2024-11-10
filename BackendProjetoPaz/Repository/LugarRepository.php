@@ -92,9 +92,9 @@ class LugarRepository {
     }
 
     public function deleteLugar($id_lugar) {
-        $query = "DELETE FROM $this->table WHERE id_lugar = :id";
+        $query = "DELETE FROM $this->table WHERE id_lugar = :id_lugar";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id_lugar, PDO::PARAM_INT);
+        $stmt->bindParam(":id_lugar", $id_lugar, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

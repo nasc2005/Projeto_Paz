@@ -44,21 +44,21 @@ class UsuarioService {
     }
 
     public function create($data) {
-        if (!isset($data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
+        if (!isset($data->id_instituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->data_nasc, $data->imagem)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do usuário."]);
             return;
         }
         
         $usuario = new usuario();
-        $usuario->setIdInstituicao($data->idInstituicao);
+        $usuario->setIdInstituicao($data->id_instituicao);
         $usuario->setNome($data->nome);
         $usuario->setEmail($data->emai);
         $usuario->setSenha($data->senha);
         $usuario->setPerfil($data->perfil);
         $usuario->setCpf($data->cpf);
         $usuario->setTelefone($data->telefone);
-        $usuario->setDataNasc($data->dataNasc);
+        $usuario->setDataNasc($data->data_nasc);
         $usuario->setImagem($data->imagem);
         $usuario->setInsertDateTime(new DateTime());
 
@@ -108,22 +108,22 @@ class UsuarioService {
         
 
     public function update($data) {
-        if (!isset($data->id, $data->idInstituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->dataNasc, $data->imagem)) {
+        if (!isset($data->id_usuario, $data->id_instituicao, $data->nome, $data->email, $data->senha, $data->perfil, $data->cpf, $data->telefone, $data->data_nasc, $data->imagem)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização do usuário."]);
             return;
         }
 
         $usuario = new Usuario();
-        $usuario->setId($data->id);
-        $usuario->setIdInstituicao($data->idInstituicao);
+        $usuario->setId($data->id_produto);
+        $usuario->setIdInstituicao($data->id_instituicao);
         $usuario->setNome($data->nome);
         $usuario->setEmail($data->emai);
         $usuario->setSenha($data->senha);
         $usuario->setPerfil($data->perfil);
         $usuario->setCpf($data->cpf);
         $usuario->setTelefone($data->telefone);
-        $usuario->setDataNasc($data->dataNasc);
+        $usuario->setDataNasc($data->data_nasc);
         $usuario->setImagem($data->imagem);
         $usuario->setInsertDateTime(new DateTime());
 

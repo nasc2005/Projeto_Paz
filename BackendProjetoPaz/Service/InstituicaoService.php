@@ -39,13 +39,11 @@ class InstituicaoService {
     public function read($id = null) {
         if ($id) {
             $result = $this->repository->getInstituicaoById($id);
-           // unset($result['senha']);
+
             $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllInstituicaos();
-            foreach ($result as &$instituicao) {
-                //unset($instituicao['senha']);
-            }
+
             unset($instituicao);
             $status = !empty($result) ? 200 : 404;
         }
@@ -55,14 +53,14 @@ class InstituicaoService {
     }
 
     public function update($data) {
-        if (!isset($data->instituicao_id, $data->descricao, $data->logo, $data->saldo)) {
+        if (!isset($data->id_instituicao, $data->descricao, $data->logo, $data->saldo)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização da instituição."]);
             return;
         }
 
         $instituicao = new Instituicao();
-        $instituicao->setId($data->instituicao_id);
+        $instituicao->setId($data->id_instituicao);
         $instituicao->setNome($data->nome);
         $instituicao->setDescricao($data->descricao);
         $instituicao->setLogo($data->logo);

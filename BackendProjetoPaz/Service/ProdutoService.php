@@ -14,7 +14,7 @@ class ProdutoService {
     }
 
     public function create($data) {
-        if (!isset($data->nome, $data->valorCusto, $data->imagem, $data->categoria, $data->valorVenda, $data->descricao, $data->estoque)) {
+        if (!isset($data->nome, $data->valor_custo, $data->imagem, $data->categoria, $data->valor_venda, $data->descricao, $data->estoque)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para a criação do produto."]);
             return;
@@ -22,10 +22,10 @@ class ProdutoService {
         
         $produto = new Produto();
         $produto->setNome($data->nome);
-        $produto->setValorCusto($data->valorCusto);
+        $produto->setValorCusto($data->valor_custo);
         $produto->setImagem($data->imagem);
         $produto->setCategoria($data->categoria);
-        $produto->setValorVenda($data->valorVenda);
+        $produto->setValorVenda($data->valor_venda);
         $produto->setDescricao($data->descricao);
         $produto->setEstoque($data->estoque);
         $produto->setInsertDateTime(new DateTime());
@@ -45,8 +45,7 @@ class ProdutoService {
             $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllProdutos();
-            foreach ($result as &$produto) {
-            }
+ 
             unset($produto);
             $status = !empty($result) ? 200 : 404;
         }
@@ -66,19 +65,19 @@ class ProdutoService {
     }
 
     public function update($data) {
-        if (!isset($data->id, $data->nome, $data->valorCusto, $data->imagem, $data->categoria, $data->valorVenda, $data->descricao, $data->estoque)) {
+        if (!isset($data->id_produto, $data->nome, $data->valor_custo, $data->imagem, $data->categoria, $data->valor_venda, $data->descricao, $data->estoque)) {
             http_response_code(400);
             echo json_encode(["error" => "Dados incompletos para atualização do produto."]);
             return;
         }
 
         $produto = new Produto();
-        $produto->setId($data->id);
+        $produto->setId($data->id_produto);
         $produto->setNome($data->nome);
-        $produto->setValorCusto($data->valorCusto);
+        $produto->setValorCusto($data->valor_custo);
         $produto->setImagem($data->imagem);
         $produto->setCategoria($data->categoria);
-        $produto->setValorVenda($data->valorVenda);
+        $produto->setValorVenda($data->valor_venda);
         $produto->setDescricao($data->descricao);
         $produto->setEstoque($data->estoque);
         $produto->setInsertDateTime(new DateTime());
