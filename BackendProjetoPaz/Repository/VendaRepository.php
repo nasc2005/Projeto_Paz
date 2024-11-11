@@ -13,7 +13,7 @@ class VendaRepository {
         $this->conn = Database::getInstance(); 
     }
 
-    /*
+    
     public function getAllVendas() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
@@ -30,7 +30,7 @@ class VendaRepository {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    */
+    
 
     public function getAllResumoVendas() {
         $query = "SELECT v.id_venda, v.status_venda, v.forma_pagamento, v.data_criacao, SUM(iv.quantidade * p.valor_venda) AS valor_total
@@ -49,7 +49,7 @@ class VendaRepository {
                   FROM $this->table v
                   JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
-                  WHERE v.id_usuarioVenda = :id
+                  WHERE v.id_usuario = :id
                   GROUP BY v.id_venda, v.data_criacao";
     
         $stmt = $this->conn->prepare($query);
@@ -64,7 +64,7 @@ class VendaRepository {
                   FROM $this->table v
                   JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
-                  WHERE v.id_lugarVenda = :id
+                  WHERE v.id_lugar = :id
                   GROUP BY v.id_venda, v.data_criacao";
     
         $stmt = $this->conn->prepare($query);
