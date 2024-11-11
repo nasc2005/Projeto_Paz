@@ -13,7 +13,7 @@ class VendaRepository {
         $this->conn = Database::getInstance(); 
     }
 
-    /*
+    
     public function getAllVendas() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
@@ -30,7 +30,7 @@ class VendaRepository {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    */
+    
 
     public function getAllResumoVendas() {
         $query = "SELECT v.id_venda, v.status_venda, v.forma_pagamento, v.data_criacao, SUM(iv.quantidade * p.valor_venda) AS valor_total

@@ -3,7 +3,9 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'http://localhost:8000/BackendProjetoPaz/Controller/UsuarioController.php',
 });
-
+const api2 = axios.create({
+    baseURL: 'http://localhost:8000/BackendProjetoPaz/Controller/EmailsController.php',
+});
 // Função para obter a lista de usuários
 export async function readUsuarios() {
     const response = await api.get('/usuarios');
@@ -19,6 +21,14 @@ export async function readUserById(id) {
 // Função para obter a lista de usuários por perfil
 export async function readPerfilUsuarios() {
     const response = await api.get('action=perfil');
+    return response.data;
+}
+
+// Função para obter a lista de usuários por perfil
+export async function EnviaEmailRedefinindoSenha(email) {
+    console.log("chegooooooooooo");
+    console.log(email);
+    const response = await api2.get(`?action=Redefinir&email=murilovnasc.prog@gmail.com`);
     return response.data;
 }
 

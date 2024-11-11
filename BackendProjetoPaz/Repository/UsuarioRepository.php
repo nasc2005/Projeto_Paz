@@ -1,6 +1,7 @@
 <?php
 namespace App\Backend\Repository;
 
+
 use App\Backend\Model\Usuario;
 use App\Backend\Config\Database;
 use PDO;

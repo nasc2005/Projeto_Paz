@@ -23,12 +23,11 @@ import DetalhesMeta from './pages/meta-detalhes';
 import TelaMeta from './pages/tela-meta';
 import VendaConcluida from './pages/venda-concluida';
 import Vendendo from './pages/vendendo';
-import Estatisticas from './pages/visualizar-estatisticas';
 import EstoqueProdutos from './pages/visualizar-estoque';
 import VisualizarLugares from './pages/visualizar-lugares';
 import VisualizarMetas from './pages/visualizar-metas';
-import VisualizarRelatorios from './pages/visualizar-relatorios';
 import VendasConcluidas from './pages/visualizar-vendas-concluidas';
+import NovaSenha from './pages/nova-senha';
 
 function AppRouter() {
   return (
@@ -56,12 +55,11 @@ function AppRouter() {
         <Route path="/tela-meta" element={<TelaMeta/>} />
         <Route path="/venda-concluida/:id" element={<VendaConcluida/>} />
         <Route path="/vendendo" element={<Vendendo/>} />
-        <Route path="/visualizar-estatisticas" element={<Estatisticas/>} />
         <Route path="/visualizar-estoque" element={<EstoqueProdutos/>} />
         <Route path="/visualizar-lugares" element={<VisualizarLugares/>} />
         <Route path="/visualizar-metas" element={<VisualizarMetas/>} />
-        <Route path="/visualizar-relatorios" element={<VisualizarRelatorios/>} />
         <Route path="/visualizar-vendas-concluidas" element={<VendasConcluidas/>} />
+        <Route path="/nova-senha" element={<NovaSenha/>} />
       </Routes>
     </Router>
   );

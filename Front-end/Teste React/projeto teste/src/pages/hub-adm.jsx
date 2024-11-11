@@ -79,18 +79,6 @@ function HubAdm() {
       link: '/visualizar-estoque',
     },
     {
-      title: 'Visualizar Relatórios',
-      description: 'Acesse os relatórios detalhados de vendas.',
-      imgSrc: visualizarRelatorioImg,
-      link: '/visualizar-relatorios',
-    },
-    {
-      title: 'Visualizar Estatísticas',
-      description: 'Confira as estatísticas de vendas e desempenho.',
-      imgSrc: visualizarEstatisticasImg,
-      link: '/visualizar-estatisticas',
-    },
-    {
       title: 'Visualizar Metas',
       description: 'Monitore suas metas e o progresso de vendas.',
       imgSrc: visualizarMetasImg,
