@@ -5,36 +5,44 @@ const api = axios.create({
 });
 
 // Função para obter a lista de usuários
-export async function getFunction() {
+export async function readUsuarios() {
     const response = await api.get('/usuarios');
     return response.data;
-
 }
 
 // Função para buscar um usuário específico pelo ID
-export async function getUserById(id) {
-    const response = await api.get(`/usuario/${id}`);
+export async function readUserById(id) {
+    const response = await api.get(`/usuario?id=${id}`);
     return response.data;
 }
 
 // Função para obter a lista de usuários por perfil
-export async function getPerfilUsuarios() {
+export async function readPerfilUsuarios() {
     const response = await api.get('action=perfil');
     return response.data;
-
 }
 
 // Função para criar um novo usuário
-export async function postFunction(data) {
+export async function postUsuario(data) {
     const response = await api.post('/cadastrar', data);
     return response.data;
+}
 
+// Função para conferir login
+export async function postLogin(data) {
+    const response = await api.post('?action=login', data);
+    return response.data;
+}
+
+// Função para atualizar um usuário
+export async function putUsuario(data) {
+    const response = await api.put('/atualizar', data);
+    return response.data;
 }
 
 // Função para deletar um usuário
-export async function deleteFunction(id) {
-    await api.delete(`/deletar/${id}`);
-
+export async function deleteUsuario(id) {
+    await api.delete(`/deletar?id=${id}`);
 }
 
 export default api;             

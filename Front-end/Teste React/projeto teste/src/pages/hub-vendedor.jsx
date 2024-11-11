@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Importar Link do React Router
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate  } from 'react-router-dom'; // Importar Link do React Router
 import '../styles/hub-vendedor.css';  // Importe o arquivo CSS correspondente
 
 // Importe as imagens dinamicamente da pasta src/assets
@@ -9,12 +9,32 @@ import visualizarEstoqueImg from '../assets/visualizar-estoque.png';
 import visualizarMetasImg from '../assets/visualizar-metas.png';
 
 function HubVendedor() {
+
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const id = localStorage.getItem('userId');
+    if (id) {
+      setUserId(id);
+    } else {
+      // Se o usuário não estiver logado, redirecione para a página de login
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userId'); // Remove o ID do usuário do local storage
+    localStorage.removeItem('instId');
+    navigate('/login'); // Redireciona para a página de login
+  };
+
   const actions = [
     {
       title: 'Editar Conta',
       description: 'Atualize as informações da sua conta rapidamente.',
       imgSrc: editarContaImg,  // Caminho das imagens importadas
-      link: '/editar-conta',  // Usando a rota do React Router
+      link: userId ? `/editar-conta/${userId}` : '/login',  // Usando a rota do React Router
     },
     {
       title: 'Abrir Vendas',
@@ -40,6 +60,9 @@ function HubVendedor() {
     <div className="container">
       <header>
         <h1>Hub Vendedor</h1>
+        <button onClick={handleLogout} className="logout-button">
+          Logoff
+        </button>
       </header>
 
       <div className="actions-grid">

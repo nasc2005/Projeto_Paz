@@ -52,33 +52,33 @@ class UsuarioRepository {
     public function insertUsuario(Usuario $usuario) {
         $id_instituicao = $usuario->getIdInstituicao();
         $nome = $usuario->getNome();
+        $telefone = $usuario->getTelefone();
         $email = $usuario->getEmail();
         $senha = $usuario->getSenha();
-        $perfil = $usuario->getPerfil();
         $cpf = $usuario->getCpf();
-        $telefone = $usuario->getTelefone();
+        $perfil = $usuario->getPerfil();
         $data_nasc = $usuario->getDataNasc();
         $imagem = $usuario->getImagem();
 
         $query = "INSERT INTO $this->table 
                     (
                     id_instituicao,
-                    nome, email, senha, perfil, cpf, 
-                    telefone, data_nasc, imagem
+                    nome, telefone, email, senha, perfil, cpf, 
+                     data_nasc, imagem
                     )
                   VALUES (
                     :id_instituicao, 
-                    :nome, :email, :senha, :perfil, :cpf, 
-                    :telefone, :data_nasc, :imagem
+                    :nome, :telefone, :email, :senha, :perfil,
+                    :cpf, :data_nasc, :imagem
                     )";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_instituicao", $id_instituicao);
         $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":telefone", $telefone);
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":senha", $senha);
-        $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":cpf", $cpf);
-        $stmt->bindParam(":telefone", $telefone);
+        $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":data_nasc", $data_nasc);
         $stmt->bindParam(":imagem", $imagem);
         

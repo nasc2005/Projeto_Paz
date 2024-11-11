@@ -1,9 +1,22 @@
 import { React, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // Importar Link do React Router
+import { Link, useNavigate} from 'react-router-dom'; // Importar Link do React Router
 import '../styles/visualizar-estatisticas.css'; // Importe o arquivo CSS para este componente
 import { readUsuarios } from '../services/api-usuarios';
 
 function Estatisticas() {
+  const [instId, setInstId] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const id = localStorage.getItem('instId');
+    if (id) {
+      setInstId(id);
+    } else {
+      // Se o usuário não estiver logado, redirecione para a página de login
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const [usuarios, setUsuarios] = useState([]);
 
   // Função para buscar usuários
@@ -53,7 +66,7 @@ function Estatisticas() {
         <Link to="/cadastrar-vendedor">
           <button>Cadastrar Vendedor</button>
         </Link>
-        <Link to="/editar-instituicao">
+        <Link to={instId ? `/editar-instituicao/${instId}` : '/login'}>
           <button>Editar Instituição</button>
         </Link>
       </div>
