@@ -1,22 +1,28 @@
 // src/pages/Vendendo.jsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Para navegação entre páginas
+import { React, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/vendendo.css'; // Estilo correspondente à página
+import { readProdutos } from '../services/api-produtos';
+
 //import { readLugares } from '../services/api-lugares';
 //import { postVenda } from '../services/api-vendas';
 //import { postItensVenda } from '../services/api-itensVenda'
-//import { readProdutos } from '../services/api-produtos';
 
 function Vendendo() {
   // Estado para armazenar os itens no carrinho
   const [carrinho, setCarrinho] = useState([]);
+  const [produtos, setProdutos] = useState([]);
 
-  // Produtos disponíveis
-  const produtos = [
-    { id: 1, nome: 'Produto A', preco: 50.00 },
-    { id: 2, nome: 'Produto B', preco: 30.00 },
-    { id: 3, nome: 'Produto C', preco: 20.00 }
-  ];
+  async function getProdutos() {
+    const response = await readProdutos();
+    setProdutos(response);
+  }
+
+  useEffect(() => {
+    getProdutos();
+  }, []);
+
+  const navigate = useNavigate();
 
   // Função para adicionar produtos ao carrinho
   const adicionarAoCarrinho = (produto) => {
@@ -34,8 +40,8 @@ function Vendendo() {
 
         <ul>
           {produtos.map((produto) => (
-            <li key={produto.id}>
-              {produto.nome} - R$ {produto.preco.toFixed(2)} 
+            <li key={produto.id_produto}>
+              {produto.nome} - R$ {produto.valor_venda.toFixed(2)} 
               <button 
                 className="btn-add-to-cart"
                 onClick={() => adicionarAoCarrinho(produto)}

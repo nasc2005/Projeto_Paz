@@ -1,29 +1,51 @@
-// src/pages/AbrirVendas.jsx
-import React, { useState } from 'react';
+import { React, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';  // Importando o hook useNavigate para navegação
 import '../styles/abrir-vendas.css';
+import { readLugares } from '../services/api-lugares';
+import { readProdutos } from '../services/api-produtos';
 
 function AbrirVendas() {
-  const [products, setProducts] = useState([{ id: 1, value: '' }]);
-  const navigate = useNavigate();  // Hook para navegação
+  const [products, setProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([{ id: 1, value: '' }]); // Para produtos selecionados
+  const [lugares, setLugares] = useState([]);
+
+  async function getProdutos() {
+    const response = await readProdutos();
+    setProducts(response); // Define a lista de produtos disponíveis
+  }
+
+  useEffect(() => {
+    getProdutos();
+  }, []);
+
+  async function getLugares() {
+    const response = await readLugares();
+    setLugares(response); // Define a lista de lugares disponíveis
+  }
+
+  useEffect(() => {
+    getLugares();
+  }, []);
+
+  const navigate = useNavigate();
 
   // Função para adicionar um novo campo de produto
   const addProductField = () => {
-    setProducts([...products, { id: products.length + 1, value: '' }]);
+    setSelectedProducts([...selectedProducts, { id: selectedProducts.length + 1, value: '' }]);
   };
 
   // Função para atualizar o valor de um produto selecionado
   const handleProductChange = (index, event) => {
-    const updatedProducts = [...products];
+    const updatedProducts = [...selectedProducts];
     updatedProducts[index].value = event.target.value;
-    setProducts(updatedProducts);
+    setSelectedProducts(updatedProducts);
   };
 
   // Função para remover um campo de produto
   const removeProductField = (index) => {
-    const updatedProducts = products.filter((_, i) => i !== index);
-    setProducts(updatedProducts);
+    const updatedProducts = selectedProducts.filter((_, i) => i !== index);
+    setSelectedProducts(updatedProducts);
   };
 
   // Função para notificar falta de produto
@@ -42,7 +64,7 @@ function AbrirVendas() {
     // Lógica adicional para enviar a venda (se necessário)
 
     // Navegar para a página "vendendo" após o envio do formulário
-    navigate('/vendendo');  // Redireciona para a página 'vendendo'
+    navigate('/vendendo');
   };
 
   return (
@@ -53,13 +75,15 @@ function AbrirVendas() {
 
       <form onSubmit={handleSubmit} className="sales-form">
         <div className="form-group">
-          <label htmlFor="date">Data da Venda:</label>
-          <input type="date" id="date" name="date" required />
-        </div>
-
-        <div className="form-group">
           <label htmlFor="location">Local de Venda:</label>
-          <input type="text" id="location" name="location" placeholder="Digite o local de venda" required />
+          <select id="location" name="location" required>
+            <option value="">Selecione um lugar</option>
+            {lugares.map((lugar) => (
+              <option key={lugar.id_lugar} value={lugar.id_lugar}>
+                {lugar.apelido}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
@@ -70,19 +94,20 @@ function AbrirVendas() {
         <div className="form-group">
           <label htmlFor="products">Produtos:</label>
           <div id="product-list">
-            {products.map((product, index) => (
-              <div className="product-item" key={product.id}>
+            {selectedProducts.map((selectedProduct, index) => (
+              <div className="product-item" key={selectedProduct.id}>
                 <select
                   name="products[]"
-                  value={product.value}
+                  value={selectedProduct.value}
                   onChange={(e) => handleProductChange(index, e)}
                   required
                 >
                   <option value="">Selecione um produto</option>
-                  <option value="produto1">Produto 1</option>
-                  <option value="produto2">Produto 2</option>
-                  <option value="produto3">Produto 3</option>
-                  <option value="produto4">Produto 4</option>
+                  {products.map((product) => (
+                    <option key={product.id_produto} value={product.id_produto}>
+                      {product.nome} - R$ {product.valor_venda.toFixed(2)}
+                    </option>
+                  ))}
                 </select>
                 <button
                   type="button"
