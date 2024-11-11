@@ -27,6 +27,7 @@ import EstoqueProdutos from './pages/visualizar-estoque';
 import VisualizarLugares from './pages/visualizar-lugares';
 import VisualizarMetas from './pages/visualizar-metas';
 import VendasConcluidas from './pages/visualizar-vendas-concluidas';
+import NovaSenha from './pages/nova-senha';
 
 function AppRouter() {
   return (
@@ -58,6 +59,7 @@ function AppRouter() {
         <Route path="/visualizar-lugares" element={<VisualizarLugares/>} />
         <Route path="/visualizar-metas" element={<VisualizarMetas/>} />
         <Route path="/visualizar-vendas-concluidas" element={<VendasConcluidas/>} />
+        <Route path="/nova-senha" element={<NovaSenha/>} />
       </Routes>
     </Router>
   );
