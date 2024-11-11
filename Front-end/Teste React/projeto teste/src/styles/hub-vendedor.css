@@ -31,13 +31,6 @@ header h1 {
     font-size: 2rem;
 }
 
-.actions-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
 .card {
     background-color: #ffffff;
     border-radius: 12px;

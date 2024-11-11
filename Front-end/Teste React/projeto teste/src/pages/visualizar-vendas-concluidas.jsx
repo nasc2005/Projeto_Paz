@@ -11,7 +11,6 @@ function VendasConcluidas() {
   async function getVendas() {
     const response = await readVendas();
     setVendas(response);
-  
   }
 
   useEffect(() => {
@@ -24,19 +23,31 @@ function VendasConcluidas() {
         <h1>Vendas Concluídas</h1>
       </header>
 
-      <div className="sales-list">
-        <ul>
-          {vendas.map((venda) => (
-            <li key={venda.id_venda}>
-              <span>
-                Venda #{venda.id_venda} - R$ {venda.valor_total} - {venda.forma_pagamento} - {venda.data_criacao} - 
-              </span>
-              <Link to={`/venda-concluida/${venda.id_venda}`} className="btn-view-sale">
-                Visualizar
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <div className="sales-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Venda #</th>
+              <th>Valor Total</th>
+              <th>Forma de Pagamento</th>
+              <th>Data da Venda</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vendas.map((venda) => (
+              <tr key={venda.id_venda}>
+                <td>{venda.id_venda}</td>
+                <td>R$ {venda.valor_total.toFixed(2)}</td>
+                <td>{venda.forma_pagamento}</td>
+                <td>{new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(venda.data_criacao))}</td>
+                <td>
+                  <Link to={`/venda-concluida/${venda.id_venda}`} className="btn-view-sale">Visualizar</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <footer>

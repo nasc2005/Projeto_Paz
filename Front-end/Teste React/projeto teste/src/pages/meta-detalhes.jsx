@@ -1,7 +1,8 @@
 // src/pages/DetalhesMeta.jsx
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import '../styles/meta-detalhes.css';  // Certifique-se de ter o arquivo CSS correspondente
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import '../styles/meta-detalhes.css';
+import Swal from 'sweetalert2'; // Importa o SweetAlert2
 import { readMetaById } from '../services/api-metas';
 
 function DetalhesMeta() {
@@ -23,7 +24,23 @@ function DetalhesMeta() {
 
   // Função para lidar com o encerramento da meta
   const handleEncerrarMeta = () => {
-    alert("Meta encerrada!");
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: "Você quer realmente encerrar essa meta?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, encerrar meta!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Encerrada!',
+          'A meta foi encerrada com sucesso.',
+          'success'
+        );
+      }
+    });
   };
 
   // Função para redirecionar para a página de criar meta
@@ -41,12 +58,12 @@ function DetalhesMeta() {
           <h2>{meta.nome || ''}</h2>
           <p><strong>Valor: R$ </strong> {meta.valor || ''}</p>
           <p><strong>Progresso Atual:</strong> trabalhando nisso</p>
-          <p><strong>Data de Início:</strong> {meta.data_criacao || ''}</p>
+          <p><strong>Data de Início:</strong> {new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(meta.data_criacao))}</p>
           <p><strong>Data de Término:</strong> trabalhando nisso</p>
           <p><strong>Status:</strong> {meta.status_meta || ''}</p>
 
           <div className="actions">
-            <button className="btn-edit" onClick={handleEditarMeta}>Editar Meta</button>
+            <Link to="/editar-meta" className="btn-edit" onClick={handleEditarMeta}>Editar Meta</Link>
             <button className="btn-close" onClick={handleEncerrarMeta}>Encerrar Meta</button>
           </div>
         </div>

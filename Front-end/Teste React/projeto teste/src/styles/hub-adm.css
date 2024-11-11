@@ -34,7 +34,7 @@ header h1 {
 /* Layout padrão para desktop */
 .actions-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 cards por linha no desktop */
+    grid-template-columns: repeat(5, 1fr); /* 3 cards por linha no desktop */
     gap: 20px;
     padding: 20px;
 }

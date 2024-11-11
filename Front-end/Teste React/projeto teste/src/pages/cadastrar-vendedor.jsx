@@ -43,8 +43,8 @@ function CadastrarVendedor() {
     try {
       await postUsuario(novoUsuario);
       Swal.fire({
-        title: 'Usuário Cadastrado!',
-        text: 'A usuário foi cadastrado com sucesso.',
+        title: 'Vendedor Cadastrado!',
+        text: 'O vendedor foi cadastrado com sucesso.',
         icon: 'success',
         confirmButtonText: 'OK'
       }).then(() => {
@@ -55,10 +55,10 @@ function CadastrarVendedor() {
       // Resetar o formulário após o envio (opcional)
       setVendedor({ nome: '', email: '', telefone: '', senha: '', cpf: '',  data_nasc: '', imagem: '' });
     } catch (error) {
-      console.error("Erro ao cadastrar usuário:", error);
+      console.error("Erro ao cadastrar vendedor:", error);
       Swal.fire({
         title: 'Erro!',
-        text: 'Não foi possível cadastrar a usuário.',
+        text: 'Não foi possível cadastrar o vendedor.',
         icon: 'error',
         confirmButtonText: 'OK'
       });

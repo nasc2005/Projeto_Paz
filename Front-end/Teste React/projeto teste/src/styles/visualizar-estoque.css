@@ -1,3 +1,4 @@
+/* Fonte e estilos gerais */
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap');
 
 * {
@@ -31,21 +32,34 @@ header h1 {
     font-size: 2rem;
 }
 
-.product-list {
+/* Estilização da tabela de produtos */
+.product-table {
     padding: 20px;
 }
 
-.product-list ul {
-    list-style-type: none;
+.product-table table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.product-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    margin-bottom: 10px;
+.product-table th,
+.product-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+    background-color: #32bacc;
+    color: #ffffff;
+}
+
+.product-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.product-table tr:hover {
+    background-color: #e0f7fa;
 }
 
 .btn-edit {
@@ -58,6 +72,7 @@ header h1 {
     cursor: pointer;
 }
 
+/* Botão de adicionar produto */
 .btn-add-product {
     margin: 20px;
     padding: 15px;
@@ -72,6 +87,7 @@ header h1 {
     cursor: pointer;
 }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 10px;

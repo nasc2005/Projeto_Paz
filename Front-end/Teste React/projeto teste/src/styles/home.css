@@ -16,7 +16,6 @@ body {
 
 .container {
     width: 100%;
-    max-width: 600px;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -58,6 +57,7 @@ p {
 }
 
 .btn:hover {
+    color: white;
     background-color: #1a616a;
 }
 

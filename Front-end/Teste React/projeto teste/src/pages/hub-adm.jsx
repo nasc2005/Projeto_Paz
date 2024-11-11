@@ -30,7 +30,7 @@ function HubAdm() {
     },
     {
       title: 'Visualizar Lugares',
-      description: 'Gerencie os lugares disponíveis.',
+      description: 'Gerencie os lugares disponíveis na sua instituição.',
       imgSrc: visualizarLugaresImg,
       link: '/visualizar-lugares',
     },
@@ -47,8 +47,8 @@ function HubAdm() {
       link: '/cadastro-adm',
     },
     {
-      title: 'Visualizar Vendas Concluídas',
-      description: 'Veja as vendas que foram finalizadas.',
+      title: 'Vendas Concluídas',
+      description: 'Veja todas as vendas que foram finalizadas.',
       imgSrc: visualizarVendasImg,
       link: '/visualizar-vendas-concluidas',
     },
@@ -60,7 +60,7 @@ function HubAdm() {
     },
     {
       title: 'Visualizar Relatórios',
-      description: 'Acesse relatórios detalhados de vendas.',
+      description: 'Acesse os relatórios detalhados de vendas.',
       imgSrc: visualizarRelatorioImg,
       link: '/visualizar-relatorios',
     },

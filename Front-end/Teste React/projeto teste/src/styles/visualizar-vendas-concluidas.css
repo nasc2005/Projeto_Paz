@@ -1,3 +1,4 @@
+/* Fonte e estilos gerais */
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap');
 
 * {
@@ -31,21 +32,34 @@ header h1 {
     font-size: 2rem;
 }
 
-.sales-list {
+/* Estilização da tabela de vendas */
+.sales-table {
     padding: 20px;
 }
 
-.sales-list ul {
-    list-style-type: none;
+.sales-table table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.sales-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    margin-bottom: 10px;
+.sales-table th,
+.sales-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.sales-table th {
+    background-color: #32bacc;
+    color: #ffffff;
+}
+
+.sales-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.sales-table tr:hover {
+    background-color: #e0f7fa;
 }
 
 .btn-view-sale {
@@ -58,6 +72,7 @@ header h1 {
     cursor: pointer;
 }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 10px;

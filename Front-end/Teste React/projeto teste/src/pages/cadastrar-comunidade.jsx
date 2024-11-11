@@ -40,11 +40,11 @@ function CadastrarComunidade() {
         icon: 'success',
         confirmButtonText: 'OK'
       }).then(() => {
-        // Redirecionar para a página de listagem de comunidades (ou qualquer outra página)
-        navigate('/visualizar-lugares'); // Substitua '/comunidades' pelo caminho correto
+        // Redirecionar para a página de listagem de comunidades
+        navigate('/visualizar-lugares');
       });
       
-      // Resetar o formulário após o envio (opcional)
+      // Resetar o formulário após o envio
       setCommunity({ apelido: '', endereco: '', numero: '', arranjo: '' });
     } catch (error) {
       console.error("Erro ao cadastrar comunidade:", error);

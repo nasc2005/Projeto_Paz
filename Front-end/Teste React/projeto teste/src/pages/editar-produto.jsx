@@ -58,7 +58,7 @@ function EditarProduto() {
       // Preparar dados para envio (pode incluir lógica de upload de imagem aqui)
       await putProduto(produto);
       Swal.fire({
-        title: 'Produto Atualizada!',
+        title: 'Produto Atualizado!',
         text: 'As informações do produto foram atualizadas com sucesso.',
         icon: 'success',
         confirmButtonText: 'OK'
@@ -84,7 +84,7 @@ function EditarProduto() {
           await deleteProduto(id);
           Swal.fire({
             title: 'Produto Excluído!',
-            text: 'O produto foi excluída com sucesso.',
+            text: 'O produto foi excluído com sucesso.',
             icon: 'success',
             confirmButtonText: 'OK'
           }).then(() => navigate('/visualizar-estoque'));

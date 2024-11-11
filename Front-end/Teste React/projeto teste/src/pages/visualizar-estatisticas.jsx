@@ -39,10 +39,7 @@ function Estatisticas() {
           {/* Lista dinâmica de usuários */}
           {usuarios.map((usuario) => (
             <li key={usuario.id_usuario}>
-              {usuario.nome} - 
-              {usuario.perfil} - 
-              {usuario.email} - 
-              {usuario.telefone}
+              {usuario.nome} - {usuario.perfil} - {usuario.email} - {usuario.telefone}
             </li>
           ))}
         </ul>

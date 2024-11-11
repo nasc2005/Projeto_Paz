@@ -57,6 +57,7 @@ function EditarMeta() {
         title: 'Meta Atualizada!',
         text: 'As informações da meta foram atualizadas com sucesso.',
         icon: 'success',
+        confirmButtonColor: '#32bacc',
         confirmButtonText: 'OK'
       }).then(() => navigate('/visualizar-metas'));
     } catch (error) {
@@ -72,15 +73,17 @@ function EditarMeta() {
       text: 'Você não poderá reverter isso!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sim, excluir',
+      confirmButtonColor: '#32bacc',
+      cancelButtonColor: '#acbcb4',
+      confirmButtonText: 'Sim, encerrar',
       cancelButtonText: 'Cancelar',
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await deleteMeta(id);
           Swal.fire({
-            title: 'Meta Excluída!',
-            text: 'A meta foi excluída com sucesso.',
+            title: 'Meta Encerrada!',
+            text: 'A meta foi encerrada com sucesso.',
             icon: 'success',
             confirmButtonText: 'OK'
           }).then(() => navigate('/visualizar-metas'));

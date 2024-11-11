@@ -53,13 +53,13 @@ function EditarConta() {
     try {
       await putUsuario(usuario); // Atualiza os dados do usuario
       Swal.fire({
-        title: 'Usuario Atualizado!',
-        text: 'As informações da usuario foram atualizadas com sucesso.',
+        title: 'Conta Atualizada!',
+        text: 'As suas informações foram atualizadas com sucesso.',
         icon: 'success',
         confirmButtonText: 'OK'
       }).then(() => navigate('/visualizar-estatisticas'));
     } catch (error) {
-      console.error("Erro ao atualizar a usuario:", error);
+      console.error("Erro ao atualizar:", error);
     } finally {
       setIsLoading(false);
     }
