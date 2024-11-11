@@ -14,29 +14,42 @@ class VendaService {
     }
 
     public function create($data) {
-        if (!isset($data->id_usuario, $data->id_lugar, $data->id_imgsVenda, $data->total, $data->status_venda, $data->forma_pagamento)) {
+        if (!isset($data->id_usuario, $data->id_lugar, $data->id_imgsVenda, $data->total, $data->status_venda)) {
             http_response_code(400);
-            echo json_encode(["error" => "Dados incompletos para a criação do venda."]);
+            echo json_encode(["error" => "Dados incompletos para a criação da venda."]);
             return;
         }
-        
+    
+        if (empty($data->id_usuario) || empty($data->id_lugar) || empty($data->id_imgsVenda) || empty($data->total) || empty($data->status_venda)) {
+            http_response_code(400);
+            echo json_encode(["error" => "Campos obrigatórios estão vazios."]);
+            return;
+        }
+    
         $venda = new Venda();
         $venda->setIdUsuario($data->id_usuario);
         $venda->setIdLugar($data->id_lugar);
         $venda->setIdImgsVenda($data->id_imgsVenda);
         $venda->setTotal($data->total);
-        $venda->setStatusVenda($data->status_venda);
         $venda->setFormaPagamento($data->forma_pagamento);
+        $venda->setStatusVenda($data->status_venda);
         $venda->setInsertDateTime(new DateTime());
-
-        if ($this->repository->insertVenda($venda)) {
+    
+        // Agora insertVenda retorna o ID da venda
+        $id_venda = $this->repository->insertVenda($venda);
+    
+        if ($id_venda) {
             http_response_code(201);
-            echo json_encode(["message" => "Venda criada com sucesso."]);
+            echo json_encode([
+                "message" => "Venda criada com sucesso.",
+                "id_venda" => $id_venda // Retorna o ID da venda criada
+            ]);
         } else {
             http_response_code(500);
             echo json_encode(["error" => "Erro ao criar venda."]);
         }
     }
+    
    
     public function read($venda_id = null) {
         if ($venda_id) {
@@ -79,30 +92,39 @@ class VendaService {
     }
 
     public function update($data) {
-        if (!isset($data->id_venda, $data->id_usuario, $data->id_lugar, $data->id_imgsVenda, $data->total, $data->status_venda, $data->forma_pagamento, $data->estoque)) {
+        // Verifica se os campos necessários para a atualização estão presentes
+        if (!isset($data->id_venda, $data->total, $data->forma_pagamento, $data->status_venda)) {
             http_response_code(400);
-            echo json_encode(["error" => "Dados incompletos para atualização da venda."]);
+            echo json_encode(["error" => "Dados incompletos para a atualização da venda."]);
             return;
         }
-
+    
+        // Verifica se campos obrigatórios estão vazios ou nulos
+        if (empty($data->total) || empty($data->status_venda)) {
+            http_response_code(400);
+            echo json_encode(["error" => "Campos obrigatórios estão vazios."]);
+            return;
+        }
+    
+        // Criação da venda (sem mudar os campos não informados)
         $venda = new Venda();
         $venda->setId($data->id_venda);
-        $venda->setIdUsuario($data->id_usuario);
-        $venda->setIdLugar($data->id_lugar);
-        $venda->setIdImgsVenda($data->id_imgsVenda);
         $venda->setTotal($data->total);
-        $venda->setStatusVenda($data->status_venda);
         $venda->setFormaPagamento($data->forma_pagamento);
-        $venda->setInsertDateTime(new DateTime());
-
+        $venda->setStatusVenda($data->status_venda);
+    
+        // Chama o método para atualizar a venda no banco de dados
         if ($this->repository->updateVenda($venda)) {
             http_response_code(200);
-            echo json_encode(["message" => "Venda atualizada com sucesso."]);
+            echo json_encode([
+                "message" => "Venda atualizada com sucesso.",
+                "id_venda" => $data->id_venda // Retorna o ID da venda atualizada
+            ]);
         } else {
             http_response_code(500);
             echo json_encode(["error" => "Erro ao atualizar venda."]);
         }
-    }
+    }    
 
     public function delete($id) {
         if ($this->repository->deleteVenda($id)) {

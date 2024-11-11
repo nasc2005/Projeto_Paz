@@ -5,15 +5,19 @@ const api = axios.create({
 });
 
 // Função para obter a lista de vendas
-export async function readItensVendas() {
+export async function readItensVenda() {
     const response = await api.get('/itens-vendas');
     return response.data;
 }
 
-// Função para buscar uma venda específica pelo ID
-export async function readItemVendaById(id) {
-    const response = await api.get(`/item-venda?id=${id}`);
-    return response.data;
+export async function readItensVendaByIdVenda(id) {
+    try {
+        const response = await api.get(`/item-venda?id=${id}`);
+        return response.data;  // Espera-se que `response.data` seja um array de itens
+    } catch (error) {
+        console.error('Erro ao buscar itens da venda:', error);
+        return [];  // Retorna um array vazio em caso de erro
+    }
 }
 
 // Função para criar uma nova venda

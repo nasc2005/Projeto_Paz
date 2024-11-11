@@ -46,14 +46,14 @@ class ItensVendaRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getItensVendaById($itensVenda_id) {
-        $query = "SELECT * FROM $this->table WHERE id_itensVenda = :id";
+    public function getItensVendaByIdVenda($itensVenda_id) {
+        $query = "SELECT * FROM $this->table WHERE id_venda = :id_venda";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $itensVenda_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_venda", $itensVenda_id, PDO::PARAM_INT);
         $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Altere para fetchAll() para pegar todos os itens
+    }    
 
     public function updateItensVenda(ItensVenda $itensVenda) {
         $id_itensVenda = $itensVenda->getId();

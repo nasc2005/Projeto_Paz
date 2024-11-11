@@ -194,7 +194,7 @@ ALTER TABLE `itens_vendas`
 --
 ALTER TABLE `lugares`
   ADD PRIMARY KEY (`id_lugar`),
-  ADD KEY `id_instituicao_idx` (`id_instituicaoLugar`);
+  ADD KEY `id_instituicao_idx` (`id_instituicao`);
 
 --
 -- Índices de tabela `metas`
@@ -222,9 +222,9 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `vendas`
   ADD PRIMARY KEY (`id_venda`),
-  ADD KEY `id_usuario_idx` (`id_usuarioVenda`),
+  ADD KEY `id_usuario_idx` (`id_usuario`),
   ADD KEY `id_imgsVenda_idx` (`id_imgsVenda`),
-  ADD KEY `id_lugarVenda_idx` (`id_lugarVenda`);
+  ADD KEY `id_lugarVenda_idx` (`id_lugar`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas

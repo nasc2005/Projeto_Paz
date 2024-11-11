@@ -49,7 +49,7 @@ class VendaRepository {
                   FROM $this->table v
                   JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
-                  WHERE v.id_usuarioVenda = :id
+                  WHERE v.id_usuario = :id
                   GROUP BY v.id_venda, v.data_criacao";
     
         $stmt = $this->conn->prepare($query);
@@ -64,7 +64,7 @@ class VendaRepository {
                   FROM $this->table v
                   JOIN itens_vendas iv ON iv.id_venda = v.id_venda
                   JOIN produtos p ON p.id_produto = iv.id_produto
-                  WHERE v.id_lugarVenda = :id
+                  WHERE v.id_lugar = :id
                   GROUP BY v.id_venda, v.data_criacao";
     
         $stmt = $this->conn->prepare($query);
@@ -93,61 +93,52 @@ class VendaRepository {
     
 
     public function insertVenda(Venda $venda) {
-        $idUsuario = $venda->getIdUsuario();
-        $idLugar = $venda->getIdLugar();
-        $idImgsVenda = $venda->getIdImgsVenda();
+        $id_usuario = $venda->getIdUsuario();
+        $id_lugar = $venda->getIdLugar();
+        $id_imgsVenda = $venda->getIdImgsVenda();
         $total = $venda->getTotal();
-        $statusVenda = $venda->getStatusVenda();
-        $formaPagamento = $venda->getFormaPagamento();
-
+        $forma_pagamento = $venda->getFormaPagamento();
+        $status_venda = $venda->getStatusVenda();
+    
         $query = "INSERT INTO $this->table (
                     id_usuario, id_lugar, id_imgsVenda,
-                    total, status_venda, formaPagamento
-                    )
+                    total, forma_pagamento, status_venda 
+                  )
                   VALUES (
-                    :idUsuario, :idLugar, :idImgsVenda, 
-                    :total, :statusVenda, :formaPagamento
-                    )";
+                    :id_usuario, :id_lugar, :id_imgsVenda, 
+                    :total, :forma_pagamento, :status_venda
+                  )";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idUsuario", $idUsuario);
-        $stmt->bindParam(":idLugar", $idLugar);
-        $stmt->bindParam(":idImgsVenda", $idImgsVenda);
+        $stmt->bindParam(":id_usuario", $id_usuario);
+        $stmt->bindParam(":id_lugar", $id_lugar);
+        $stmt->bindParam(":id_imgsVenda", $id_imgsVenda);
         $stmt->bindParam(":total", $total);
-        $stmt->bindParam(":statusVenda", $statusVenda);
-        $stmt->bindParam(":formaPagamento", $formaPagamento);
+        $stmt->bindParam(":forma_pagamento", $forma_pagamento);
+        $stmt->bindParam(":status_venda", $status_venda);
+    
+        // Execute a query e retorna o ID gerado
+        if ($stmt->execute()) {
+            return $this->conn->lastInsertId(); // Retorna o ID da venda inserida
+        } else {
+            return false;
+        }
+    }    
 
-        return $stmt->execute();
-    }
-
-    public function updateVenda(Venda $venda) {
-        $venda_id = $venda->getId();
-        $idUsuario = $venda->getIdUsuario();
-        $idLugar = $venda->getIdLugar();
-        $idImgsVenda = $venda->getIdImgsVenda();
-        $total = $venda->getTotal();
-        $statusVenda = $venda->getStatusVenda();
-        $formaPagamento = $venda->getFormaPagamento();
-
-        $query = "UPDATE $this->table SET 
-                    id_usuario = :idUsuario, 
-                    id_lugar = :idLugar, 
-                    id_imgsVenda = :idImgsVenda,
-                    total = :total, 
-                    status_venda = :statusVenda, 
-                    forma_pagamento = :formaPagamento
-                  WHERE id_venda = :id";
-
+    public function updateVenda($venda) {
+        $query = "UPDATE $this->table
+                  SET total = :total,
+                      forma_pagamento = :forma_pagamento,
+                      status_venda = :status_venda
+                  WHERE id_venda = :id_venda";
+    
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idUsuario", $idUsuario);
-        $stmt->bindParam(":idLugar", $idLugar);
-        $stmt->bindParam(":idImgsVenda", $idImgsVenda);
-        $stmt->bindParam(":total", $total);
-        $stmt->bindParam(":statusVenda", $statusVenda);
-        $stmt->bindParam(":formaPagamento", $formaPagamento);
-        $stmt->bindParam(":id", $venda_id);
-
+        $stmt->bindParam(":total", $venda->getTotal());
+        $stmt->bindParam(":forma_pagamento", $venda->getFormaPagamento());
+        $stmt->bindParam(":status_venda", $venda->getStatusVenda());
+        $stmt->bindParam(":id_venda", $venda->getId());
+    
         return $stmt->execute();
-    }
+    }    
 
     public function deleteVenda($venda_id) {
         $query = "DELETE FROM $this->table WHERE id_venda = :id";

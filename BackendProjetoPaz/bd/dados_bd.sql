@@ -17,7 +17,7 @@ VALUES
 (4, 'Pedro Gomes', '11943210987', 'pedro.gomes@example.com', 'senha202', '321.654.987-00', 'Administrador', '1995-09-20', 'https://example.com/user5.png');
 
 /* TABELA DE LUGARES */
-INSERT INTO `lugares` (id_instituicaoLugar, apelido, endereco, numero, arranjo)
+INSERT INTO `lugares` (id_instituicao, apelido, endereco, numero, arranjo)
 VALUES 
 (1, 'Auditório Central', 'Rua das Flores', '123', 'Palco frontal'),
 (2, 'Campo de Futebol', 'Av. Esportiva', '456', 'Gramado aberto'),
@@ -44,7 +44,7 @@ VALUES
 ('https://example.com/pix5.png', 'https://example.com/dinheiro5.png', 'https://example.com/comprovante5.png');
 
 /* TABELA DE VENDAS */
-INSERT INTO `vendas` (id_usuarioVenda, id_lugarVenda, id_imgsVenda, total, forma_pagamento, status_venda)
+INSERT INTO `vendas` (id_usuario, id_lugar, id_imgsVenda, total, forma_pagamento, status_venda)
 VALUES 
 (1, 1, 1, 300.00, 'PIX', 'Concluída'),
 (2, 2, 2, 150.00, 'Dinheiro', 'Pendente'),

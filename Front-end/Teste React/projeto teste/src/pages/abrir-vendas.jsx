@@ -58,12 +58,29 @@ function AbrirVendas() {
     });
   };
 
-  // Função para enviar o formulário e redirecionar para "vendendo"
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica adicional para enviar a venda (se necessário)
 
-    // Navegar para a página "vendendo" após o envio do formulário
+    // Extrai o ID do lugar selecionado
+    const selectedLocationId = document.getElementById('location').value;
+
+    // Armazena o ID do lugar no localStorage
+    localStorage.setItem('selectedLocationId', selectedLocationId);
+  
+    // Extrai os produtos selecionados e formata-os para armazenar no localStorage
+    const productsToSave = selectedProducts.map((selectedProduct) => {
+      const product = products.find((p) => p.id_produto === Number(selectedProduct.value));
+      return {
+        id_produto: product?.id_produto,
+        nome: product?.nome,
+        valor_venda: product?.valor_venda,
+      };
+    });
+  
+    // Armazena os produtos selecionados no localStorage
+    localStorage.setItem('selectedProducts', JSON.stringify(productsToSave));
+  
+    // Navega para a página "vendendo" após o envio do formulário
     navigate('/vendendo');
   };
 
@@ -94,26 +111,26 @@ function AbrirVendas() {
         <div className="form-group">
           <label htmlFor="products">Produtos:</label>
           <div id="product-list">
-            {selectedProducts.map((selectedProduct, index) => (
-              <div className="product-item" key={selectedProduct.id}>
-                <select
-                  name="products[]"
-                  value={selectedProduct.value}
-                  onChange={(e) => handleProductChange(index, e)}
-                  required
-                >
-                  <option value="">Selecione um produto</option>
-                  {products.map((product) => (
-                    <option key={product.id_produto} value={product.id_produto}>
-                      {product.nome} - R$ {product.valor_venda.toFixed(2)}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  className="remove-btn"
-                  onClick={() => removeProductField(index)}
-                >
+          {selectedProducts.map((selectedProduct, index) => (
+            <div className="product-item" key={selectedProduct.value}>
+              <select
+                name="products[]"
+                value={selectedProduct.value}
+                onChange={(e) => handleProductChange(index, e)}
+                required
+              >
+                <option value="">Selecione um produto</option>
+                {products.map((product) => (
+                  <option key={product.id_produto} value={product.id_produto}>
+                    {product.nome} - R$ {product.valor_venda.toFixed(2)}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                className="remove-btn"
+                onClick={() => removeProductField(index)}
+              >
                   X
                 </button>
               </div>

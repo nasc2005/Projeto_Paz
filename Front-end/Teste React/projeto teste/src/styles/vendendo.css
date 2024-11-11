@@ -47,10 +47,43 @@ header h1 {
 .sales-list li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
     background-color: #ffffff;
     border-radius: 8px;
     margin-bottom: 10px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-btn {
+    padding: 5px;
+    background-color: #32bacc;
+    color: #f3fbfc;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn:hover {
+    background-color: #2797a5;
+}
+
+.sales-list li span {
+    flex: 1;
+    margin: 0 10px;
 }
 
 .btn-add-to-cart {

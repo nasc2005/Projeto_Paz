@@ -35,23 +35,18 @@ class ItensVendaService {
         }
     }
    
-    public function read($id = null) {
-        if ($id) {
-            $result = $this->repository->getItensVendaById($id);
-           // unset($result['senha']);
-           $status = $result ? 200 : 404;
+    public function read($id_venda = null) {
+        if ($id_venda) {
+            $result = $this->repository->getItensVendaByIdVenda($id_venda);
+            $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllItensVenda();
-            foreach ($result as &$itensVenda) {
-                //unset($itensVenda['senha']);
-            }
-            unset($itensVenda);
             $status = !empty($result) ? 200 : 404;
         }
-
+    
         http_response_code($status);
-        echo json_encode($result ?: ["message" => "Nenhum itens da venda encontrados."]);
-    }
+        echo json_encode($result ?: ["message" => "Nenhum item da venda encontrado."]);
+    }    
 
     public function update($data) {
         if (!isset($data->id_itensVenda, $data->id_produto, $data->id_venda, $data->quantidade, $data->preco_unitario, $data->subtotal)) {

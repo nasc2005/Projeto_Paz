@@ -1,32 +1,70 @@
-// src/pages/Vendendo.jsx
 import { React, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/vendendo.css'; // Estilo correspondente à página
+import '../styles/vendendo.css';
 import { readProdutos } from '../services/api-produtos';
-
-//import { readLugares } from '../services/api-lugares';
-//import { postVenda } from '../services/api-vendas';
-//import { postItensVenda } from '../services/api-itensVenda'
+import { readVendas } from '../services/api-vendas';
+import { readVendaById } from '../services/api-vendas';
+import { postVenda } from '../services/api-vendas';
+import { postItensVenda } from '../services/api-itensVendas';
 
 function Vendendo() {
-  // Estado para armazenar os itens no carrinho
   const [carrinho, setCarrinho] = useState([]);
   const [produtos, setProdutos] = useState([]);
-
-  async function getProdutos() {
-    const response = await readProdutos();
-    setProdutos(response);
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
+    async function getProdutos() {
+      const response = await readProdutos();
+      setProdutos(response);
+
+      const produtosSelecionados = JSON.parse(localStorage.getItem('selectedProducts')) || [];
+      const carrinhoInicial = produtosSelecionados.map(produto => ({
+        ...produto,
+        quantidade: 1,
+        subtotal: parseFloat(produto.valor_venda),
+      }));
+      setCarrinho(carrinhoInicial);
+    }
     getProdutos();
   }, []);
 
-  const navigate = useNavigate();
+  const finalizarVenda = async () => {
+    try {
+      const vendaData = {
+        id_usuario: localStorage.getItem('userId'),
+        id_lugar: localStorage.getItem('selectedLocationId'),
+        id_imgsVenda: 1,
+        total: carrinho.reduce((total, item) => total + item.subtotal, 0),
+        status_venda: 'Em andamento',
+        forma_pagamento: null,
+      };
 
-  // Função para adicionar produtos ao carrinho
-  const adicionarAoCarrinho = (produto) => {
-    setCarrinho([...carrinho, produto]);
+      const vendaResponse = await postVenda(vendaData);
+      const idVendaCriada = vendaResponse?.id_venda;
+      if (!idVendaCriada) {
+        console.log(idVendaCriada)
+        throw new Error('Erro ao criar venda: ID da venda não retornado');
+      }
+
+      const itensVendaData = carrinho.map((produto) => ({
+        id_produto: produto.id_produto,
+        id_venda: idVendaCriada,
+        quantidade: produto.quantidade,
+        preco_unitario: produto.valor_venda,
+        subtotal: produto.subtotal,
+      }));
+
+      await Promise.all(itensVendaData.map(item => postItensVenda(item)));
+
+      localStorage.setItem('idVenda', idVendaCriada);
+      setCarrinho([]);
+      localStorage.removeItem('selectedProducts');
+      navigate(`/finalizar-venda/${idVendaCriada}`);
+    } catch (error) {
+      console.error('Erro ao finalizar a venda:', error);
+      navigate('/finalizar-venda');
+      //alert('Ocorreu um erro ao finalizar a venda.');
+    }
   };
 
   return (
@@ -36,26 +74,19 @@ function Vendendo() {
       </header>
 
       <div className="sales-list">
-        <h2>Produtos Disponíveis</h2>
-
+        <h2>Carrinho de Compras</h2>
         <ul>
-          {produtos.map((produto) => (
+          {carrinho.map((produto) => (
             <li key={produto.id_produto}>
-              {produto.nome} - R$ {produto.valor_venda.toFixed(2)} 
-              <button 
-                className="btn-add-to-cart"
-                onClick={() => adicionarAoCarrinho(produto)}
-              >
-                Adicionar ao Carrinho
-              </button>
+              {produto.nome} - R$ {produto.valor_venda.toFixed(2)} x {produto.quantidade} = R$ {produto.subtotal.toFixed(2)}
             </li>
           ))}
         </ul>
-
-        {/* Exibindo o link para finalizar a venda */}
-        <Link to="/finalizar-venda" className="btn-finalize-sale">
+        <h3>Total: R$ {carrinho.reduce((total, item) => total + item.subtotal, 0).toFixed(2)}</h3>
+        
+        <button onClick={finalizarVenda} className="btn-finalize-sale">
           Finalizar Venda
-        </Link>
+        </button>
       </div>
 
       <footer>

@@ -49,7 +49,7 @@ function AppRouter() {
         <Route path="/editar-instituicao/:id" element={<EditarInstituicao/>} />
         <Route path="/editar-meta/:id" element={<EditarMeta/>} />
         <Route path="/editar-produto/:id" element={<EditarProduto/>} />
-        <Route path="/finalizar-venda" element={<FinalizarVenda/>} />
+        <Route path="/finalizar-venda/:id" element={<FinalizarVenda/>} />
         <Route path="/hub-adm" element={<HubAdm/>} />
         <Route path="/hub-vendedor" element={<HubVendedor/>} />
         <Route path="/meta-detalhes/:id" element={<DetalhesMeta/>} />
