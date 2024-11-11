@@ -99,6 +99,27 @@ button:hover {
     color: #32bacc;
 }
 
+.password-field {
+    position: relative;
+}
+
+.password-field input {
+    width: calc(100% - 40px);
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+
 footer {
     text-align: center;
     padding: 10px;

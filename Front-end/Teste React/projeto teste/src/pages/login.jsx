@@ -6,27 +6,20 @@ import { postLogin } from '../services/api-usuarios';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Limpar erro anterior
+    setError(null);
 
     try {
       const response = await postLogin({ email, senha: password });
       if (response.usuario) {
-        // Login bem-sucedido, redirecionar para a página desejada
-        if ((response.usuario.perfil) == 'Administrador') {
-          localStorage.setItem('userId', response.usuario.id_usuario);
-          localStorage.setItem('instId', response.usuario.id_instituicao);
-          navigate('/hub-adm');
-        }
-        if ((response.usuario.perfil) == 'Vendedor') {
-          localStorage.setItem('userId', response.usuario.id_usuario);
-          localStorage.setItem('instId', response.usuario.id_instituicao);
-          navigate('/hub-vendedor');
-        }
+        localStorage.setItem('userId', response.usuario.id_usuario);
+        localStorage.setItem('instId', response.usuario.id_instituicao);
+        navigate(response.usuario.perfil === 'Administrador' ? '/hub-adm' : '/hub-vendedor');
       } else {
         setError('Email ou senha incorretos.');
       }
@@ -56,14 +49,24 @@ function Login() {
           />
 
           <label htmlFor="password">Senha</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Digite sua senha"
-            required
-          />
+          <div className="password-field">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Digite sua senha"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="toggle-password"
+              aria-label="Mostrar ou esconder senha"
+            >
+              {showPassword ? '👁️' : '🙈'}
+            </button>
+          </div>
 
           <button type="submit">Entrar</button>
 
