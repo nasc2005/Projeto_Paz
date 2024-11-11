@@ -50,13 +50,21 @@ function AbrirVendas() {
 
   // Função para notificar falta de produto
   const notifyProductShortage = () => {
+    const navigate = useNavigate(); // useNavigate hook
+    
     Swal.fire({
-      title: 'Falta de Produto!',
-      text: 'Notificação de falta de produto enviada com sucesso.',
+      title: 'Deseja Adicionar uma nova comunidade!',
+      text: 'Aonde Você está, crie uma agora.',
       icon: 'warning',
       confirmButtonText: 'OK',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Navegar para outra tela após clicar no "OK"
+        navigate('/visualizar-lugares'); // Substitua com a rota que deseja ir
+      }
     });
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -141,9 +149,9 @@ function AbrirVendas() {
           </button>
         </div>
 
-        <button type="button" className="btn-open-sales" onClick={notifyProductShortage}>
-          Notificar Falta de Produto
-        </button>
+        {/* <button type="button" className="btn-open-sales" onClick={notifyProductShortage}>
+          Adiconar Nova Comunidade
+        </button> */}
 
         <button type="submit" className="btn-open-sales">
           Iniciar Venda

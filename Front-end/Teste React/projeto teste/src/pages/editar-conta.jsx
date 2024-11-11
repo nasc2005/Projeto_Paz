@@ -57,7 +57,7 @@ function EditarConta() {
         text: 'As suas informações foram atualizadas com sucesso.',
         icon: 'success',
         confirmButtonText: 'OK'
-      }).then(() => navigate('/visualizar-estatisticas'));
+      }).then(() => navigate('/visualizar-vendas-concluidas'));
     } catch (error) {
       console.error("Erro ao atualizar:", error);
     } finally {

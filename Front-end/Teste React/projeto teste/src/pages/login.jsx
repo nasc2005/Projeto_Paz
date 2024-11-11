@@ -71,7 +71,7 @@ function Login() {
         </form>
 
         <div className="options">
-          <Link to="/cadastroInstituicao">Cadastrar-se</Link>
+          {/* <Link to="/cadastroInstituicao">Cadastrar-se</Link> */}
           <Link to="/recuperar-senha">Esqueceu sua senha?</Link>
         </div>
       </div>

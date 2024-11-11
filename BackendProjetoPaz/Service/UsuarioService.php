@@ -56,6 +56,10 @@ class UsuarioService {
             echo json_encode(["error" => "Dados incompletos para a criação do usuário."]);
             return;
         }
+
+        $this->EnviaEmailVendedor($data->email);
+
+
         $usuario = new Usuario();
         $usuario->setIdInstituicao($data->id_instituicao);
         $usuario->setNome($data->nome);
@@ -522,8 +526,17 @@ class UsuarioService {
     }
     }
 
-    public function EnviaEmailNotificarVenda($email) {
+    public static function EnviaEmailNotificarVenda($result) {
         $mail = new PHPMailer(true);
+        
+        
+        // Verifica se a chave 'data' existe e é um array
+        if (isset($result['data']) && is_array($result['data'])) {
+            // Itera sobre cada usuário no array 'data'
+            foreach ($result['data'] as $usuario) {
+                $email = $usuario["email"];
+                
+        
         try
         {
         // Configurações do servidor
@@ -543,7 +556,7 @@ class UsuarioService {
         $mail->addAddress($email);
         // Conteúdo da mensagem
         $mail->isHTML(true);  // Seta o formato do e-mail para aceitar conteúdo HTML
-        $mail->Subject = 'Agradecimentos por estar no projeto Paz';
+        $mail->Subject = 'Nova Venda Realizada';
         $mail->Body    = '<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -640,6 +653,7 @@ class UsuarioService {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
     }
+    }}
 
     public function EnviaEmailFaltaProduto($email,$Produto) {
         $mail = new PHPMailer(true);

@@ -48,15 +48,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
                                 // Chama o serviço para obter os usuários com o perfil "Administrador"
                                 $result = $service->readByPerfil2("Administrador");
                             
-                                // Verifica se a chave 'data' existe e é um array
-                                if (isset($result['data']) && is_array($result['data'])) {
-                                    // Itera sobre cada usuário no array 'data'
-                                    foreach ($result['data'] as $usuario) {
-                                        $email = $usuario["email"];
+                       
                                         
                                         // Chama o método para enviar email para o usuário atual
-                                        $service->EnviaEmailNotificarVenda($email);
-                                    }
+                                     if(   $service->EnviaEmailNotificarVenda($result)){
+                    
                             
                                     http_response_code(200);
                                     echo json_encode([

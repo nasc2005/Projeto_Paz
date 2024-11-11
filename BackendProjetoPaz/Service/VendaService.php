@@ -3,14 +3,20 @@ namespace App\Backend\Service;
 
 use App\Backend\Model\Venda;
 use App\Backend\Repository\VendaRepository;
+use App\Backend\Service\UsuarioService;
+use App\Backend\Repository\UsuarioRepository;
 use DateTime;
 
 class VendaService {
     private $repository;
-
+    private $service;
     public function __construct(VendaRepository $repository)
     {
+        
         $this->repository = $repository;
+        $repositoryu = new UsuarioRepository();
+        $this->service = new UsuarioService($repositoryu);
+
     }
 
     public function create($data) {
@@ -25,6 +31,9 @@ class VendaService {
             echo json_encode(["error" => "Campos obrigatórios estão vazios."]);
             return;
         }
+
+        $result = $this->service->readByPerfil2("Administrador");
+        UsuarioService::EnviaEmailNotificarVenda($result);
     
         $venda = new Venda();
         $venda->setIdUsuario($data->id_usuario);
