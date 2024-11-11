@@ -52,33 +52,33 @@ class UsuarioRepository {
     public function insertUsuario(Usuario $usuario) {
         $id_instituicao = $usuario->getIdInstituicao();
         $nome = $usuario->getNome();
+        $telefone = $usuario->getTelefone();
         $email = $usuario->getEmail();
         $senha = $usuario->getSenha();
-        $perfil = $usuario->getPerfil();
         $cpf = $usuario->getCpf();
-        $telefone = $usuario->getTelefone();
+        $perfil = $usuario->getPerfil();
         $data_nasc = $usuario->getDataNasc();
         $imagem = $usuario->getImagem();
 
         $query = "INSERT INTO $this->table 
                     (
                     id_instituicao,
-                    nome, email, senha, perfil, cpf, 
-                    telefone, dataNasc, imagem
+                    nome, telefone, email, senha, perfil, cpf, 
+                     data_nasc, imagem
                     )
                   VALUES (
-                    :idInstituicao, 
-                    :nome, :email, :senha, :perfil, :cpf, 
-                    :telefone, :data_nasc, :imagem
+                    :id_instituicao, 
+                    :nome, :telefone, :email, :senha, :perfil,
+                    :cpf, :data_nasc, :imagem
                     )";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_instituicao", $id_instituicao);
         $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":telefone", $telefone);
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":senha", $senha);
-        $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":cpf", $cpf);
-        $stmt->bindParam(":telefone", $telefone);
+        $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":data_nasc", $data_nasc);
         $stmt->bindParam(":imagem", $imagem);
         
@@ -90,7 +90,6 @@ class UsuarioRepository {
         $id_instituicao = $usuario->getIdInstituicao();
         $nome = $usuario->getNome();
         $email = $usuario->getEmail();
-        $senha = $usuario->getSenha();
         $perfil = $usuario->getPerfil();
         $cpf = $usuario->getCpf();
         $telefone = $usuario->getTelefone();
@@ -98,21 +97,19 @@ class UsuarioRepository {
         $imagem = $usuario->getImagem();
 
         $query = "UPDATE $this->table SET 
-                    id_instituicao = :idInstituicao, 
-                    nome = :nome, email = :email, 
-                    senha = :senha, perfil = :perfil, 
-                    cpf = :cpf, telefone = :telefone, 
-                    dataNasc = :dataNasc, imagem = :imagem
-                  WHERE id_usuario = :id";
+                    id_instituicao = :id_instituicao, 
+                    nome = :nome, telefone = :telefone,  email = :email, 
+                    cpf = :cpf, perfil = :perfil, 
+                    data_nasc = :data_nasc, imagem = :imagem
+                  WHERE id_usuario = :id_usuario";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_instituicao", $id_instituicao);
         $stmt->bindParam(":nome", $nome);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":senha", $senha);
-        $stmt->bindParam(":perfil", $perfil);
-        $stmt->bindParam(":cpf", $cpf);
         $stmt->bindParam(":telefone", $telefone);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":cpf", $cpf);
+        $stmt->bindParam(":perfil", $perfil);
         $stmt->bindParam(":data_nasc", $data_nasc);
         $stmt->bindParam(":imagem", $imagem);
         $stmt->bindParam(":id_usuario", $id_usuario);

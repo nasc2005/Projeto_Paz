@@ -76,7 +76,7 @@ class VendaRepository {
     
     public function getDetalhesVenda($venda_id) {
         $query = "SELECT v.id_venda, v.data_criacao, v.status_venda, v.forma_pagamento, iv.quantidade,
-                         p.nome, (iv.quantidade * p.valor_venda) AS valor_item, p.valor_custo, p.valor_venda,
+                         p.id_produto, p.nome, (iv.quantidade * p.valor_venda) AS valor_item, p.valor_custo, p.valor_venda,
                          imgv.*
                   FROM vendas v
                   JOIN itens_vendas iv ON iv.id_venda = v.id_venda
@@ -101,7 +101,7 @@ class VendaRepository {
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "INSERT INTO $this->table (
-                    id_usuarioVenda, id_lugarVenda, id_imgsVenda,
+                    id_usuario, id_lugar, id_imgsVenda,
                     total, status_venda, formaPagamento
                     )
                   VALUES (
@@ -129,12 +129,12 @@ class VendaRepository {
         $formaPagamento = $venda->getFormaPagamento();
 
         $query = "UPDATE $this->table SET 
-                    id_usuarioVenda = :idUsuario, 
-                    id_lugarVenda = :idLugar, 
+                    id_usuario = :idUsuario, 
+                    id_lugar = :idLugar, 
                     id_imgsVenda = :idImgsVenda,
                     total = :total, 
                     status_venda = :statusVenda, 
-                    formaPagamento = :formaPagamento
+                    forma_pagamento = :formaPagamento
                   WHERE id_venda = :id";
 
         $stmt = $this->conn->prepare($query);

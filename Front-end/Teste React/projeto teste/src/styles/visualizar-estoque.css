@@ -1,0 +1,97 @@
+/* Fonte e estilos gerais */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: #f3fbfc;
+    color: #1a616a;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #32bacc;
+    color: #f3fbfc;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+}
+
+/* Estilização da tabela de produtos */
+.product-table {
+    padding: 20px;
+}
+
+.product-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+    background-color: #32bacc;
+    color: #ffffff;
+}
+
+.product-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.product-table tr:hover {
+    background-color: #e0f7fa;
+}
+
+.btn-edit {
+    padding: 5px 10px;
+    background-color: #32bacc;
+    color: #f3fbfc;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Botão de adicionar produto */
+.btn-add-product {
+    margin: 20px;
+    padding: 15px;
+    background-color: #32bacc;
+    color: #f3fbfc;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f3fbfc;
+    color: #acbcb4;
+    font-size: 0.8rem;
+}

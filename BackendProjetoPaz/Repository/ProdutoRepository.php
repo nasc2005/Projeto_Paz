@@ -24,20 +24,21 @@ class ProdutoRepository {
         $estoque = $produto->getEstoque();
 
         $query = "INSERT INTO $this->table (
-                    nome, valor_custo, imagem, categoria, valor_venda, descricao, estoque
-                    )
+                    nome, valor_custo, imagem, categoria, valor_venda, descricao, estoque)
                   VALUES (
-                    :nome, :valor_custo, :imagem, :categoria, :valor_venda, :descricao, :estoque
-                    )";
+                    :nome, :valor_custo, :imagem, :categoria, :valor_venda, :descricao, :estoque)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":valor_custo", $valor_custo);
-        $stmt->bindParam(":imagem", $imagem);
         $stmt->bindParam(":categoria", $categoria);
-        $stmt->bindParam(":valor_Venda", $valor_venda);
+        $stmt->bindParam(":valor_venda", $valor_venda);
         $stmt->bindParam(":descricao", $descricao);
         $stmt->bindParam(":estoque", $estoque);
+        // Bind de imagem somente se houver imagem
+        if ($imagem) {
+            $stmt->bindParam(":imagem", $imagem);
+        }
         
         return $stmt->execute();
     }
@@ -51,7 +52,7 @@ class ProdutoRepository {
     }
 
     public function getProdutoById($id_produto) {
-        $query = "SELECT * FROM $this->table WHERE id_produto = :id";
+        $query = "SELECT * FROM $this->table WHERE id_produto = :id_produto";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id_produto", $id_produto, PDO::PARAM_INT);
         $stmt->execute();
@@ -64,7 +65,7 @@ class ProdutoRepository {
         $stmt->bindParam(":categoria", $categoria, PDO::PARAM_STR);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function updateProduto(Produto $produto) {
