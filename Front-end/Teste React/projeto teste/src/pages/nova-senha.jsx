@@ -7,7 +7,6 @@ import '../styles/nova-senha.css';
 function NovaSenha() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,10 +25,6 @@ function NovaSenha() {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="container">
       <header>
@@ -41,34 +36,24 @@ function NovaSenha() {
         <p>Digite sua nova senha para atualizar sua conta</p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="new-password">Nova Senha</label>
-          <div className="password-input-container">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="new-password"
-              placeholder="Digite sua nova senha"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-            />
-            <span className="toggle-password" onClick={togglePasswordVisibility}>
-              {showPassword ? '👁️' : '🙈'}
-            </span>
-          </div>
+          <input
+            type="password"
+            id="new-password"
+            placeholder="Digite sua nova senha"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
 
           <label htmlFor="confirm-password">Confirmar Nova Senha</label>
-          <div className="password-input-container">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="confirm-password"
-              placeholder="Confirme sua nova senha"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-            <span className="toggle-password" onClick={togglePasswordVisibility}>
-              {showPassword ? '👁️' : '🙈'}
-            </span>
-          </div>
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="Confirme sua nova senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
 
           <button type="submit">Redefinir Senha</button>
         </form>
