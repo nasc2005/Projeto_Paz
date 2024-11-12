@@ -6,14 +6,14 @@ use PDO;
 
 class Meta {
     private $id;
-    private $idLugarMeta;
+    private $idLugar;
     private $usuarioCriador;
     private $insertDateTime;
     private $nome;
     private $valor;
     private $marca;
-    private $imgUrl;
-    private $status;
+    private $imagem;
+    private $statusMeta;
 
     public function getId() {
         return $this->id;
@@ -23,12 +23,12 @@ class Meta {
         $this->id = $id;
     }
 
-    public function getIdLugarMeta() {
-        return $this->idLugarMeta;
+    public function getIdLugar() {
+        return $this->idLugar;
     }
 
-    public function setIdLugarMeta($idLugarMeta) {
-        $this->idLugarMeta = $idLugarMeta;
+    public function setIdLugar($idLugar) {
+        $this->idLugar = $idLugar;
     }
 
     public function getUsuarioCriador() {
@@ -71,19 +71,19 @@ class Meta {
         $this->marca = $marca;
     }
 
-    public function getImgUrl() {
-        return $this->imgUrl;
+    public function getImagem() {
+        return $this->imagem;
     }
 
-    public function setImgUrl($imgUrl) {
-        $this->imgUrl = $imgUrl;
+    public function setImagem($imagem) {
+        $this->imagem = $imagem;
     }
 
-    public function getStatus() {
-        return $this->status;
+    public function getStatusMeta() {
+        return $this->statusMeta;
     }
 
-    public function setStatus($status) {
-        $this->status = $status;
+    public function setStatusMeta($statusMeta) {
+        $this->statusMeta = $statusMeta;
     }
 }

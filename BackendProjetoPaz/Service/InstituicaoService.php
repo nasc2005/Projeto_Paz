@@ -16,7 +16,7 @@ class InstituicaoService {
     public function create($data) {
         if (!isset($data->nome, $data->descricao, $data->logo, $data->saldo)) {
             http_response_code(400);
-            echo json_encode(["error" => "Dados incompletos para a criação do instituição."]);
+            echo json_encode(["error" => "Dados incompletos para a criação da instituição."]);
             return;
         }
         
@@ -39,30 +39,28 @@ class InstituicaoService {
     public function read($id = null) {
         if ($id) {
             $result = $this->repository->getInstituicaoById($id);
-           // unset($result['senha']);
+
             $status = $result ? 200 : 404;
         } else {
             $result = $this->repository->getAllInstituicaos();
-            foreach ($result as &$instituicao) {
-                //unset($instituicao['senha']);
-            }
+
             unset($instituicao);
             $status = !empty($result) ? 200 : 404;
         }
 
         http_response_code($status);
-        echo json_encode($result ?: ["message" => "Nenhum instituição encontrado."]);
+        echo json_encode($result ?: ["message" => "Nenhuma instituição encontrada."]);
     }
 
     public function update($data) {
-        if (!isset($data->instituicao_id, $data->descricao, $data->logo, $data->saldo)) {
+        if (!isset($data->id_instituicao, $data->descricao, $data->logo, $data->saldo)) {
             http_response_code(400);
-            echo json_encode(["error" => "Dados incompletos para atualização do instituição."]);
+            echo json_encode(["error" => "Dados incompletos para atualização da instituição."]);
             return;
         }
 
         $instituicao = new Instituicao();
-        $instituicao->setId($data->instituicao_id);
+        $instituicao->setId($data->id_instituicao);
         $instituicao->setNome($data->nome);
         $instituicao->setDescricao($data->descricao);
         $instituicao->setLogo($data->logo);
@@ -70,7 +68,7 @@ class InstituicaoService {
 
         if ($this->repository->updateInstituicao($instituicao)) {
             http_response_code(200);
-            echo json_encode(["message" => "Instituição atualizado com sucesso."]);
+            echo json_encode(["message" => "Instituição atualizada com sucesso."]);
         } else {
             http_response_code(500);
             echo json_encode(["error" => "Erro ao atualizar instituição."]);
@@ -80,7 +78,7 @@ class InstituicaoService {
     public function delete($id) {
         if ($this->repository->deleteInstituicao($id)) {
             http_response_code(200);
-            echo json_encode(["message" => "Usuário excluído com sucesso."]);
+            echo json_encode(["message" => "Institução excluída com sucesso."]);
         } else {
             http_response_code(500);
             echo json_encode(["error" => "Erro ao excluir instituição."]);

@@ -13,32 +13,6 @@ class MetaRepository {
         $this->conn = Database::getInstance(); 
     }
 
-    public function insertMeta(Meta $meta) {
-        $idLugarMeta = $meta->getIdLugarMeta();
-        $usuarioCriador = $meta->getUsuarioCriador();
-        $insertDateTime = $meta->getInsertDateTime();
-        $nome = $meta->getNome();
-        $valor = $meta->getValor();
-        $marca = $meta->getMarca();
-        $imgUrl = $meta->getImgUrl();
-        $status = $meta->getStatus();
-
-        $query = "INSERT INTO $this->table (idLugarMeta, usuarioCriador, insertDateTime, nome, valor, marca, imgUrl, status)
-                  VALUES (:idLugarMeta, :usuarioCriador, :insertDateTime, :nome, :valor, :marca, :imgUrl, :status)";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idLugarMeta", $idLugarMeta);
-        $stmt->bindParam(":usuarioCriador", $usuarioCriador);
-        $stmt->bindParam(":insertDateTime", $insertDateTime);
-        $stmt->bindParam(":nome", $nome);
-        $stmt->bindParam(":valor", $valor);
-        $stmt->bindParam(":marca", $marca);
-        $stmt->bindParam(":imgUrl", $imgUrl);
-        $stmt->bindParam(":status", $status);
-
-        return $stmt->execute();
-    }
-
     public function getAllMetas() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($query);
@@ -47,55 +21,88 @@ class MetaRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getMetaById($meta_id) {
-        $query = "SELECT * FROM $this->table WHERE id = :id";
+    public function getAllMetasByLugar($id_lugar) {
+        $query = "SELECT * FROM $this->table WHERE id_lugarMeta = :id_lugar";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $meta_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_lugar", $id_lugar, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateMeta(Meta $meta) {
-        $meta_id = $meta->getId();
-        $idLugarMeta = $meta->getIdLugarMeta();
-        $usuarioCriador = $meta->getUsuarioCriador();
-        $insertDateTime = $meta->getInsertDateTime();
+    public function getMetaById($meta_id) {
+        $query = "SELECT * FROM $this->table WHERE id_meta = :id_meta";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id_meta", $meta_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function insertMeta(Meta $meta) {
+        $id_lugar = $meta->getIdLugar();
+        $id_usuarioCriador = $meta->getUsuarioCriador();
         $nome = $meta->getNome();
         $valor = $meta->getValor();
         $marca = $meta->getMarca();
-        $imgUrl = $meta->getImgUrl();
-        $status = $meta->getStatus();
+        $imagem = $meta->getImagem();
+        $status_meta = $meta->getStatusMeta();
 
-        $query = "UPDATE $this->table SET 
-                    idLugarMeta = :idLugarMeta, 
-                    usuarioCriador = :usuarioCriador, 
-                    insertDateTime = :insertDateTime, 
-                    nome = :nome, 
-                    valor = :valor, 
-                    marca = :marca, 
-                    imgUrl = :imgUrl, 
-                    status = :status
-                  WHERE id = :id";
+        $query = "INSERT INTO $this->table (
+                    id_lugar, id_usuarioCriador, nome, valor, marca, imagem, status_meta)
+                  VALUES (
+                    :id_lugar, :id_usuarioCriador, :nome, :valor, :marca, :imagem, :status_meta)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":idLugarMeta", $idLugarMeta);
-        $stmt->bindParam(":usuarioCriador", $usuarioCriador);
-        $stmt->bindParam(":insertDateTime", $insertDateTime);
+        $stmt->bindParam(":id_lugar", $id_lugar);
+        $stmt->bindParam(":id_usuarioCriador", $id_usuarioCriador);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":valor", $valor);
         $stmt->bindParam(":marca", $marca);
-        $stmt->bindParam(":imgUrl", $imgUrl);
-        $stmt->bindParam(":status", $status);
-        $stmt->bindParam(":id", $meta_id);
+        $stmt->bindParam(":imagem", $imagem);
+        $stmt->bindParam(":status_meta", $status_meta);
 
         return $stmt->execute();
     }
 
-    public function deleteMeta($meta_id) {
-        $query = "DELETE FROM $this->table WHERE id = :id";
+    public function updateMeta(Meta $meta) {
+        $id_meta = $meta->getId();
+        $id_lugar = $meta->getIdLugar();
+        $id_usuarioCriador = $meta->getUsuarioCriador();
+        $nome = $meta->getNome();
+        $valor = $meta->getValor();
+        $marca = $meta->getMarca();
+        $imagem = $meta->getImagem();
+        $status_meta = $meta->getStatusMeta();
+
+        $query = "UPDATE $this->table 
+                  SET 
+                    id_lugar = :id_lugar, 
+                    id_usuarioCriador = :id_usuarioCriador,
+                    nome = :nome, 
+                    valor = :valor, 
+                    marca = :marca, 
+                    imagem = :imagem, 
+                    status_meta = :status_meta
+                  WHERE id_meta = :id_meta";
+
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $meta_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_lugar", $id_lugar);
+        $stmt->bindParam(":id_usuarioCriador", $id_usuarioCriador);
+        $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":valor", $valor);
+        $stmt->bindParam(":marca", $marca);
+        $stmt->bindParam(":imagem", $imagem);
+        $stmt->bindParam(":status_meta", $status_meta);
+        $stmt->bindParam(":id_meta", $id_meta);
+
+        return $stmt->execute();
+    }
+
+    public function deleteMeta($id_meta) {
+        $query = "DELETE FROM $this->table WHERE id_meta = :id_meta";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id_meta", $id_meta, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

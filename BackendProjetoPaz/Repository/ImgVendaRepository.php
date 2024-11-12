@@ -7,7 +7,7 @@ use PDO;
 
 class ImgVendaRepository {
     private $conn;
-    private $table = "imgvendas";
+    private $table = "imgs_vendas";
 
     public function __construct()
     {
@@ -19,7 +19,7 @@ class ImgVendaRepository {
         $imgDinheiro = $imgVenda->getImgDinheiro();
         $imgComprovante = $imgVenda->getImgComprovante();
 
-        $query = "INSERT INTO $this->table (imgPix, imgDinheiro, imgComprovante)
+        $query = "INSERT INTO $this->table (img_pix, img_dinheiro, img_comprovante)
                   VALUES (:imgPix, :imgDinheiro, :imgComprovante)";
 
         $stmt = $this->conn->prepare($query);
@@ -39,7 +39,7 @@ class ImgVendaRepository {
     }
 
     public function getImgVendaById($imgVenda_id) {
-        $query = "SELECT * FROM $this->table WHERE id = :id";
+        $query = "SELECT * FROM $this->table WHERE id_imgsVenda = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $imgVenda_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -53,11 +53,12 @@ class ImgVendaRepository {
         $imgDinheiro = $imgVenda->getImgDinheiro();
         $imgComprovante = $imgVenda->getImgComprovante();
 
-        $query = "UPDATE $this->table SET 
-                    imgPix = :imgPix, 
-                    imgDinheiro = :imgDinheiro, 
-                    imgComprovante = :imgComprovante
-                  WHERE id = :id";
+        $query = "UPDATE $this->table 
+                  SET 
+                    img_pix = :imgPix, 
+                    img_dinheiro = :imgDinheiro, 
+                    img_comprovante = :imgComprovante
+                  WHERE id_imgsVenda = :id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":imgPix", $imgPix);
@@ -69,7 +70,7 @@ class ImgVendaRepository {
     }
 
     public function deleteImgVenda($imgVenda_id) {
-        $query = "DELETE FROM $this->table WHERE id = :id";
+        $query = "DELETE FROM $this->table WHERE id_imgsVenda = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $imgVenda_id, PDO::PARAM_INT);
 

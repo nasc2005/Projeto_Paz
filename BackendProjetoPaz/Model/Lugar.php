@@ -7,7 +7,7 @@ use PDO;
 class Lugar {
 
     private $id;
-    private $idInstL;
+    private $idInstituicao;
     private $insertDateTime;
     private $apelido;
     private $endereco;
@@ -23,12 +23,12 @@ class Lugar {
         $this->id = $id;
     }
 
-    public function getIdInstL() {
-        return $this->idInstL;
+    public function getIdInstituicao() {
+        return $this->idInstituicao;
     }
 
-    public function setIdInstL($idInstL) {
-        $this->idInstL = $idInstL;
+    public function setIdInstituicao($idInstituicao) {
+        $this->idInstituicao = $idInstituicao;
     }
 
     public function getInsertDateTime() {

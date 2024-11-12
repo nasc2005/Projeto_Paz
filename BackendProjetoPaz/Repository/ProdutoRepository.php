@@ -16,27 +16,30 @@ class ProdutoRepository {
 
     public function insertProduto(Produto $produto) {
         $nome = $produto->getNome();
-        $valorCusto = $produto->getValorCusto();
-        $imgUrl = $produto->getImgUrl();
+        $valor_custo = $produto->getValorCusto();
+        $imagem = $produto->getImagem();
         $categoria = $produto->getCategoria();
-        $valorVenda = $produto->getValorVenda();
+        $valor_venda = $produto->getValorVenda();
         $descricao = $produto->getDescricao();
         $estoque = $produto->getEstoque();
-        $insertDateTime = $produto->getInsertDateTime();
 
-        $query = "INSERT INTO $this->table (nome, valorCusto, imgUrl, categoria, valorVenda, descricao, estoque, insertDateTime)
-                  VALUES (:nome, :valorCusto, :imgUrl, :categoria, :valorVenda, :descricao, :estoque, :insertDateTime)";
+        $query = "INSERT INTO $this->table (
+                    nome, valor_custo, imagem, categoria, valor_venda, descricao, estoque)
+                  VALUES (
+                    :nome, :valor_custo, :imagem, :categoria, :valor_venda, :descricao, :estoque)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $nome);
-        $stmt->bindParam(":valorCusto", $valorCusto);
-        $stmt->bindParam(":imgUrl", $imgUrl);
+        $stmt->bindParam(":valor_custo", $valor_custo);
         $stmt->bindParam(":categoria", $categoria);
-        $stmt->bindParam(":valorVenda", $valorVenda);
+        $stmt->bindParam(":valor_venda", $valor_venda);
         $stmt->bindParam(":descricao", $descricao);
         $stmt->bindParam(":estoque", $estoque);
-        $stmt->bindParam(":insertDateTime", $insertDateTime);
-
+        // Bind de imagem somente se houver imagem
+        if ($imagem) {
+            $stmt->bindParam(":imagem", $imagem);
+        }
+        
         return $stmt->execute();
     }
 
@@ -48,52 +51,60 @@ class ProdutoRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProdutoById($produto_id) {
-        $query = "SELECT * FROM $this->table WHERE id = :id";
+    public function getProdutoById($id_produto) {
+        $query = "SELECT * FROM $this->table WHERE id_produto = :id_produto";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $produto_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_produto", $id_produto, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function getCategoria($categoria){
+        $query = "SELECT * FROM $this->table WHERE categoria = :categoria";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":categoria", $categoria, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function updateProduto(Produto $produto) {
-        $produto_id = $produto->getId();
+        $id_produto = $produto->getId();
         $nome = $produto->getNome();
-        $valorCusto = $produto->getValorCusto();
-        $imgUrl = $produto->getImgUrl();
+        $valor_custo = $produto->getValorCusto();
+        $imagem = $produto->getImagem();
         $categoria = $produto->getCategoria();
-        $valorVenda = $produto->getValorVenda();
+        $valor_venda = $produto->getValorVenda();
         $descricao = $produto->getDescricao();
         $estoque = $produto->getEstoque();
 
         $query = "UPDATE $this->table SET 
                     nome = :nome, 
-                    valorCusto = :valorCusto, 
-                    imgUrl = :imgUrl, 
+                    valor_custo = :valor_custo, 
+                    imagem = :imagem, 
                     categoria = :categoria, 
-                    valorVenda = :valorVenda, 
+                    valor_venda = :valor_venda, 
                     descricao = :descricao, 
                     estoque = :estoque
-                  WHERE id = :id";
+                  WHERE id_produto = :id_produto";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $nome);
-        $stmt->bindParam(":valorCusto", $valorCusto);
-        $stmt->bindParam(":imgUrl", $imgUrl);
+        $stmt->bindParam(":valor_custo", $valor_custo);
+        $stmt->bindParam(":imagem", $imagem);
         $stmt->bindParam(":categoria", $categoria);
-        $stmt->bindParam(":valorVenda", $valorVenda);
+        $stmt->bindParam(":valor_venda", $valor_venda);
         $stmt->bindParam(":descricao", $descricao);
         $stmt->bindParam(":estoque", $estoque);
-        $stmt->bindParam(":id", $produto_id);
+        $stmt->bindParam(":id_produto", $id_produto);
 
         return $stmt->execute();
     }
 
-    public function deleteProduto($produto_id) {
-        $query = "DELETE FROM $this->table WHERE id = :id";
+    public function deleteProduto($id_produto) {
+        $query = "DELETE FROM $this->table WHERE id_produto = :id_produto";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $produto_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id_produto", $id_produto, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
