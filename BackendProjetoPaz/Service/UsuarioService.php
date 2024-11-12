@@ -625,13 +625,8 @@ class UsuarioService {
             <h1>Nova Venda Realizada</h1>
         </div>
         <div class="content">
-            <p>Olá,</p>
+            <p>Olá,Adiministrador</p>
             <p>Informamos que uma nova venda foi concluída com sucesso em nossa plataforma.</p>
-            <p><strong>Detalhes da Venda:</strong></p>
-            <ul>
-                <li><strong>Vendedor:</strong> Nome do Vendedor</li>
-                <li><strong>Data da Venda:</strong> Data da Venda</li>
-            </ul>
             <p>Para mais informações e acompanhamento, acesse o painel administrativo.</p>
             <p>Atenciosamente,<br>Equipe de Desenvolvimento</p>
         </div>
@@ -657,9 +652,6 @@ class UsuarioService {
 
     public function EnviaEmailFaltaProduto($email,$Produto) {
         $mail = new PHPMailer(true);
-
-        $data = new DateTime();
-        var_dump($data);die;
         try
         {
         // Configurações do servidor
@@ -750,11 +742,7 @@ class UsuarioService {
                 <div class="content">
                     <p>Olá,</p>
                     <p>Informamos que o produto abaixo está indisponível em nossa plataforma.</p>
-                    <p><strong>Detalhes do Produto:</strong></p>
-                    <ul style="text-align: left;">
-                        <li><strong>Nome:</strong> '.$Produto.'</li>
-                        <li><strong>Última Atualização:</strong> '.$data.'</li>
-                    </ul>
+                    <p><strong>Detalhes do Produto:'.$Produto.'</strong></p>
                     <p>Por favor, atualize o estoque ou entre em contato com o fornecedor para restabelecer a disponibilidade do produto o quanto antes.</p>
                     <p>Atenciosamente,<br>Equipe de Desenvolvimento</p>
                 </div>

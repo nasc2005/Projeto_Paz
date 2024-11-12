@@ -78,11 +78,11 @@ function HubAdm() {
       imgSrc: visualizarEstoqueImg,
       link: '/visualizar-estoque',
     },
-    {
-      title: 'Visualizar Metas',
-      description: 'Monitore suas metas e o progresso de vendas.',
-      imgSrc: visualizarMetasImg,
-      link: '/visualizar-metas',
+     {
+       title: 'Visualizar Metas',
+       description: 'Monitore suas metas e o progresso de vendas.',
+       imgSrc: visualizarMetasImg,
+       link: '/visualizar-metas',
     },
   ];
 

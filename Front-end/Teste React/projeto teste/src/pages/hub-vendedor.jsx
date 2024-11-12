@@ -48,12 +48,12 @@ function HubVendedor() {
       imgSrc: visualizarEstoqueImg,
       link: '/visualizar-estoque',
     },
-    {
-      title: 'Visualizar Metas',
-      description: 'Confira suas metas e o progresso de vendas.',
-      imgSrc: visualizarMetasImg,
-      link: '/visualizar-metas',
-    },
+    // {
+    //   title: 'Visualizar Metas',
+    //   description: 'Confira suas metas e o progresso de vendas.',
+    //   imgSrc: visualizarMetasImg,
+    //   link: '/visualizar-metas',
+    // },
   ];
 
   return (
